@@ -96,7 +96,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         TelaInicio tela = new TelaInicio();
-        jPanelteste.add(tela);
+       /*this.*/ jPanelteste.add(tela);
         //tela.setAlignmentX(CENTER);
         tela.show();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
