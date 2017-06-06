@@ -13,7 +13,14 @@ public class Modelo {
     private int id = 0;
     private String descricao = "";
     private String marca = "";
-    private String tipo = "";
+    //private String tipo = "";
+    
+    public enum Tipo {
+    LUXO,
+    PLUS,
+    ECONÔMICO;
+    }
+    
 
     public int getId() {
         return id;
@@ -39,12 +46,5 @@ public class Modelo {
         this.marca = marca;
     }
 
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
     
 }

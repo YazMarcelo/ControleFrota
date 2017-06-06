@@ -14,12 +14,12 @@ import persistencia.VeiculoDAO;
  *
  * @author Pedro
  */
-public class TelaInicio extends javax.swing.JInternalFrame {
+public class TelaMarca extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form TelaInicio
      */
-    public TelaInicio() {
+    public TelaMarca() {
         initComponents();
     }
 

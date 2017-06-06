@@ -6,6 +6,7 @@
 package persistencia;
 
 import classededados.Marca;
+import classededados.Modelo;
 import interfaces.CRUD;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -42,7 +43,23 @@ public class VeiculoDAO implements CRUD{
 
     @Override
     public void incluirModelo(Object objeto) throws Exception {
+        Modelo objModelo = (Modelo)(objeto);
         
+        FileWriter fileModelo = null;
+        BufferedWriter bufferModelo = null;
+        
+        try {
+           fileModelo = new FileWriter(arquivoModelo, true);
+           bufferModelo = new BufferedWriter(fileModelo);
+           
+           String aux = objModelo.getId()+";"+objModelo.getDescricao()+"\n";
+           bufferModelo.write(aux);
+           
+        } catch (Exception e) {
+            throw e;
+        }finally{
+            if (bufferModelo != null) bufferModelo.close();
+        }
     }
 
     @Override
