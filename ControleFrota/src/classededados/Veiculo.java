@@ -9,6 +9,7 @@ public class Veiculo {
     VENDIDO,
     SINISTRO,
     DISPONIVEL,
+    DEVOLVIDO,
     LOCADO;
     }
 
