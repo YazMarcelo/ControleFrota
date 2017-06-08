@@ -7,13 +7,14 @@ package interfacesgraficas;
 
 import classededados.Marca;
 import classededados.Veiculo;
+import classededados.Veiculo.UserStatus;
 import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import persistencia.VeiculoDAO;
+import persistencia.ClasseDAO;
 
 
 public class Teste extends javax.swing.JFrame {
@@ -23,11 +24,11 @@ public class Teste extends javax.swing.JFrame {
      */
     public Teste() {
         initComponents();
-                ArrayList<Veiculo.UserStatus> testeEnum = new ArrayList<>();
-                for (Veiculo.UserStatus a : Veiculo.UserStatus.values()){
-                    testeEnum.add(a);
-                }
-                jComboBox1.setModel(new DefaultComboBoxModel(new Vector(testeEnum)));
+//                ArrayList<Veiculo.UserStatus> testeEnum = new ArrayList<>();
+//                for (Veiculo.UserStatus a : Veiculo.UserStatus.values()){
+//                    testeEnum.add(a);
+//                }
+                jComboBox1.setModel(new DefaultComboBoxModel(UserStatus.values()));
                 //jComboBox.setModel(new DefaultComboBoxModel(new Vector(Arraylist)));
     }
     @SuppressWarnings("unchecked")
@@ -110,7 +111,7 @@ public class Teste extends javax.swing.JFrame {
         marca.setDescricao(jTextFieldDescricao.getText());
         marca.setId(Integer.parseInt(jTextFieldId.getText()));
         
-        VeiculoDAO inclusaoMarca = new VeiculoDAO();
+        ClasseDAO inclusaoMarca = new ClasseDAO();
         inclusaoMarca.incluirMarca(marca);
         } catch (Exception e) {
         }

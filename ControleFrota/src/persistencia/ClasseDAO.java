@@ -8,14 +8,17 @@ package persistencia;
 import classededados.Marca;
 import classededados.Modelo;
 import interfaces.CRUD;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.ArrayList;
 
 /**
  *
  * @author Pedro
  */
-public class VeiculoDAO implements CRUD{
+public class ClasseDAO implements CRUD{
     String arquivoMarca = "C:\\Users\\aluno\\Documents\\NetBeansProjects\\ControleFrota\\ControleFrota\\src\\arquivo\\Marca.csv";
     String arquivoModelo = "C:\\Users\\aluno\\Documents\\NetBeansProjects\\ControleFrota\\ControleFrota\\src\\arquivo\\Modelo.csv";
     
@@ -70,6 +73,28 @@ public class VeiculoDAO implements CRUD{
     @Override
     public void incluirCliente(Object objeto) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    @Override
+    public ArrayList<Marca> recuperarMarca() throws Exception {
+        
+        ArrayList<Marca> listaDeMarca = new ArrayList<>();
+        Marca objMarca = null;            
+            
+    FileReader frMarca = new FileReader(arquivoMarca);
+    BufferedReader br = new BufferedReader(frMarca);
+    String linha = "";
+    
+    while((linha=br.readLine())!= null){
+        String vector[] = linha.split(";");
+        
+        objMarca = new Marca();
+        objMarca.setId(Integer.parseInt(vector[0]));
+        objMarca.setDescricao(vector[1]);    
+        
+       listaDeMarca.add(objMarca);
+    }
+    br.close();
+    return listaDeMarca;
     }
     
 }
