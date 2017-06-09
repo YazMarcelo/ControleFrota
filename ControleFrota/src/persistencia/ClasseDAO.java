@@ -19,10 +19,10 @@ import java.util.ArrayList;
  * @author Pedro
  */
 public class ClasseDAO implements CRUD{
-    String arquivoMarca = "C:\\Users\\aluno\\Documents\\NetBeansProjects\\ControleFrota\\ControleFrota\\src\\arquivo\\Marca.csv";
-    String arquivoModelo = "C:\\Users\\aluno\\Documents\\NetBeansProjects\\ControleFrota\\ControleFrota\\src\\arquivo\\Modelo.csv";
+    private String arquivoMarca = "C:\\Users\\aluno\\Documents\\NetBeansProjects\\ControleFrota\\ControleFrota\\src\\arquivo\\Marca.csv";
+    private String arquivoModelo = "C:\\Users\\aluno\\Documents\\NetBeansProjects\\ControleFrota\\ControleFrota\\src\\arquivo\\Modelo.csv";
     
-
+    
     @Override
     public void incluirMarca(Object objeto) throws Exception {
         Marca objMarca = (Marca)(objeto);
@@ -96,5 +96,6 @@ public class ClasseDAO implements CRUD{
     br.close();
     return listaDeMarca;
     }
+
     
 }

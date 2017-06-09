@@ -53,6 +53,8 @@ public class TelaModelo extends javax.swing.JInternalFrame {
         jComboBoxTipo = new javax.swing.JComboBox<>();
         jButtonIncluir = new javax.swing.JButton();
 
+        setClosable(true);
+
         jLabel1.setText("Marca:");
 
         jLabel2.setText("Descrição");
