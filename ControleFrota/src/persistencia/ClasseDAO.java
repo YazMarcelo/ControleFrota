@@ -19,7 +19,7 @@ import java.util.ArrayList;
  * @author Pedro
  */
 public class ClasseDAO implements CRUD{
-    private String arquivoMarca = "C:\\Users\\aluno\\Documents\\NetBeansProjects\\ControleFrota\\ControleFrota\\src\\arquivo\\Marca.csv";
+    private String arquivoMarca = "C:\\Users\\Pedro\\Documents\\NetBeansProjects\\ControleFrota\\ControleFrota\\src\\arquivo\\Marca.csv";
     private String arquivoModelo = "C:\\Users\\aluno\\Documents\\NetBeansProjects\\ControleFrota\\ControleFrota\\src\\arquivo\\Modelo.csv";
     
     

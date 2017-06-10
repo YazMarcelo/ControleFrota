@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  * @author Pedro
  */
 public class TelaPrincipal extends javax.swing.JFrame {
-
+    TelaConsultaMarca tela = null;
     /**
      * Creates new form TelaPrincipal
      */
@@ -208,10 +208,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMarcaActionPerformed
-        TelaMarca tela = new TelaMarca();
+        tela = new TelaConsultaMarca();
+        tela.dispose();
+        tela.setLocation(182, 36);
        /*this.*/ this.add(tela);
-        //tela.setAlignmentX(CENTER);
         tela.show();
+//        TelaMarca tela = new TelaMarca();
+//       /*this.*/ this.add(tela);
+//        //tela.setAlignmentX(CENTER);
+//        tela.show();
     }//GEN-LAST:event_jButtonMarcaActionPerformed
 
     private void jButtonModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModeloActionPerformed
@@ -225,7 +230,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonClienteActionPerformed
 
     private void jButtonVeiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVeiculoActionPerformed
-        TelaConsultaVeículo tela = new TelaConsultaVeículo();
+        TelaConsultaVeiculo tela = new TelaConsultaVeiculo();
         tela.setLocation(182, 36);
        /*this.*/ this.add(tela);
         tela.show();
