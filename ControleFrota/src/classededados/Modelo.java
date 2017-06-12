@@ -13,8 +13,12 @@ import classededados.Marca;
 public class Modelo {
     private int id = 0;
     private String descricao = "";
-    private String marca = "";
+    private Marca marca = null;
     //private String tipo = "";
+
+    public Modelo() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     public enum Tipo {
     LUXO,
@@ -22,6 +26,11 @@ public class Modelo {
     ECONÔMICO;
     }
     
+    public Modelo(int id, String descricao, Marca marca){
+        this.id = id;
+        this.descricao = descricao;
+        this.marca = marca;
+    }
 
     public int getId() {
         return id;
@@ -39,11 +48,11 @@ public class Modelo {
         this.descricao = descricao;
     }
 
-    public String getMarca() {
+    public Marca getMarca() {
         return marca;
     }
 
-    public void setMarca(String marca) {
+    public void setMarca(Marca marca) {
         this.marca = marca;
     }
 
