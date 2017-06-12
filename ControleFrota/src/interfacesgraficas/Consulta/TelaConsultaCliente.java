@@ -3,53 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package interfacesgraficas;
-
-import classededados.Marca;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import javax.swing.RowFilter;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
-import persistencia.ClasseDAO;
+package interfacesgraficas.Consulta;
 
 /**
  *
  * @author aluno
  */
-public class TelaConsultaMarca extends javax.swing.JInternalFrame {
-    DefaultTableModel model = null;
-    TableRowSorter trs;
-    TelaPrincipal desk = null;
+public class TelaConsultaCliente extends javax.swing.JInternalFrame {
+
     /**
      * Creates new form TelaConsultaVeículo
      */
-    public TelaConsultaMarca() {
+    public TelaConsultaCliente() {
         initComponents();
-        try {
-            ArrayList<Marca> listaDeMarcas;
-            ClasseDAO agenda = new ClasseDAO();
-            listaDeMarcas = agenda.recuperarMarca();
-            model = (DefaultTableModel) jTableMarca.getModel();
-            
-            model.setNumRows(0);
-            for(int pos=0; pos<listaDeMarcas.size();pos++){
-                String[] saida = new String[2];
-                Marca aux = listaDeMarcas.get(pos);
-                saida[0] = String.valueOf(aux.getId());
-                saida[1] = aux.getDescricao();
-                model.addRow(saida);
-            }         
-        } catch (Exception erro) {
-            JOptionPane.showMessageDialog(this, erro.getMessage());
-        }
-        
     }
 
     /**
@@ -66,7 +32,7 @@ public class TelaConsultaMarca extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableMarca = new javax.swing.JTable();
+        jTableCliente = new javax.swing.JTable();
         jTextFieldPesquisar = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -80,17 +46,12 @@ public class TelaConsultaMarca extends javax.swing.JInternalFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setText("Consulta de Marcas");
+        jLabel1.setText("Consulta de Veículos");
 
         jButton1.setBackground(new java.awt.Color(0, 136, 204));
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("+ Novo Marca");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        jButton1.setText("+ Novo Veículo");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -113,45 +74,15 @@ public class TelaConsultaMarca extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        jTableMarca.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTableMarca.setModel(new javax.swing.table.DefaultTableModel(
+        jTableCliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Código", "Descrição"
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(jTableMarca);
-        if (jTableMarca.getColumnModel().getColumnCount() > 0) {
-            jTableMarca.getColumnModel().getColumn(0).setResizable(false);
-            jTableMarca.getColumnModel().getColumn(1).setResizable(false);
-            jTableMarca.getColumnModel().getColumn(1).setPreferredWidth(300);
-        }
-
-        jTextFieldPesquisar.setForeground(new java.awt.Color(204, 204, 204));
-        jTextFieldPesquisar.setText("Procurar...");
-        jTextFieldPesquisar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTextFieldPesquisarMouseClicked(evt);
-            }
-        });
-        jTextFieldPesquisar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTextFieldPesquisarKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextFieldPesquisarKeyTyped(evt);
-            }
-        });
+        ));
+        jScrollPane1.setViewportView(jTableCliente);
 
         jButton2.setBackground(new java.awt.Color(0, 136, 204));
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -208,61 +139,6 @@ public class TelaConsultaMarca extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextFieldPesquisarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldPesquisarKeyTyped
-        jTextFieldPesquisar.setForeground(new java.awt.Color(0, 0, 0));
-        jTextFieldPesquisar.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-               
-               trs.setRowFilter(RowFilter.regexFilter("(?)"+jTextFieldPesquisar.getText(),1)); 
-            }       
-});
-        trs = new TableRowSorter(model);
-            jTableMarca.setRowSorter(trs);
-    }//GEN-LAST:event_jTextFieldPesquisarKeyTyped
-
-    private void jTextFieldPesquisarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldPesquisarMouseClicked
-        jTextFieldPesquisar.setText("");
-    }//GEN-LAST:event_jTextFieldPesquisarMouseClicked
-
-    private void jTextFieldPesquisarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldPesquisarKeyReleased
-        
-    }//GEN-LAST:event_jTextFieldPesquisarKeyReleased
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            Teste tela = new Teste();
-            tela.setVisible(true);
-            Object source;
-            source = evt.getSource();
-            
-            while(tela.isVisible()){
-            ArrayList<Marca> listaDeMarcas;
-            ClasseDAO agenda = new ClasseDAO();
-            listaDeMarcas = agenda.recuperarMarca();
-            DefaultTableModel model = (DefaultTableModel) jTableMarca.getModel();
-            
-            model.setNumRows(0);
-            for(int pos=0; pos<listaDeMarcas.size();pos++){
-                String[] saida = new String[2];
-                Marca aux = listaDeMarcas.get(pos);
-                saida[0] = String.valueOf(aux.getId());
-                saida[1] = aux.getDescricao();
-                model.addRow(saida);
-            }
-            }
-            
-            
-//      TelaMarca tela = new TelaMarca();
-//      tela.setLocation(182, 36);
-//      desk = new TelaPrincipal();
-//      desk.add(tela);
-//      tela.setVisible(true);
-        } catch (Exception ex) {
-            Logger.getLogger(TelaConsultaMarca.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -272,7 +148,7 @@ public class TelaConsultaMarca extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableMarca;
+    private javax.swing.JTable jTableCliente;
     private javax.swing.JTextField jTextFieldPesquisar;
     // End of variables declaration//GEN-END:variables
 }

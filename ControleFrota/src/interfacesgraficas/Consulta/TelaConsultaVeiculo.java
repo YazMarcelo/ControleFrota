@@ -3,18 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package interfacesgraficas;
+package interfacesgraficas.Consulta;
 
 /**
  *
  * @author aluno
  */
-public class TelaConsultaCliente extends javax.swing.JInternalFrame {
+public class TelaConsultaVeiculo extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form TelaConsultaVeículo
      */
-    public TelaConsultaCliente() {
+    public TelaConsultaVeiculo() {
         initComponents();
     }
 
@@ -32,7 +32,7 @@ public class TelaConsultaCliente extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableCliente = new javax.swing.JTable();
+        jTableVeiculo = new javax.swing.JTable();
         jTextFieldPesquisar = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -74,7 +74,7 @@ public class TelaConsultaCliente extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        jTableCliente.setModel(new javax.swing.table.DefaultTableModel(
+        jTableVeiculo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -82,7 +82,13 @@ public class TelaConsultaCliente extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTableCliente);
+        jScrollPane1.setViewportView(jTableVeiculo);
+
+        jTextFieldPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldPesquisarActionPerformed(evt);
+            }
+        });
 
         jButton2.setBackground(new java.awt.Color(0, 136, 204));
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -139,6 +145,10 @@ public class TelaConsultaCliente extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jTextFieldPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPesquisarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldPesquisarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -148,7 +158,7 @@ public class TelaConsultaCliente extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableCliente;
+    private javax.swing.JTable jTableVeiculo;
     private javax.swing.JTextField jTextFieldPesquisar;
     // End of variables declaration//GEN-END:variables
 }

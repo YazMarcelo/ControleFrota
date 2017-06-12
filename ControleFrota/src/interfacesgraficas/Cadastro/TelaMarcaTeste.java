@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package interfacesgraficas;
+package interfacesgraficas.Cadastro;
 
 import classededados.GeradorDeId;
 import classededados.Marca;

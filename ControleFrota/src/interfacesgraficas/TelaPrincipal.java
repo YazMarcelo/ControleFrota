@@ -5,6 +5,9 @@
  */
 package interfacesgraficas;
 
+import interfacesgraficas.Cadastro.TelaModelo;
+import interfacesgraficas.Consulta.TelaConsultaVeiculo;
+import interfacesgraficas.Consulta.TelaConsultaMarca;
 import java.awt.Color;
 import static javax.swing.GroupLayout.Alignment.CENTER;
 import javax.swing.JOptionPane;
