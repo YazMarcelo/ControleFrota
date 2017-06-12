@@ -11,6 +11,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -78,12 +80,12 @@ public class TelaConsultaMarca extends javax.swing.JInternalFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setText("Consulta de Veículos");
+        jLabel1.setText("Consulta de Marcas");
 
         jButton1.setBackground(new java.awt.Color(0, 136, 204));
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("+ Novo Veículo");
+        jButton1.setText("+ Novo Marca");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -111,6 +113,7 @@ public class TelaConsultaMarca extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
+        jTableMarca.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTableMarca.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -131,6 +134,7 @@ public class TelaConsultaMarca extends javax.swing.JInternalFrame {
         if (jTableMarca.getColumnModel().getColumnCount() > 0) {
             jTableMarca.getColumnModel().getColumn(0).setResizable(false);
             jTableMarca.getColumnModel().getColumn(1).setResizable(false);
+            jTableMarca.getColumnModel().getColumn(1).setPreferredWidth(300);
         }
 
         jTextFieldPesquisar.setForeground(new java.awt.Color(204, 204, 204));
@@ -226,11 +230,37 @@ public class TelaConsultaMarca extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextFieldPesquisarKeyReleased
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-      TelaMarca tela = new TelaMarca();
-      tela.setLocation(182, 36);
-      desk = new TelaPrincipal();
-      desk.add(tela);
-      tela.show();
+        try {
+            Teste tela = new Teste();
+            tela.setVisible(true);
+            Object source;
+            source = evt.getSource();
+            
+            while(tela.isVisible()){
+            ArrayList<Marca> listaDeMarcas;
+            ClasseDAO agenda = new ClasseDAO();
+            listaDeMarcas = agenda.recuperarMarca();
+            DefaultTableModel model = (DefaultTableModel) jTableMarca.getModel();
+            
+            model.setNumRows(0);
+            for(int pos=0; pos<listaDeMarcas.size();pos++){
+                String[] saida = new String[2];
+                Marca aux = listaDeMarcas.get(pos);
+                saida[0] = String.valueOf(aux.getId());
+                saida[1] = aux.getDescricao();
+                model.addRow(saida);
+            }
+            }
+            
+            
+//      TelaMarca tela = new TelaMarca();
+//      tela.setLocation(182, 36);
+//      desk = new TelaPrincipal();
+//      desk.add(tela);
+//      tela.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(TelaConsultaMarca.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

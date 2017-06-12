@@ -233,7 +233,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         TelaConsultaVeiculo tela = new TelaConsultaVeiculo();
         tela.setLocation(182, 36);
        /*this.*/ this.add(tela);
-        tela.show();
+        tela.setVisible(true);
     }//GEN-LAST:event_jButtonVeiculoActionPerformed
 
     /**
