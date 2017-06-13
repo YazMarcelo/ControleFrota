@@ -5,6 +5,9 @@
  */
 package interfacesgraficas.Consulta;
 
+import interfacesgraficas.Cadastro.CadastroMarca;
+import interfacesgraficas.Cadastro.CadastroVeiculo;
+
 /**
  *
  * @author aluno
@@ -52,6 +55,11 @@ public class TelaConsultaVeiculo extends javax.swing.JInternalFrame {
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("+ Novo Veículo");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -148,6 +156,11 @@ public class TelaConsultaVeiculo extends javax.swing.JInternalFrame {
     private void jTextFieldPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPesquisarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldPesquisarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        CadastroVeiculo tela= new CadastroVeiculo();
+            tela.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

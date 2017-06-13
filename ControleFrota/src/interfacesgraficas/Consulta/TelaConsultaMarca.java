@@ -6,6 +6,7 @@
 package interfacesgraficas.Consulta;
 
 import classededados.Marca;
+import interfacesgraficas.Cadastro.CadastroMarca;
 import interfacesgraficas.TelaPrincipal;
 import interfacesgraficas.Teste;
 import java.awt.event.KeyAdapter;
@@ -15,6 +16,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static javax.swing.GroupLayout.Alignment.CENTER;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -232,27 +234,30 @@ public class TelaConsultaMarca extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextFieldPesquisarKeyReleased
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            Teste tela = new Teste();
+            CadastroMarca tela= new CadastroMarca();
             tela.setVisible(true);
-            Object source;
-            source = evt.getSource();
-            
-            while(tela.isVisible()){
-            ArrayList<Marca> listaDeMarcas;
-            ClasseDAO agenda = new ClasseDAO();
-            listaDeMarcas = agenda.recuperarMarca();
-            DefaultTableModel model = (DefaultTableModel) jTableMarca.getModel();
-            
-            model.setNumRows(0);
-            for(int pos=0; pos<listaDeMarcas.size();pos++){
-                String[] saida = new String[2];
-                Marca aux = listaDeMarcas.get(pos);
-                saida[0] = String.valueOf(aux.getId());
-                saida[1] = aux.getDescricao();
-                model.addRow(saida);
-            }
-            }
+
+//        try {
+//            Teste tela = new Teste();
+//            tela.setVisible(true);
+//            Object source;
+//            source = evt.getSource();
+//            
+//            while(tela.isVisible()){
+//            ArrayList<Marca> listaDeMarcas;
+//            ClasseDAO agenda = new ClasseDAO();
+//            listaDeMarcas = agenda.recuperarMarca();
+//            DefaultTableModel model = (DefaultTableModel) jTableMarca.getModel();
+//            
+//            model.setNumRows(0);
+//            for(int pos=0; pos<listaDeMarcas.size();pos++){
+//                String[] saida = new String[2];
+//                Marca aux = listaDeMarcas.get(pos);
+//                saida[0] = String.valueOf(aux.getId());
+//                saida[1] = aux.getDescricao();
+//                model.addRow(saida);
+//            }
+//            }
             
             
 //      TelaMarca tela = new TelaMarca();
@@ -260,9 +265,9 @@ public class TelaConsultaMarca extends javax.swing.JInternalFrame {
 //      desk = new TelaPrincipal();
 //      desk.add(tela);
 //      tela.setVisible(true);
-        } catch (Exception ex) {
-            Logger.getLogger(TelaConsultaMarca.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        } catch (Exception ex) {
+//            Logger.getLogger(TelaConsultaMarca.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

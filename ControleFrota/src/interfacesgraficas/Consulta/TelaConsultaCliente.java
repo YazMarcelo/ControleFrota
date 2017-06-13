@@ -5,6 +5,8 @@
  */
 package interfacesgraficas.Consulta;
 
+import interfacesgraficas.Cadastro.CadastroCliente;
+
 /**
  *
  * @author aluno
@@ -46,12 +48,17 @@ public class TelaConsultaCliente extends javax.swing.JInternalFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setText("Consulta de Veículos");
+        jLabel1.setText("Consulta de Clientes");
 
         jButton1.setBackground(new java.awt.Color(0, 136, 204));
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("+ Novo Veículo");
+        jButton1.setText("+ Novo Cliente");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -138,6 +145,11 @@ public class TelaConsultaCliente extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        CadastroCliente tela = new CadastroCliente();
+        tela.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
