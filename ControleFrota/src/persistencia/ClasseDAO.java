@@ -27,10 +27,10 @@ public class ClasseDAO implements CRUD{
     private String t = "C:\\Users\\aluno\\Documents\\VPProjects\\ControleFrota\\ControleFrota\\src\\arquivo";
     private String d = "";
     
-    private String arquivoMarca = "C:\\Users\\aluno\\Documents\\VPProjects\\ControleFrota\\ControleFrota\\src\\arquivo\\Marca.csv";
-    private String arquivoModelo = "C:\\Users\\aluno\\Documents\\VPProjects\\ControleFrota\\ControleFrota\\src\\arquivo\\Modelo.csv";
-    private String arquivoVeiculo = "C:\\Users\\aluno\\Documents\\VPProjects\\ControleFrota\\ControleFrota\\src\\arquivo\\Veiculos.csv";
-    private String arquivoCliente = "C:\\Users\\aluno\\Documents\\VPProjects\\ControleFrota\\ControleFrota\\src\\arquivo\\Cliente.csv";
+    private String arquivoMarca = t+"\\Marca.csv";
+    private String arquivoModelo = t+"\\Modelo.csv";
+    private String arquivoVeiculo = t+"\\Veiculos.csv";
+    private String arquivoCliente = t+"\\Cliente.csv";
     
     @Override
     public void incluirMarca(Object objeto) throws Exception {
