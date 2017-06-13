@@ -5,6 +5,11 @@
  */
 package interfacesgraficas.Cadastro;
 
+import classededados.GeradorDeId;
+import classededados.Marca;
+import javax.swing.JOptionPane;
+import persistencia.ClasseDAO;
+
 /**
  *
  * @author aluno
@@ -33,7 +38,7 @@ public class CadastroMarca extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jButtonSalvar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -67,8 +72,14 @@ public class CadastroMarca extends javax.swing.JFrame {
 
         jLabel3.setText("Nome*");
 
-        jButton1.setBackground(new java.awt.Color(0, 136, 204));
-        jButton1.setText("Salvar");
+        jButtonSalvar.setBackground(new java.awt.Color(0, 136, 204));
+        jButtonSalvar.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonSalvar.setText("Salvar");
+        jButtonSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSalvarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -82,7 +93,7 @@ public class CadastroMarca extends javax.swing.JFrame {
                         .addComponent(jLabel2))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(164, 164, 164)
-                        .addComponent(jButton1))
+                        .addComponent(jButtonSalvar))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(86, 86, 86)
                         .addComponent(jLabel3)
@@ -101,7 +112,7 @@ public class CadastroMarca extends javax.swing.JFrame {
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addGap(32, 32, 32)
-                .addComponent(jButton1)
+                .addComponent(jButtonSalvar)
                 .addContainerGap())
         );
 
@@ -118,6 +129,32 @@ public class CadastroMarca extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
+        
+        if(!(jTextField1.getText().equals(""))){
+           int resposta  = JOptionPane.showConfirmDialog(rootPane, "Confirmar Cadastro?");
+           if(resposta == JOptionPane.YES_OPTION){
+            try {
+
+                GeradorDeId idMarca = new GeradorDeId();
+                Marca obj = new Marca();
+                
+                obj.setId(idMarca.getIdMarca());
+                obj.setDescricao(jTextField1.getText());
+                
+            ClasseDAO categoria = new ClasseDAO();
+            categoria.incluirMarca(obj);
+            JOptionPane.showMessageDialog(rootPane, "Cadastro efetuado com sucesso!");
+            idMarca.finalize();
+        } catch (Exception e) {
+        }
+        } 
+        }else{
+        JOptionPane.showMessageDialog(rootPane, "Campos obrigatórios não preenchidos!");
+        }
+        jTextField1.setText("");
+    }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -155,7 +192,7 @@ public class CadastroMarca extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonSalvar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
