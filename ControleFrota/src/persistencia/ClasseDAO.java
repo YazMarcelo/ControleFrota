@@ -7,12 +7,14 @@ package persistencia;
 
 import classededados.Marca;
 import classededados.Modelo;
+import classededados.Veiculo;
 import interfaces.CRUD;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,7 +23,7 @@ import java.util.ArrayList;
 public class ClasseDAO implements CRUD{
     private String arquivoMarca = "C:\\Users\\aluno\\Documents\\VPProjects\\ControleFrota\\ControleFrota\\src\\Arquivos\\Marca.csv";
     private String arquivoModelo = "C:\\Users\\aluno\\Documents\\VPProjects\\ControleFrota\\ControleFrota\\src\\Arquivos\\Modelo.csv";
-    
+    private String arquivoVeiculo = "C:\\Users\\aluno\\Documents\\VPProjects\\ControleFrota\\ControleFrota\\src\\Arquivos\\Veiculos.csv";
     
     @Override
     public void incluirMarca(Object objeto) throws Exception {
@@ -67,7 +69,26 @@ public class ClasseDAO implements CRUD{
 
     @Override
     public void incluirVeiculo(Object objeto) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            Veiculo objVeiculo = (Veiculo) (objeto);
+            
+            FileWriter fileVeiculo = null;
+            BufferedWriter bufferVeiculo = null;
+            
+            try {
+            fileVeiculo = new FileWriter(arquivoVeiculo, true);
+            bufferVeiculo = new BufferedWriter(fileVeiculo);
+            
+            Marca marca = new Marca();
+            Modelo modelo = new Modelo();
+            
+            String aux = objVeiculo.getId()+";"+objVeiculo.getMarca(marca.toString())+";"+objVeiculo.getModelo(modelo.toString())+"\n";
+            bufferVeiculo.write(aux);
+            
+        } catch (Exception e) {
+                JOptionPane.showMessageDialog(null , e.getMessage());
+        }finally{
+                if(bufferVeiculo != null) bufferVeiculo.close();
+            }
     }
 
     @Override

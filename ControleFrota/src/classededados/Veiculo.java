@@ -4,6 +4,14 @@ public class Veiculo {
     private Marca marca = null;
     private Modelo modelo = null;
 
+    public String getMarca(String toString) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public String getModelo(String toString) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     
     public enum UserStatus {
     VENDIDO,
