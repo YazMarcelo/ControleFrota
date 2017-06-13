@@ -15,8 +15,10 @@ import java.util.logging.Logger;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.MaskFormatter;
 import persistencia.ClasseDAO;
 
 
@@ -27,26 +29,35 @@ public class Teste extends javax.swing.JFrame {
      */
     public Teste() throws Exception {
         initComponents();
+       MaskFormatter fmtTelefone = new MaskFormatter("####-####");
+        
+        jFormattedTextField1 = new JFormattedTextField(fmtTelefone);
+        fmtTelefone.setValidCharacters("0123456789");
+        jFormattedTextField1.setColumns(6);
+        add(jFormattedTextField1);
+        //http://www.devmedia.com.br/forum/jformattedtextfield/566158
+        
 //                ArrayList<Veiculo.UserStatus> testeEnum = new ArrayList<>();
 //                for (Veiculo.UserStatus a : Veiculo.UserStatus.values()){
 //                    testeEnum.add(a);
 //                }
-                jComboBox1.setModel(new DefaultComboBoxModel(UserStatus.values()));
-                //jComboBox.setModel(new DefaultComboBoxModel(new Vector(Arraylist)));
-                
-                
-            ArrayList<Marca> listaDeMarcas;
-            ArrayList<String> marcas = new ArrayList<>();
-            ClasseDAO agenda = new ClasseDAO();
-            listaDeMarcas = agenda.recuperarMarca();
-            for(int pos=0; pos<listaDeMarcas.size();pos++){
-                String saida;
-                Marca aux = listaDeMarcas.get(pos);
-                saida = aux.getDescricao();
-                marcas.add(String.valueOf(saida));
-            }
-            jComboBox2.setModel(new DefaultComboBoxModel(new Vector(marcas)));
-            
+//                jComboBox1.setModel(new DefaultComboBoxModel(UserStatus.values()));
+//                //jComboBox.setModel(new DefaultComboBoxModel(new Vector(Arraylist)));
+//                
+//                
+//            ArrayList<Marca> listaDeMarcas;
+//            ArrayList<String> marcas = new ArrayList<>();
+//            ClasseDAO agenda = new ClasseDAO();
+//            listaDeMarcas = agenda.recuperarMarca();
+//            for(int pos=0; pos<listaDeMarcas.size();pos++){
+//                String saida;
+//                Marca aux = listaDeMarcas.get(pos);
+//                saida = aux.getDescricao();
+//                marcas.add(String.valueOf(saida));
+//            }
+//            jComboBox2.setModel(new DefaultComboBoxModel(new Vector(marcas)));
+//            
+//    }}
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -59,6 +70,7 @@ public class Teste extends javax.swing.JFrame {
         jTextFieldDescricao = new javax.swing.JTextField();
         jButtonIncluir = new javax.swing.JButton();
         jComboBox2 = new javax.swing.JComboBox<>();
+        jFormattedTextField1 = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -77,6 +89,12 @@ public class Teste extends javax.swing.JFrame {
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        jFormattedTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFormattedTextField1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -86,23 +104,28 @@ public class Teste extends javax.swing.JFrame {
                 .addComponent(jButtonIncluir)
                 .addGap(25, 25, 25))
             .addGroup(layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(122, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(56, 56, 56))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(106, 106, 106)
+                        .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(106, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -120,7 +143,9 @@ public class Teste extends javax.swing.JFrame {
                             .addComponent(jTextFieldId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(jLabel2)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(59, 59, 59)
                 .addComponent(jButtonIncluir)
                 .addGap(24, 24, 24))
         );
@@ -142,6 +167,10 @@ public class Teste extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_jButtonIncluirActionPerformed
+
+    private void jFormattedTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFormattedTextField1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -186,6 +215,7 @@ public class Teste extends javax.swing.JFrame {
     private javax.swing.JButton jButtonIncluir;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField jTextFieldDescricao;
