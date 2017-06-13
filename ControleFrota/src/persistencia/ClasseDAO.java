@@ -8,6 +8,7 @@ package persistencia;
 import classededados.Marca;
 import classededados.Modelo;
 import classededados.Veiculo;
+import classededados.Cliente;
 import interfaces.CRUD;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -24,6 +25,7 @@ public class ClasseDAO implements CRUD{
     private String arquivoMarca = "C:\\Users\\aluno\\Documents\\VPProjects\\ControleFrota\\ControleFrota\\src\\Arquivos\\Marca.csv";
     private String arquivoModelo = "C:\\Users\\aluno\\Documents\\VPProjects\\ControleFrota\\ControleFrota\\src\\Arquivos\\Modelo.csv";
     private String arquivoVeiculo = "C:\\Users\\aluno\\Documents\\VPProjects\\ControleFrota\\ControleFrota\\src\\Arquivos\\Veiculos.csv";
+    private String arquivoCliente = "C:\\Users\\aluno\\Documents\\VPProjects\\ControleFrota\\ControleFrota\\src\\Arquivos\\Cliente.csv";
     
     @Override
     public void incluirMarca(Object objeto) throws Exception {
@@ -93,7 +95,23 @@ public class ClasseDAO implements CRUD{
 
     @Override
     public void incluirCliente(Object objeto) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            Cliente objCliente = (Cliente) (objeto);
+            
+            FileWriter fileCliente = null;
+            BufferedWriter bufferCliente = null;
+            
+            try {
+            fileCliente = new FileWriter(arquivoCliente, true);
+            bufferCliente = new BufferedWriter(fileCliente);
+            
+            String aux = objCliente.getNome()+";"+objCliente.getCnh()+"\n";
+            bufferCliente.write(aux);
+            
+        } catch (Exception e) {
+            throw e;
+        }finally{
+                if(bufferCliente != null) bufferCliente.close();
+            }
     }
     @Override
     public ArrayList<Marca> recuperarMarca() throws Exception {
