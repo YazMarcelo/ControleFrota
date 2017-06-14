@@ -176,7 +176,32 @@ public class CadastroModelo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-            
+            if(!(jTextField1.getText().equals(""))){
+           int resposta  = JOptionPane.showConfirmDialog(rootPane, "Confirmar Cadastro?");
+           if(resposta == JOptionPane.YES_OPTION){
+            try {
+
+                GeradorDeId idModelo = new GeradorDeId();
+                Modelo obj = new Modelo();
+                
+                obj.setId(idModelo.getIdModelo());
+                obj.setDescricao(jTextField1.getText());
+                obj.setMarca(jComboBoxMarca.getSelectedItem().toString());
+                obj.setTipo(jComboBoxTipo.getSelectedItem().toString());
+                
+                                
+            ClasseDAO daoMarca = new ClasseDAO();
+            daoMarca.incluirModelo(obj);
+            JOptionPane.showMessageDialog(rootPane, "Cadastro efetuado com sucesso!");
+            idModelo.finalize();   
+                                   
+        } catch (Exception e) {
+        }
+        } 
+        }else{
+        JOptionPane.showMessageDialog(rootPane, "Campos obrigatórios não preenchidos!");
+        }
+        jTextField1.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
