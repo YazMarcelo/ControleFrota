@@ -26,6 +26,7 @@ import persistencia.ClasseDAO;
 public class TelaConsultaCliente extends javax.swing.JInternalFrame {
     DefaultTableModel model = null;
     TableRowSorter trs;
+    int esc;
     /**
      * Creates new form TelaConsultaVeículo
      */
@@ -194,7 +195,7 @@ public class TelaConsultaCliente extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Filtro");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione...", "Placa", "Marca", "Modelo", "Cor", "Situação" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione...", "Nome", "CNH", "Email" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -316,11 +317,14 @@ public class TelaConsultaCliente extends javax.swing.JInternalFrame {
 
     private void jTextFieldPesquisar1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldPesquisar1KeyTyped
         jTextFieldPesquisar1.setForeground(new java.awt.Color(0, 0, 0));
+        if(jComboBox1.getSelectedItem().equals("Nome")|| jComboBox1.getSelectedItem().equals("Selecione...")) esc = 0; 
+        if(jComboBox1.getSelectedItem().equals("CNH")) esc = 1; 
+        if(jComboBox1.getSelectedItem().equals("Email")) esc = 2; 
         jTextFieldPesquisar1.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
 
-                trs.setRowFilter(RowFilter.regexFilter("(?)"+jTextFieldPesquisar1.getText(),0));
+                trs.setRowFilter(RowFilter.regexFilter("(?)"+jTextFieldPesquisar1.getText(),esc));
             }
         });
         trs = new TableRowSorter(model);

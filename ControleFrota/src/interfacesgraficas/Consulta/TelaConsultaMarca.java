@@ -184,7 +184,7 @@ public class TelaConsultaMarca extends javax.swing.JInternalFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione...", "Placa", "Marca", "Modelo", "Cor", "Situação" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione...", "Código", "Descrição" }));
 
         jLabel2.setText("Filtro");
 
@@ -248,10 +248,8 @@ public class TelaConsultaMarca extends javax.swing.JInternalFrame {
     private void jTextFieldPesquisarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldPesquisarKeyTyped
         jTextFieldPesquisar.setForeground(new java.awt.Color(0, 0, 0));
         if(jComboBox1.getSelectedItem().equals("Código")) esc = 0; 
-        if(jComboBox1.getSelectedItem().equals("Modelo")|| jComboBox1.getSelectedItem().equals("Selecione...")) esc = 1; 
-        if(jComboBox1.getSelectedItem().equals("Marca")) esc = 2; 
-        if(jComboBox1.getSelectedItem().equals("Tipo")) esc = 3; 
-        if(jComboBox1.getSelectedItem().equals("Situação")) esc = 4;
+        if(jComboBox1.getSelectedItem().equals("Descrição")|| jComboBox1.getSelectedItem().equals("Selecione...")) esc = 1;
+        
         jTextFieldPesquisar.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
