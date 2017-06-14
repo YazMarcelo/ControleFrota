@@ -169,7 +169,7 @@ public class ClasseDAO implements CRUD{
         ArrayList<Cliente> listaDeCliente = new ArrayList<>();
         Cliente objCliente = null;            
             
-    FileReader frModelo = new FileReader(arquivoVeiculo);
+    FileReader frModelo = new FileReader(arquivoCliente);
     BufferedReader br = new BufferedReader(frModelo);
     String linha = "";
     
@@ -214,7 +214,7 @@ public class ClasseDAO implements CRUD{
     return listaDeVeiculo;
     }
     @Override
-    public void excluirMarca(String descricao) throws Exception {
+    public void excluirMarca(String id) throws Exception {
         Marca objMarca;
         try {
            ArrayList<Marca> listaDeMarcas = this.recuperarMarca();
@@ -222,7 +222,7 @@ public class ClasseDAO implements CRUD{
            BufferedWriter bw = new BufferedWriter(fw);
            for(int pos=0; pos<listaDeMarcas.size();pos++){
                Marca aux = listaDeMarcas.get(pos);
-               if(!(aux.getDescricao().equals(descricao))){
+               if((Integer.parseInt(id) != aux.getId())){
                    bw.write(aux.getId()+";"+aux.getDescricao()+"\n");
                }
            }
@@ -232,6 +232,60 @@ public class ClasseDAO implements CRUD{
         }
         
 
+    }
+
+    @Override
+    public void excluirVeiculo(String placa) throws Exception {
+        try {
+           ArrayList<Veiculo> listaDeVeiculos = this.recuperarVeiculo();
+           FileWriter fw = new FileWriter(arquivoVeiculo);
+           BufferedWriter bw = new BufferedWriter(fw);
+           for(int pos=0; pos<listaDeVeiculos.size();pos++){
+               Veiculo aux = listaDeVeiculos.get(pos);
+               if(!(aux.getPlaca().equals(placa))){
+                   bw.write(aux.getPlaca()+";"+aux.getMarca()+";"+aux.getModelo()+";"+aux.getAno()+";"+aux.getCor()+";"+aux.getSituacao()+"\n");
+               }
+           }
+           bw.close();
+        } catch (Exception erro) {
+            throw erro;
+        }
+    }
+
+    @Override
+    public void excluirModelo(String id) throws Exception {
+        try {
+           ArrayList<Modelo> listaDeModelos = this.recuperarModelo();
+           FileWriter fw = new FileWriter(arquivoModelo);
+           BufferedWriter bw = new BufferedWriter(fw);
+           for(int pos=0; pos<listaDeModelos.size();pos++){
+               Modelo aux = listaDeModelos.get(pos);
+               if((Integer.parseInt(id) != aux.getId())){
+                   bw.write(aux.getId()+";"+aux.getDescricao()+";"+aux.getMarca()+";"+aux.getTipo()+"\n");
+               }
+           }
+           bw.close();
+        } catch (Exception erro) {
+            throw erro;
+        }
+    }
+
+    @Override
+    public void excluirCliente(String cnh) throws Exception {
+        try {
+           ArrayList<Cliente> listaDeClientes = this.recuperarCliente();
+           FileWriter fw = new FileWriter(arquivoCliente);
+           BufferedWriter bw = new BufferedWriter(fw);
+           for(int pos=0; pos<listaDeClientes.size();pos++){
+               Cliente aux = listaDeClientes.get(pos);
+               if(!(aux.getCnh().equals(cnh))){
+                   bw.write(aux.getNome()+";"+aux.getCnh()+";"+aux.getEmail()+";"+aux.getTelefone()+"\n");
+               }
+           }
+           bw.close();
+        } catch (Exception erro) {
+            throw erro;
+        }
     }
     
 }

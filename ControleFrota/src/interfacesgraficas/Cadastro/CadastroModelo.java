@@ -25,19 +25,27 @@ public class CadastroModelo extends javax.swing.JFrame {
     /**
      * Creates new form CadastroMarca
      */
-    public CadastroModelo() throws Exception {
+    public CadastroModelo() {
         initComponents();
+        try {
+        
         ArrayList<Marca> listaDeMarcas;
             ArrayList<String> marcas = new ArrayList<>();
             ClasseDAO agenda = new ClasseDAO();
+        
             listaDeMarcas = agenda.recuperarMarca();
+       
             for(int pos=0; pos<listaDeMarcas.size();pos++){
                 String saida;
                 Marca aux = listaDeMarcas.get(pos);
                 saida = aux.getDescricao();
                 marcas.add(String.valueOf(saida));
             }
+             
             jComboBoxMarca.setModel(new DefaultComboBoxModel(new Vector(marcas)));
+            } catch (Exception ex) {
+            Logger.getLogger(CadastroModelo.class.getName()).log(Level.SEVERE, null, ex);
+        }
             jComboBoxTipo.setModel(new DefaultComboBoxModel(Modelo.Tipo.values()));
     }
 
