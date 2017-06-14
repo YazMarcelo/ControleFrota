@@ -147,6 +147,7 @@ public class CadastroMarca extends javax.swing.JFrame {
             categoria.incluirMarca(obj);
             JOptionPane.showMessageDialog(rootPane, "Cadastro efetuado com sucesso!");
             idMarca.finalize();
+                                   
         } catch (Exception e) {
         }
         } 
