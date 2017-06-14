@@ -5,21 +5,61 @@
  */
 package interfacesgraficas.Cadastro;
 
+import classededados.Cliente;
+import classededados.Veiculo;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import persistencia.ClasseDAO;
 
 /**
  *
  * @author aluno
  */
 public class TelaLocar extends javax.swing.JInternalFrame {
-
+    DefaultTableModel model = null;
+    DefaultTableModel modelCliente = null;
+    TableRowSorter trs;
     /**
      * Creates new form TelaLocar
      */
     public TelaLocar() {
         initComponents();
+        try {
+            ArrayList<Veiculo> listaDeVeiculos;
+            ClasseDAO dao = new ClasseDAO();
+            listaDeVeiculos = dao.recuperarVeiculo();
+            model = (DefaultTableModel) jTableVeiculo.getModel();
+            
+            model.setNumRows(0);
+            for(int pos=0; pos<listaDeVeiculos.size();pos++){
+                String[] saida = new String[3];
+                Veiculo aux = listaDeVeiculos.get(pos);
+                saida[0] = aux.getModelo();
+                saida[1] = aux.getMarca();
+                saida[2] = aux.getCor();
+                model.addRow(saida);
+            }
+            
+            ArrayList<Cliente> listaDeClientes;
+            ClasseDAO daoCliente = new ClasseDAO();
+            listaDeClientes = daoCliente.recuperarCliente();
+            modelCliente = (DefaultTableModel) jTableCliente.getModel();
+            
+            modelCliente.setNumRows(0);
+            for(int pos=0; pos<listaDeClientes.size();pos++){
+                String[] saida = new String[2];
+                Cliente aux = listaDeClientes.get(pos);
+                saida[0] = aux.getNome();
+                saida[1] = aux.getCnh();
+                modelCliente.addRow(saida);
+            }
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(this, erro.getMessage());
+        }
     }
 
     /**
