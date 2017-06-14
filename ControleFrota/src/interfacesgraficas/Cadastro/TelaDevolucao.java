@@ -9,12 +9,12 @@ package interfacesgraficas.Cadastro;
  *
  * @author aluno
  */
-public class TelaDevolução extends javax.swing.JInternalFrame {
+public class TelaDevolucao extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form TelaDevolução
      */
-    public TelaDevolução() {
+    public TelaDevolucao() {
         initComponents();
     }
 
