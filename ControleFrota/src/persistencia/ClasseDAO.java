@@ -165,12 +165,52 @@ public class ClasseDAO implements CRUD{
 
     @Override
     public ArrayList<Cliente> recuperarCliente() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<Cliente> listaDeCliente = new ArrayList<>();
+        Cliente objCliente = null;            
+            
+    FileReader frModelo = new FileReader(arquivoVeiculo);
+    BufferedReader br = new BufferedReader(frModelo);
+    String linha = "";
+    
+    while((linha=br.readLine())!= null){
+        String vector[] = linha.split(";");
+        
+        objCliente = new Cliente();
+        objCliente.setNome(vector[0]);
+        objCliente.setCnh(vector[1]);
+        objCliente.setEmail(vector[2]);
+        objCliente.setTelefone(vector[3]);   
+        
+       listaDeCliente.add(objCliente);
+    }
+    br.close();
+    return listaDeCliente;
     }
 
     @Override
     public ArrayList<Veiculo> recuperarVeiculo() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<Veiculo> listaDeVeiculo = new ArrayList<>();
+        Veiculo objVeiculo = null;            
+            
+    FileReader frModelo = new FileReader(arquivoVeiculo);
+    BufferedReader br = new BufferedReader(frModelo);
+    String linha = "";
+    
+    while((linha=br.readLine())!= null){
+        String vector[] = linha.split(";");
+        
+        objVeiculo = new Veiculo();
+        objVeiculo.setPlaca(vector[0]);
+        objVeiculo.setMarca(vector[1]);
+        objVeiculo.setModelo(vector[2]);
+        objVeiculo.setAno(Integer.parseInt(vector[3]));
+        objVeiculo.setCor(vector[4]);       
+        objVeiculo.setSituacao(vector[5]);    
+        
+       listaDeVeiculo.add(objVeiculo);
+    }
+    br.close();
+    return listaDeVeiculo;
     }
     @Override
     public void excluirMarca(String descricao) throws Exception {
@@ -189,31 +229,8 @@ public class ClasseDAO implements CRUD{
         } catch (Exception erro) {
             throw erro;
         }
-  
-//        boolean igualdade = false;
-//        Marca objMarca = (Marca)(objeto);
-//        String aux = objMarca.getId()+";"+objMarca.getDescricao()+"\n";
-//        
-//        FileWriter fileMarca = null;
-//        BufferedWriter bufferMarca = null;
-//        fileMarca = new FileWriter(arquivoMarca, true);
-//        bufferMarca = new BufferedWriter(fileMarca);
-//        
-//        FileReader frMarca = new FileReader(arquivoMarca);
-//        BufferedReader brMarca = new BufferedReader(frMarca);
-//        
-//        String linha = "";
-//        while((linha=brMarca.readLine())!= null){
-//          if(aux==linha){
-//              
-//          }  
-//        }
-        
         
 
     }
-
-
-
     
 }
