@@ -5,7 +5,14 @@
  */
 package interfacesgraficas.Consulta;
 
-import interfacesgraficas.Cadastro.CadastroModeloTeste;
+import classededados.Modelo;
+import interfacesgraficas.Cadastro.CadastroModelo;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import persistencia.ClasseDAO;
 
 /**
  *
@@ -18,6 +25,25 @@ public class TelaConsultaModelo extends javax.swing.JInternalFrame {
      */
     public TelaConsultaModelo() {
         initComponents();
+        try {
+            ArrayList<Modelo> listaDeModelos;
+            ClasseDAO dao = new ClasseDAO();
+            listaDeModelos = dao.recuperarModelo();
+            DefaultTableModel model = (DefaultTableModel) jTableModelo.getModel();
+            
+            model.setNumRows(0);
+            for(int pos=0; pos<listaDeModelos.size();pos++){
+                String[] saida = new String[4];
+                Modelo aux = listaDeModelos.get(pos);
+                saida[0] = String.valueOf(aux.getId());
+                saida[1] = aux.getDescricao();
+                saida[2] = aux.getMarca();
+                saida[3] = aux.getTipo();
+                model.addRow(saida);
+            }         
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(this, erro.getMessage());
+        }
     }
 
     /**
@@ -86,7 +112,7 @@ public class TelaConsultaModelo extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Código", "Modelo", "Marca", "Tipo"
             }
         ));
         jScrollPane1.setViewportView(jTableModelo);
@@ -147,8 +173,14 @@ public class TelaConsultaModelo extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        CadastroModeloTeste tela = new CadastroModeloTeste();
-        tela.setVisible(true);
+        CadastroModelo tela;
+        try {
+            tela = new CadastroModelo();
+            tela.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(TelaConsultaModelo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

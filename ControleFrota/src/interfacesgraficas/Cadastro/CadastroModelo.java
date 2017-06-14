@@ -95,6 +95,7 @@ public class CadastroModelo extends javax.swing.JFrame {
         jLabel3.setText("Nome*");
 
         jButton1.setBackground(new java.awt.Color(0, 136, 204));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Salvar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -15,9 +15,10 @@ public class GeradorDeId {
     private int idModelo = 0;
     
     private String m = "C:\\Users\\aluno\\Documents\\NetBeansProjects\\ControleFrota\\ControleFrota\\src\\arquivo";
+    private String mc = "C:\\Users\\Pedro\\Documents\\NetBeansProjects\\ControleFrota\\ControleFrota\\src\\arquivo";
     private String t = "C:\\Users\\aluno\\Documents\\VPProjects\\ControleFrota\\ControleFrota\\src\\arquivo";
     private String d = "";
-    String arquivoIds = m+"\\Ids.csv";
+    String arquivoIds = mc+"\\Ids.csv";
     
     FileReader frIds = null;
     BufferedReader brIds = null;

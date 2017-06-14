@@ -13,6 +13,15 @@ public class Marca {
     private int id = 0;
     private String descricao = "";
 
+    public Marca() {
+    }
+    public Marca(int id, String descricao) {
+        this.descricao = descricao;
+        this.id = id;
+    }
+    
+    
+
     public int getId() {
         return id;
     }

@@ -5,7 +5,6 @@
  */
 package interfacesgraficas;
 
-import interfacesgraficas.Cadastro.TelaModelo;
 import interfacesgraficas.Consulta.TelaConsultaCliente;
 import interfacesgraficas.Consulta.TelaConsultaMarca;
 import interfacesgraficas.Consulta.TelaConsultaModelo;
@@ -20,7 +19,11 @@ import javax.swing.JPanel;
  * @author Pedro
  */
 public class TelaPrincipal extends javax.swing.JFrame {
-    TelaConsultaMarca tela = null;
+    TelaConsultaMarca telaMarca = new TelaConsultaMarca();
+    TelaConsultaVeiculo telaVeiculo = new TelaConsultaVeiculo();
+    TelaConsultaModelo telaModelo = new TelaConsultaModelo();
+    TelaConsultaCliente telaCliente = new TelaConsultaCliente();
+    
     /**
      * Creates new form TelaPrincipal
      */
@@ -223,36 +226,39 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMarcaActionPerformed
-        tela = new TelaConsultaMarca();
-        tela.dispose();
-        tela.setLocation(182, 36);
-       /*this.*/ this.add(tela);
-        tela.show();
-//        TelaMarca tela = new TelaMarca();
-//       /*this.*/ this.add(tela);
-//        //tela.setAlignmentX(CENTER);
-//        tela.show();
+        telaMarca.setLocation(182, 36);
+       /*this.*/ this.add(telaMarca);
+        telaMarca.show();
+        telaCliente.dispose();
+        telaVeiculo.dispose();
+        telaModelo.dispose();
     }//GEN-LAST:event_jButtonMarcaActionPerformed
 
     private void jButtonModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModeloActionPerformed
-        TelaConsultaModelo tela = new TelaConsultaModelo();
-        tela.setLocation(182, 36);
-       /*this.*/ this.add(tela);
-        tela.show();
+        telaModelo.setLocation(182, 36);
+       /*this.*/ this.add(telaModelo);
+        telaModelo.show();
+        telaCliente.dispose();
+        telaVeiculo.dispose();
+        telaMarca.dispose();
     }//GEN-LAST:event_jButtonModeloActionPerformed
 
     private void jButtonClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonClienteActionPerformed
-        TelaConsultaCliente tela = new TelaConsultaCliente();
-        tela.setLocation(182, 36);
-       /*this.*/ this.add(tela);
-        tela.show();
+        telaCliente.setLocation(182, 36);
+       /*this.*/ this.add(telaCliente);
+        telaCliente.show();
+        telaVeiculo.dispose();
+        telaMarca.dispose();
+        telaModelo.dispose();
     }//GEN-LAST:event_jButtonClienteActionPerformed
 
     private void jButtonVeiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVeiculoActionPerformed
-        TelaConsultaVeiculo tela = new TelaConsultaVeiculo();
-        tela.setLocation(182, 36);
-       /*this.*/ this.add(tela);
-        tela.show();
+        telaVeiculo.setLocation(182, 36);
+       /*this.*/ this.add(telaVeiculo);
+        telaVeiculo.show();
+        telaCliente.dispose();
+        telaMarca.dispose();
+        telaModelo.dispose();
     }//GEN-LAST:event_jButtonVeiculoActionPerformed
 
     private void jLabelSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelSairMouseClicked

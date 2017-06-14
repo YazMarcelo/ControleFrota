@@ -18,7 +18,7 @@ public class Modelo {
     //private String tipo = "";
 
     public Modelo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
     
     public enum Tipo {
