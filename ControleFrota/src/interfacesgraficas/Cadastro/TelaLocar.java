@@ -94,6 +94,7 @@ public class TelaLocar extends javax.swing.JInternalFrame {
         ));
         jScrollPane2.setViewportView(jTable2);
 
+        jButtonLocar.setForeground(new java.awt.Color(0, 0, 255));
         jButtonLocar.setText("LOCAR");
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());

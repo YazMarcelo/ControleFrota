@@ -244,6 +244,8 @@ public class TelaConsultaModelo extends javax.swing.JInternalFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         if (jTableModelo.getSelectedRow() >= 0){
+            int resposta  = JOptionPane.showConfirmDialog(rootPane, "Excluir Modelo?");
+            if(resposta == JOptionPane.YES_OPTION){
         try {
             
             String descricao = (String)jTableModelo.getValueAt(jTableModelo.getSelectedRow(), 0);
@@ -255,6 +257,7 @@ public class TelaConsultaModelo extends javax.swing.JInternalFrame {
         } catch (Exception ex) {
             Logger.getLogger(TelaConsultaMarca.class.getName()).log(Level.SEVERE, null, ex);
         }
+            }
         }else{
             JOptionPane.showMessageDialog(null, "Selecione uma linha!");
         }

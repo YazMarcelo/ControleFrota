@@ -282,6 +282,8 @@ public class TelaConsultaVeiculo extends javax.swing.JInternalFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         if (jTableVeiculo.getSelectedRow() >= 0){
+            int resposta  = JOptionPane.showConfirmDialog(rootPane, "Excluir Veiculo?");
+            if(resposta == JOptionPane.YES_OPTION){
         try {
             
             String placa = (String)jTableVeiculo.getValueAt(jTableVeiculo.getSelectedRow(), 0);
@@ -293,6 +295,7 @@ public class TelaConsultaVeiculo extends javax.swing.JInternalFrame {
         } catch (Exception ex) {
             Logger.getLogger(TelaConsultaMarca.class.getName()).log(Level.SEVERE, null, ex);
         }
+            }
         }else{
             JOptionPane.showMessageDialog(null, "Selecione uma linha!");
         } 

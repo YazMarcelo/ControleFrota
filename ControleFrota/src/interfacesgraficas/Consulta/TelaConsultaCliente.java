@@ -283,6 +283,8 @@ public class TelaConsultaCliente extends javax.swing.JInternalFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         if (jTableCliente.getSelectedRow() >= 0){
+            int resposta  = JOptionPane.showConfirmDialog(rootPane, "Excluir Cliente?");
+            if(resposta == JOptionPane.YES_OPTION){
         try {
             
             String cnh = (String)jTableCliente.getValueAt(jTableCliente.getSelectedRow(), 1);
@@ -294,6 +296,7 @@ public class TelaConsultaCliente extends javax.swing.JInternalFrame {
         } catch (Exception ex) {
             Logger.getLogger(TelaConsultaMarca.class.getName()).log(Level.SEVERE, null, ex);
         }
+            }
         }else{
             JOptionPane.showMessageDialog(null, "Selecione uma linha!");
         } 

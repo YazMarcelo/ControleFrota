@@ -296,6 +296,8 @@ public class TelaConsultaMarca extends javax.swing.JInternalFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         if (jTableMarca.getSelectedRow() >= 0){
+            int resposta  = JOptionPane.showConfirmDialog(rootPane, "Excluir Marca?");
+            if(resposta == JOptionPane.YES_OPTION){
         try {
             
             String descricao = (String)jTableMarca.getValueAt(jTableMarca.getSelectedRow(), 0);
@@ -307,6 +309,7 @@ public class TelaConsultaMarca extends javax.swing.JInternalFrame {
         } catch (Exception ex) {
             Logger.getLogger(TelaConsultaMarca.class.getName()).log(Level.SEVERE, null, ex);
         }
+            }
         }else{
             JOptionPane.showMessageDialog(null, "Selecione uma linha!");
         }       
