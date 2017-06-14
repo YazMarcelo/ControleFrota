@@ -183,7 +183,11 @@ public class CadastroCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if(!(jTextFieldNome.getText().equals(""))){
+        if(((jFormattedTextFieldCNH.getText().equals("           ")))||((jTextFieldNome.getText().equals("")))||
+           ((jTextFieldEmail.getText().equals("")))||((jFormattedTextFieldTef.getText().equals("(  )    -    ")))){
+                    JOptionPane.showMessageDialog(rootPane, "Campos obrigatórios não preenchidos!");
+        }else{
+             
            int resposta  = JOptionPane.showConfirmDialog(rootPane, "Confirmar Cadastro?");
            if(resposta == JOptionPane.YES_OPTION){
             try {
@@ -191,7 +195,6 @@ public class CadastroCliente extends javax.swing.JFrame {
                 GeradorDeId idCliente = new GeradorDeId();
                 Cliente obj = new Cliente();
                 
-                obj.setId(idCliente.getIdCliente());
                 obj.setCnh(jFormattedTextFieldCNH.getText());
                 obj.setEmail(jTextFieldEmail.getText());
                 obj.setNome(jTextFieldNome.getText());
@@ -201,15 +204,17 @@ public class CadastroCliente extends javax.swing.JFrame {
             ClasseDAO dao = new ClasseDAO();
             dao.incluirCliente(obj);
             JOptionPane.showMessageDialog(rootPane, "Cadastro efetuado com sucesso!");
-            idCliente.finalize();   
+            idCliente.finalize();  
+        jTextFieldNome.setText("");
+        jFormattedTextFieldCNH.setText("");
+        jTextFieldEmail.setText("");
+        jFormattedTextFieldTef.setText("");
                                    
         } catch (Exception e) {
         }
-        } 
-        }else{
-        JOptionPane.showMessageDialog(rootPane, "Campos obrigatórios não preenchidos!");
         }
-        jTextFieldNome.setText("");
+        }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

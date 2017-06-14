@@ -4,6 +4,8 @@ public class Cliente {
     private String nome = "";
     private String cpf = "";
     private String cnh = "";
+    private String email = "";
+    private String telefone = "";
 
     public String getNome() {
         return nome;
@@ -27,6 +29,22 @@ public class Cliente {
 
     public void setCnh(String cnh) {
         this.cnh = cnh;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
     
     

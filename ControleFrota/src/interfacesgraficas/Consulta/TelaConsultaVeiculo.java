@@ -19,6 +19,8 @@ public class TelaConsultaVeiculo extends javax.swing.JInternalFrame {
      */
     public TelaConsultaVeiculo() {
         initComponents();
+        
+        
     }
 
     /**
@@ -87,10 +89,25 @@ public class TelaConsultaVeiculo extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Placa", "Marca", "Modelo", "Cor", "Situação"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTableVeiculo);
+        if (jTableVeiculo.getColumnModel().getColumnCount() > 0) {
+            jTableVeiculo.getColumnModel().getColumn(0).setResizable(false);
+            jTableVeiculo.getColumnModel().getColumn(1).setResizable(false);
+            jTableVeiculo.getColumnModel().getColumn(2).setResizable(false);
+            jTableVeiculo.getColumnModel().getColumn(3).setResizable(false);
+            jTableVeiculo.getColumnModel().getColumn(4).setResizable(false);
+        }
 
         jTextFieldPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

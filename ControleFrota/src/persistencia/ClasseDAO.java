@@ -25,13 +25,14 @@ import javax.swing.JOptionPane;
 public class ClasseDAO implements CRUD{
     private String m = "C:\\Users\\aluno\\Documents\\NetBeansProjects\\ControleFrota\\ControleFrota\\src\\arquivo";
     private String mc = "C:\\Users\\Pedro\\Documents\\NetBeansProjects\\ControleFrota\\ControleFrota\\src\\arquivo";
+    private String mt = "C:\\Users\\selecta\\Documents\\NetBeansProjects\\ControleFrota\\ControleFrota\\src\\arquivo";
     private String t = "C:\\Users\\aluno\\Documents\\VPProjects\\ControleFrota\\ControleFrota\\src\\arquivo";
     private String d = "";
     
-    private String arquivoMarca = mc+"\\Marca.csv";
-    private String arquivoModelo = "C:\\Users\\Pedro\\Documents\\NetBeansProjects\\ControleFrota\\ControleFrota\\src\\arquivo\\Modelo.csv";
-    private String arquivoVeiculo = mc+"\\Veiculos.csv";
-    private String arquivoCliente = mc+"\\Cliente.csv";
+    private String arquivoMarca = mt+"\\Marca.csv";
+    private String arquivoModelo = mt+"\\Modelo.csv";
+    private String arquivoVeiculo = mt+"\\Veiculos.csv";
+    private String arquivoCliente = mt+"\\Cliente.csv";
     
     @Override
     public void incluirMarca(Object objeto) throws Exception {
