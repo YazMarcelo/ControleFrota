@@ -8,6 +8,7 @@ package interfacesgraficas.Cadastro;
 import classededados.GeradorDeId;
 import classededados.Marca;
 import classededados.Modelo;
+import classededados.Modelo.Tipo;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -20,14 +21,14 @@ import persistencia.ClasseDAO;
  *
  * @author aluno
  */
-public class CadastroModelo extends javax.swing.JFrame {
+public class CadastroModeloTeste extends javax.swing.JFrame {
 
     /**
      * Creates new form CadastroMarca
      */
-    public CadastroModelo() throws Exception {
+    public CadastroModeloTeste() throws Exception {
         initComponents();
-        ArrayList<Marca> listaDeMarcas;
+            ArrayList<Marca> listaDeMarcas;
             ArrayList<String> marcas = new ArrayList<>();
             ClasseDAO agenda = new ClasseDAO();
             listaDeMarcas = agenda.recuperarMarca();
@@ -38,7 +39,8 @@ public class CadastroModelo extends javax.swing.JFrame {
                 marcas.add(String.valueOf(saida));
             }
             jComboBoxMarca.setModel(new DefaultComboBoxModel(new Vector(marcas)));
-            jComboBoxTipo.setModel(new DefaultComboBoxModel(Modelo.Tipo.values()));
+            jComboBoxTipo.setModel(new DefaultComboBoxModel(Tipo.values()));
+
     }
 
     /**
@@ -154,7 +156,7 @@ public class CadastroModelo extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(19, 19, 19))
         );
@@ -176,7 +178,31 @@ public class CadastroModelo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-            
+        if(!(jTextField1.getText().equals(""))){
+           int resposta  = JOptionPane.showConfirmDialog(rootPane, "Confirmar Cadastro?");
+           if(resposta == JOptionPane.YES_OPTION){
+            try {
+
+                GeradorDeId idModelo = new GeradorDeId();
+                Modelo obj = new Modelo();
+                
+                obj.setId(idModelo.getIdModelo());
+                obj.setDescricao(jTextField1.getText());
+                obj.setMarca((jComboBoxMarca.getSelectedItem().toString()));
+                obj.setTipo((jComboBoxTipo.getSelectedItem()));
+                
+            ClasseDAO categoria = new ClasseDAO();
+            categoria.incluirModelo(obj);
+            JOptionPane.showMessageDialog(rootPane, "Cadastro efetuado com sucesso!");
+            idModelo.finalize();
+        } catch (Exception e) {
+             JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        } 
+        }else{
+        JOptionPane.showMessageDialog(rootPane, "Campos obrigatórios não preenchidos!");
+        }
+        jTextField1.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -196,14 +222,16 @@ public class CadastroModelo extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CadastroModelo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroModeloTeste.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CadastroModelo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroModeloTeste.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CadastroModelo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroModeloTeste.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CadastroModelo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroModeloTeste.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
@@ -211,9 +239,9 @@ public class CadastroModelo extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new CadastroModelo().setVisible(true);
+                    new CadastroModeloTeste().setVisible(true);
                 } catch (Exception ex) {
-                    Logger.getLogger(CadastroModelo.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(CadastroModeloTeste.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
