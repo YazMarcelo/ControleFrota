@@ -380,7 +380,7 @@ public class TelaLocar extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextFieldPesquisarMouseClicked
 
     private void jTextFieldPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPesquisarActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_jTextFieldPesquisarActionPerformed
 
     private void jTextFieldPesquisarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldPesquisarKeyReleased
