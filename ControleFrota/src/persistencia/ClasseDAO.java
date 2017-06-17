@@ -15,6 +15,8 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import javax.swing.JOptionPane;
 
 
@@ -29,10 +31,10 @@ public class ClasseDAO implements CRUD{
     private String t = "C:\\Users\\aluno\\Documents\\VPProjects\\ControleFrota\\ControleFrota\\src\\arquivo";
     private String d = "";
     
-    private String arquivoMarca = m+"\\Marca.csv";
-    private String arquivoModelo = m+"\\Modelo.csv";
-    private String arquivoVeiculo = m+"\\Veiculos.csv";
-    private String arquivoCliente = m+"\\Cliente.csv";
+    private String arquivoMarca = mc+"\\Marca.csv";
+    private String arquivoModelo = mc+"\\Modelo.csv";
+    private String arquivoVeiculo = mc+"\\Veiculos.csv";
+    private String arquivoCliente = mc+"\\Cliente.csv";
     
     @Override
     public void incluirMarca(Object objeto) throws Exception {
@@ -136,6 +138,13 @@ public class ClasseDAO implements CRUD{
         
        listaDeMarca.add(objMarca);
     }
+                Collections.sort(listaDeMarca, new Comparator<Marca>() {
+                @Override
+                public int compare(Marca o1, Marca o2) {
+                    return String.valueOf(o1.getId()).compareTo(String.valueOf(o2.getId()));
+                }
+            });
+    
     br.close();
     return listaDeMarca;
     }
@@ -213,6 +222,7 @@ public class ClasseDAO implements CRUD{
     br.close();
     return listaDeVeiculo;
     }
+    
     @Override
     public void excluirMarca(String id) throws Exception {
         Marca objMarca;
@@ -286,6 +296,12 @@ public class ClasseDAO implements CRUD{
         } catch (Exception erro) {
             throw erro;
         }
+    }
+
+    @Override
+    public void alterarMarca(Object objeto, String id) throws Exception {
+        excluirMarca(id);
+        incluirMarca(objeto);
     }
     
 }

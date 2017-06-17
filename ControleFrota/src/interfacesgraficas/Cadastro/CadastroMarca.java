@@ -7,20 +7,24 @@ package interfacesgraficas.Cadastro;
 
 import classededados.GeradorDeId;
 import classededados.Marca;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import persistencia.ClasseDAO;
+
 
 /**
  *
  * @author aluno
  */
 public class CadastroMarca extends javax.swing.JFrame {
-
+    String idAlteracao;
     /**
      * Creates new form CadastroMarca
      */
     public CadastroMarca() {
         initComponents();
+        
     }
 
     /**
@@ -34,9 +38,9 @@ public class CadastroMarca extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabelAcao = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTextFieldDescricao = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jButtonSalvar = new javax.swing.JButton();
 
@@ -46,8 +50,8 @@ public class CadastroMarca extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setText("Nova Marca");
+        jLabelAcao.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabelAcao.setText("Nova Marca");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -55,14 +59,14 @@ public class CadastroMarca extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addComponent(jLabel1)
+                .addComponent(jLabelAcao)
                 .addContainerGap(245, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(jLabel1)
+                .addComponent(jLabelAcao)
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
@@ -98,7 +102,7 @@ public class CadastroMarca extends javax.swing.JFrame {
                         .addGap(86, 86, 86)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTextFieldDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -109,7 +113,7 @@ public class CadastroMarca extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addGap(32, 32, 32)
                 .addComponent(jButtonSalvar)
@@ -131,8 +135,8 @@ public class CadastroMarca extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
-        
-        if(!(jTextField1.getText().equals(""))){
+            if(!(jTextFieldDescricao.getText().equals(""))){
+            if((jLabelAcao.getText()).equals("Nova Marca")){
            int resposta  = JOptionPane.showConfirmDialog(rootPane, "Confirmar Cadastro?");
            if(resposta == JOptionPane.YES_OPTION){
             try {
@@ -141,20 +145,39 @@ public class CadastroMarca extends javax.swing.JFrame {
                 Marca obj = new Marca();
                 
                 obj.setId(idMarca.getIdMarca());
-                obj.setDescricao(jTextField1.getText());
+                obj.setDescricao(jTextFieldDescricao.getText());
                 
             ClasseDAO categoria = new ClasseDAO();
             categoria.incluirMarca(obj);
             JOptionPane.showMessageDialog(rootPane, "Cadastro efetuado com sucesso!");
             idMarca.finalize();
-                                   
+                                
         } catch (Exception e) {
         }
-        } 
+        }
+        }else{
+           int resposta  = JOptionPane.showConfirmDialog(rootPane, "Confirmar Alteração?");
+           if(resposta == JOptionPane.YES_OPTION){
+                try {
+                Marca obj = new Marca();     
+                obj.setId(Integer.parseInt(idAlteracao));
+                obj.setDescricao(jTextFieldDescricao.getText());
+                
+                ClasseDAO dao = new ClasseDAO();
+                dao.alterarMarca(obj, idAlteracao);
+                JOptionPane.showMessageDialog(rootPane, "Alteração efetuada com sucesso!");
+                } catch (Exception e) {
+                }
+           }
+                 
+        }
+            jTextFieldDescricao.setText(""); 
         }else{
         JOptionPane.showMessageDialog(rootPane, "Campos obrigatórios não preenchidos!");
         }
-        jTextField1.setText("");
+        
+        
+        
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     /**
@@ -194,11 +217,27 @@ public class CadastroMarca extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonSalvar;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabelAcao;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextFieldDescricao;
     // End of variables declaration//GEN-END:variables
+    public void alteracao(String acao, String id, String descricao) throws Exception{
+            jLabelAcao.setText(acao);
+            ArrayList<Marca> listaDeMarcas;
+            ClasseDAO agenda = new ClasseDAO();
+            listaDeMarcas = agenda.recuperarMarca();            
+            for(int pos=0; pos<listaDeMarcas.size();pos++){
+                Marca aux = listaDeMarcas.get(pos);
+                
+                if(id.equals(String.valueOf(aux.getId()))){
+                    this.idAlteracao = String.valueOf(aux.getId());
+                jTextFieldDescricao.setText(aux.getDescricao());
+                }
+            }
+                  
+    }
+    
 }

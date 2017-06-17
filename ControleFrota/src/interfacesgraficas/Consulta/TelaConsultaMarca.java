@@ -13,8 +13,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static javafx.scene.input.KeyCode.T;
 import static javax.swing.GroupLayout.Alignment.CENTER;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
@@ -43,7 +47,8 @@ public class TelaConsultaMarca extends javax.swing.JInternalFrame {
                 saida[0] = String.valueOf(aux.getId());
                 saida[1] = aux.getDescricao();
                 model.addRow(saida);
-            }         
+            }
+            
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(this, erro.getMessage());
         }
@@ -61,7 +66,7 @@ public class TelaConsultaMarca extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableMarca = new javax.swing.JTable();
         jTextFieldPesquisar = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        jButtonAlterar = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -154,13 +159,13 @@ public class TelaConsultaMarca extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(0, 136, 204));
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Alterar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonAlterar.setBackground(new java.awt.Color(0, 136, 204));
+        jButtonAlterar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButtonAlterar.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonAlterar.setText("Alterar");
+        jButtonAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonAlterarActionPerformed(evt);
             }
         });
 
@@ -203,7 +208,7 @@ public class TelaConsultaMarca extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1070, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jButton2)
+                            .addComponent(jButtonAlterar)
                             .addGap(15, 15, 15)
                             .addComponent(jButton4)
                             .addGap(18, 18, 18)
@@ -223,7 +228,7 @@ public class TelaConsultaMarca extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2)
+                    .addComponent(jButtonAlterar)
                     .addComponent(jButton3)
                     .addComponent(jButton4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -300,9 +305,9 @@ public class TelaConsultaMarca extends javax.swing.JInternalFrame {
             if(resposta == JOptionPane.YES_OPTION){
         try {
             
-            String descricao = (String)jTableMarca.getValueAt(jTableMarca.getSelectedRow(), 0);
+            String id = (String)jTableMarca.getValueAt(jTableMarca.getSelectedRow(), 0);
             ClasseDAO dao = new ClasseDAO();
-            dao.excluirMarca(descricao);
+            dao.excluirMarca(id);
             model.removeRow(jTableMarca.getSelectedRow());
             jTableMarca.setModel(model);
         
@@ -315,9 +320,17 @@ public class TelaConsultaMarca extends javax.swing.JInternalFrame {
         }       
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        CadastroMarca tela = new CadastroMarca();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void jButtonAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAlterarActionPerformed
+        try {
+        CadastroMarca tela= new CadastroMarca();
+            tela.alteracao("Alterar Marca",(String)jTableMarca.getValueAt(jTableMarca.getSelectedRow(), 0),
+                          (String)jTableMarca.getValueAt(jTableMarca.getSelectedRow(), 1));
+            tela.setVisible(true);
+            
+        } catch (Exception ex) {
+            Logger.getLogger(TelaConsultaMarca.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButtonAlterarActionPerformed
 
     private void jTextFieldPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPesquisarActionPerformed
         // TODO add your handling code here:
@@ -326,9 +339,9 @@ public class TelaConsultaMarca extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButtonAlterar;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

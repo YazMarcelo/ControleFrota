@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public interface CRUD {
     void incluirMarca(Object objeto)throws Exception;
     void excluirMarca(String id)throws Exception;
+    void alterarMarca(Object objeto, String id)throws Exception;
     void excluirVeiculo(String placa)throws Exception;
     void excluirModelo(String id)throws Exception;
     void excluirCliente(String cnh)throws Exception;
