@@ -7,24 +7,30 @@ package interfacesgraficas.Cadastro;
 
 import classededados.GeradorDeId;
 import classededados.Marca;
+import interfacesgraficas.Consulta.TelaConsultaMarca;
+import interfacesgraficas.TelaPrincipal;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import persistencia.ClasseDAO;
-
 
 /**
  *
  * @author aluno
  */
 public class CadastroMarca extends javax.swing.JFrame {
+
     String idAlteracao;
+    String descricao;
+    private boolean terminado;
+
     /**
      * Creates new form CadastroMarca
      */
     public CadastroMarca() {
         initComponents();
-        
+
     }
 
     /**
@@ -135,49 +141,61 @@ public class CadastroMarca extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
-            if(!(jTextFieldDescricao.getText().equals(""))){
-            if((jLabelAcao.getText()).equals("Nova Marca")){
-           int resposta  = JOptionPane.showConfirmDialog(rootPane, "Confirmar Cadastro?");
-           if(resposta == JOptionPane.YES_OPTION){
-            try {
+        descricao = jTextFieldDescricao.getText();
+        if (!(jTextFieldDescricao.getText().equals(""))) {
+            if ((jLabelAcao.getText()).equals("Nova Marca")) {
+                int resposta = JOptionPane.showConfirmDialog(rootPane, "Confirmar Cadastro?");
+                if (resposta == JOptionPane.YES_OPTION) {
+                    try {
+                        GeradorDeId idMarca = new GeradorDeId();
+                        Marca obj = new Marca();
 
-                GeradorDeId idMarca = new GeradorDeId();
-                Marca obj = new Marca();
-                
-                obj.setId(idMarca.getIdMarca());
-                obj.setDescricao(jTextFieldDescricao.getText());
-                
-            ClasseDAO categoria = new ClasseDAO();
-            categoria.incluirMarca(obj);
-            JOptionPane.showMessageDialog(rootPane, "Cadastro efetuado com sucesso!");
-            idMarca.finalize();
-                                
-        } catch (Exception e) {
-        }
-        }
-        }else{
-           int resposta  = JOptionPane.showConfirmDialog(rootPane, "Confirmar Alteração?");
-           if(resposta == JOptionPane.YES_OPTION){
-                try {
-                Marca obj = new Marca();     
-                obj.setId(Integer.parseInt(idAlteracao));
-                obj.setDescricao(jTextFieldDescricao.getText());
-                
-                ClasseDAO dao = new ClasseDAO();
-                dao.alterarMarca(obj, idAlteracao);
-                JOptionPane.showMessageDialog(rootPane, "Alteração efetuada com sucesso!");
-                } catch (Exception e) {
+                        obj.setId(idMarca.getIdMarca());
+                        obj.setDescricao(jTextFieldDescricao.getText());
+
+                        ClasseDAO categoria = new ClasseDAO();
+                        categoria.incluirMarca(obj);
+                        JOptionPane.showMessageDialog(rootPane, "Cadastro efetuado com sucesso!");
+                        idMarca.finalize();
+                        jTextFieldDescricao.setText("");
+
+                    } catch (Exception e) {
+                    }
+                } else if (resposta == JOptionPane.NO_OPTION) {
+                    jTextFieldDescricao.setText(descricao);
+                } else {
+                    this.dispose();
                 }
-           }
-                 
+            } else {
+                int resposta = JOptionPane.showConfirmDialog(rootPane, "Confirmar Alteração?");
+                if (resposta == JOptionPane.YES_OPTION) {
+                    try {
+                        Marca obj = new Marca();
+                        obj.setId(Integer.parseInt(idAlteracao));
+                        obj.setDescricao(descricao);
+
+                        ClasseDAO dao = new ClasseDAO();
+                        dao.alterarMarca(obj, idAlteracao);
+                        JOptionPane.showMessageDialog(rootPane, "Alteração efetuada com sucesso!");
+                        atualizarJTable();
+                        ClasseDAO daoMarca = new ClasseDAO();                      
+                        terminado = true;
+                        jTextFieldDescricao.setEnabled(false);
+                    } catch (Exception e) {
+                    }
+                } else if (resposta == JOptionPane.NO_OPTION) {
+                    jTextFieldDescricao.setText(descricao);
+                } else {
+                    this.dispose();
+                }
+
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Campos obrigatórios não preenchidos!");
         }
-            jTextFieldDescricao.setText(""); 
-        }else{
-        JOptionPane.showMessageDialog(rootPane, "Campos obrigatórios não preenchidos!");
-        }
-        
-        
-        
+
+
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     /**
@@ -224,20 +242,44 @@ public class CadastroMarca extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField jTextFieldDescricao;
     // End of variables declaration//GEN-END:variables
-    public void alteracao(String acao, String id, String descricao) throws Exception{
-            jLabelAcao.setText(acao);
+    public void alteracao(String acao, String id, String descricao) throws Exception {
+        jLabelAcao.setText(acao);
+        ArrayList<Marca> listaDeMarcas;
+        ClasseDAO agenda = new ClasseDAO();
+        listaDeMarcas = agenda.recuperarMarca();
+        for (int pos = 0; pos < listaDeMarcas.size(); pos++) {
+            Marca aux = listaDeMarcas.get(pos);
+
+            if (id.equals(String.valueOf(aux.getId()))) {
+                this.idAlteracao = String.valueOf(aux.getId());
+                jTextFieldDescricao.setText(aux.getDescricao());
+            }
+        }
+
+    }
+
+    public boolean isTerminado() {
+        return terminado;
+    }
+
+    public void atualizarJTable() {
+        try {
             ArrayList<Marca> listaDeMarcas;
             ClasseDAO agenda = new ClasseDAO();
-            listaDeMarcas = agenda.recuperarMarca();            
-            for(int pos=0; pos<listaDeMarcas.size();pos++){
+            listaDeMarcas = agenda.recuperarMarca();
+            new TelaConsultaMarca().model = (DefaultTableModel) new TelaConsultaMarca().jTableMarca.getModel();
+
+            new TelaConsultaMarca().model.setNumRows(0);
+            for (int pos = 0; pos < listaDeMarcas.size(); pos++) {
+                String[] saida = new String[2];
                 Marca aux = listaDeMarcas.get(pos);
-                
-                if(id.equals(String.valueOf(aux.getId()))){
-                    this.idAlteracao = String.valueOf(aux.getId());
-                jTextFieldDescricao.setText(aux.getDescricao());
-                }
+                saida[0] = String.valueOf(aux.getId());
+                saida[1] = aux.getDescricao();
+                new TelaConsultaMarca().model.addRow(saida);
             }
-                  
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(this, erro.getMessage());
+        }
     }
-    
+
 }

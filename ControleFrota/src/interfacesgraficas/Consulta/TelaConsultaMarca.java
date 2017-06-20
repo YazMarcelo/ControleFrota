@@ -12,6 +12,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -20,39 +22,25 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import static javafx.scene.input.KeyCode.T;
 import static javax.swing.GroupLayout.Alignment.CENTER;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import persistencia.ClasseDAO;
 
 public class TelaConsultaMarca extends javax.swing.JInternalFrame {
-    DefaultTableModel model = null;
+    public DefaultTableModel model = null;
     TableRowSorter trs;
     TelaPrincipal desk = null;
+    CadastroMarca telaCadastroMarca= null;
     int esc;
+    
 
     public TelaConsultaMarca() {
         initComponents();
-        try {
-            ArrayList<Marca> listaDeMarcas;
-            ClasseDAO agenda = new ClasseDAO();
-            listaDeMarcas = agenda.recuperarMarca();
-            model = (DefaultTableModel) jTableMarca.getModel();
-            
-            model.setNumRows(0);
-            for(int pos=0; pos<listaDeMarcas.size();pos++){
-                String[] saida = new String[2];
-                Marca aux = listaDeMarcas.get(pos);
-                saida[0] = String.valueOf(aux.getId());
-                saida[1] = aux.getDescricao();
-                model.addRow(saida);
-            }
-            
-        } catch (Exception erro) {
-            JOptionPane.showMessageDialog(this, erro.getMessage());
-        }
-        
+        atualizar();
     }
 
     @SuppressWarnings("unchecked")
@@ -86,7 +74,7 @@ public class TelaConsultaMarca extends javax.swing.JInternalFrame {
         jButton1.setBackground(new java.awt.Color(0, 136, 204));
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("+ Novo Marca");
+        jButton1.setText("+ Nova Marca");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -275,28 +263,15 @@ public class TelaConsultaMarca extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextFieldPesquisarKeyReleased
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-            CadastroMarca tela= new CadastroMarca();
-            tela.setVisible(true);
+            telaCadastroMarca= new CadastroMarca();
+            telaCadastroMarca.setVisible(true);
+            atualizaAposFechar();
+            //atualizaAposFechar();
+            
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-         try {
-            ArrayList<Marca> listaDeMarcas;
-            ClasseDAO agenda = new ClasseDAO();
-            listaDeMarcas = agenda.recuperarMarca();
-            model = (DefaultTableModel) jTableMarca.getModel();
-            
-            model.setNumRows(0);
-            for(int pos=0; pos<listaDeMarcas.size();pos++){
-                String[] saida = new String[2];
-                Marca aux = listaDeMarcas.get(pos);
-                saida[0] = String.valueOf(aux.getId());
-                saida[1] = aux.getDescricao();
-                model.addRow(saida);
-            }         
-        } catch (Exception erro) {
-            JOptionPane.showMessageDialog(this, erro.getMessage());
-        }
+        this.atualizar();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -322,14 +297,17 @@ public class TelaConsultaMarca extends javax.swing.JInternalFrame {
 
     private void jButtonAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAlterarActionPerformed
         try {
-        CadastroMarca tela= new CadastroMarca();
-            tela.alteracao("Alterar Marca",(String)jTableMarca.getValueAt(jTableMarca.getSelectedRow(), 0),
+        telaCadastroMarca= new CadastroMarca();
+            telaCadastroMarca.alteracao("Alterar Marca",(String)jTableMarca.getValueAt(jTableMarca.getSelectedRow(), 0),
                           (String)jTableMarca.getValueAt(jTableMarca.getSelectedRow(), 1));
-            tela.setVisible(true);
+            telaCadastroMarca.setVisible(true);
             
         } catch (Exception ex) {
             Logger.getLogger(TelaConsultaMarca.class.getName()).log(Level.SEVERE, null, ex);
         }
+                    atualizaAposFechar();
+                    
+
     }//GEN-LAST:event_jButtonAlterarActionPerformed
 
     private void jTextFieldPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPesquisarActionPerformed
@@ -348,7 +326,44 @@ public class TelaConsultaMarca extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableMarca;
+    public javax.swing.JTable jTableMarca;
     private javax.swing.JTextField jTextFieldPesquisar;
     // End of variables declaration//GEN-END:variables
+public void atualizar(){
+    try {
+            ArrayList<Marca> listaDeMarcas;
+            ClasseDAO agenda = new ClasseDAO();
+            listaDeMarcas = agenda.recuperarMarca();
+            model = (DefaultTableModel) jTableMarca.getModel();
+            
+            model.setNumRows(0);
+            for(int pos=0; pos<listaDeMarcas.size();pos++){
+                String[] saida = new String[2];
+                Marca aux = listaDeMarcas.get(pos);
+                saida[0] = String.valueOf(aux.getId());
+                saida[1] = aux.getDescricao();
+                model.addRow(saida);
+            }         
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(this, erro.getMessage());
+        }
+}
+public void atualizaAposFechar(){
+    telaCadastroMarca.addWindowListener(new WindowAdapter() {
+        public void windowClosing(WindowEvent evt) {
+            atualizar();
+        }
+    });  
+}
+//public void atualizarDeOutraTela(ArrayList<Marca> alm){
+//    model = (DefaultTableModel) jTableMarca.getModel();
+//            model.setNumRows(0);
+//            for(int pos=0; pos<alm.size();pos++){
+//                String[] saida = new String[2];
+//                Marca aux = alm.get(pos);
+//                saida[0] = String.valueOf(aux.getId());
+//                saida[1] = aux.getDescricao();
+//                model.addRow(saida);
+//            }
+//}
 }

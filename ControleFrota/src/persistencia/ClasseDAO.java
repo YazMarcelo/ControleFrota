@@ -138,12 +138,14 @@ public class ClasseDAO implements CRUD{
         
        listaDeMarca.add(objMarca);
     }
-                Collections.sort(listaDeMarca, new Comparator<Marca>() {
+        Collections.sort(listaDeMarca, new Comparator<Marca>() {
                 @Override
                 public int compare(Marca o1, Marca o2) {
                     return String.valueOf(o1.getId()).compareTo(String.valueOf(o2.getId()));
                 }
             });
+
+                
     
     br.close();
     return listaDeMarca;

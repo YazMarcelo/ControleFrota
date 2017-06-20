@@ -27,6 +27,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     TelaConsultaCliente telaCliente = new TelaConsultaCliente();
     TelaLocar telaLocar = new TelaLocar();
     TelaDevolucao telaDevolucao = new TelaDevolucao();
+    boolean aberta;
     
     /**
      * Creates new form TelaPrincipal
@@ -288,6 +289,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         telaModelo.dispose();
         telaLocar.dispose();
         telaDevolucao.dispose();
+        aberta = true;
     }//GEN-LAST:event_jButtonMarcaActionPerformed
 
     private void jButtonModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModeloActionPerformed
