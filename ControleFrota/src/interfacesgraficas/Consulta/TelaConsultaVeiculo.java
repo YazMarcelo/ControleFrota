@@ -6,6 +6,7 @@
 package interfacesgraficas.Consulta;
 
 import classededados.Marca;
+import classededados.Modelo;
 import classededados.Veiculo;
 import interfacesgraficas.Cadastro.CadastroMarca;
 import interfacesgraficas.Cadastro.CadastroVeiculo;
@@ -35,19 +36,36 @@ public class TelaConsultaVeiculo extends javax.swing.JInternalFrame {
         initComponents();
         try {
             ArrayList<Veiculo> listaDeVeiculos;
+            ArrayList<Modelo> listaDeModelos;
+            ArrayList<Marca> listaDeMarcas;
+            
             ClasseDAO dao = new ClasseDAO();
+        
+            listaDeMarcas = dao.recuperarMarca();
+            listaDeModelos = dao.recuperarModelo();
             listaDeVeiculos = dao.recuperarVeiculo();
             model = (DefaultTableModel) jTableVeiculo.getModel();
             
             model.setNumRows(0);
-            for(int pos=0; pos<listaDeVeiculos.size();pos++){
-                String[] saida = new String[5];
-                Veiculo aux = listaDeVeiculos.get(pos);
+            for(int posVeiculo=0; posVeiculo<listaDeVeiculos.size();posVeiculo++){
+                String[] saida = new String[6];
+                Veiculo aux = listaDeVeiculos.get(posVeiculo);
                 saida[0] = aux.getPlaca();
-                saida[1] = aux.getMarca();
-                saida[2] = aux.getModelo();
-                saida[3] = aux.getCor();
-                saida[4] = aux.getSituacao();
+                for(int pos=0; pos<listaDeModelos.size();pos++){
+                Modelo auxMod = listaDeModelos.get(pos);
+                if((aux.getIdModelo())==(auxMod.getId())){
+                    for(int pos2=0; pos2<listaDeMarcas.size();pos2++){
+                    Marca aux2 = listaDeMarcas.get(pos2);
+                    if((auxMod.getIdMarca())==(aux2.getId())){
+                        saida[1] = aux2.getDescricao();
+                    }
+                    saida[2] = auxMod.getDescricao();
+                    saida[3] = auxMod.getTipo(); 
+                }
+                }
+                }
+                saida[4] = aux.getCor();
+                saida[5] = aux.getSituacao();
                 model.addRow(saida);
             }         
         } catch (Exception erro) {
@@ -125,11 +143,11 @@ public class TelaConsultaVeiculo extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Placa", "Marca", "Modelo", "Cor", "Situação"
+                "Placa", "Marca", "Modelo", "Tipo", "Cor", "Situação"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -143,6 +161,7 @@ public class TelaConsultaVeiculo extends javax.swing.JInternalFrame {
             jTableVeiculo.getColumnModel().getColumn(2).setResizable(false);
             jTableVeiculo.getColumnModel().getColumn(3).setResizable(false);
             jTableVeiculo.getColumnModel().getColumn(4).setResizable(false);
+            jTableVeiculo.getColumnModel().getColumn(5).setResizable(false);
         }
 
         jButton2.setBackground(new java.awt.Color(0, 136, 204));
@@ -260,21 +279,38 @@ public class TelaConsultaVeiculo extends javax.swing.JInternalFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
        try {
             ArrayList<Veiculo> listaDeVeiculos;
+            ArrayList<Modelo> listaDeModelos;
+            ArrayList<Marca> listaDeMarcas;
+            
             ClasseDAO dao = new ClasseDAO();
+        
+            listaDeMarcas = dao.recuperarMarca();
+            listaDeModelos = dao.recuperarModelo();
             listaDeVeiculos = dao.recuperarVeiculo();
             model = (DefaultTableModel) jTableVeiculo.getModel();
             
             model.setNumRows(0);
-            for(int pos=0; pos<listaDeVeiculos.size();pos++){
-                String[] saida = new String[5];
-                Veiculo aux = listaDeVeiculos.get(pos);
+            for(int posVeiculo=0; posVeiculo<listaDeVeiculos.size();posVeiculo++){
+                String[] saida = new String[6];
+                Veiculo aux = listaDeVeiculos.get(posVeiculo);
                 saida[0] = aux.getPlaca();
-                saida[1] = aux.getMarca();
-                saida[2] = aux.getModelo();
-                saida[3] = aux.getCor();
-                saida[4] = aux.getSituacao();
+                for(int pos=0; pos<listaDeModelos.size();pos++){
+                Modelo auxMod = listaDeModelos.get(pos);
+                if((aux.getIdModelo())==(auxMod.getId())){
+                    saida[2] = auxMod.getDescricao();
+                    saida[3] = auxMod.getTipo();
+                    for(int pos2=0; pos2<listaDeMarcas.size();pos2++){
+                    Marca aux2 = listaDeMarcas.get(pos2);
+                    if((auxMod.getIdMarca())==(aux2.getId())){
+                        saida[1] = aux2.getDescricao();
+                    }
+                }
+                }
+                }
+                saida[4] = aux.getCor();
+                saida[5] = aux.getSituacao();
                 model.addRow(saida);
-            }         
+            }        
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(this, erro.getMessage());
         }

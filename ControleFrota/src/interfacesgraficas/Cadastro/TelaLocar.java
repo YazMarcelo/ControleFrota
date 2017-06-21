@@ -30,28 +30,28 @@ public class TelaLocar extends javax.swing.JInternalFrame {
     public TelaLocar() {
         initComponents();
         try {
-            ArrayList<Veiculo> listaDeVeiculos;
-            ClasseDAO dao = new ClasseDAO();
-            listaDeVeiculos = dao.recuperarVeiculo();
-            model = (DefaultTableModel) jTableVeiculo.getModel();
-            
-            model.setNumRows(0);
-            for(int pos=0; pos<listaDeVeiculos.size();pos++){
-                
-                String[] saida = new String[4];
-                Veiculo aux = listaDeVeiculos.get(pos);
-                saida[0] = aux.getPlaca();
-                saida[1] = aux.getModelo();
-                saida[2] = aux.getMarca();
-                saida[3] = aux.getCor();
-                String disp = aux.getSituacao();
-                if(disp.equals("DISPONIVEL")){
-                    model.addRow(saida);
-                }else{
-                
-                }
-                
-            }
+//            ArrayList<Veiculo> listaDeVeiculos;
+//            ClasseDAO dao = new ClasseDAO();
+//            listaDeVeiculos = dao.recuperarVeiculo();
+//            model = (DefaultTableModel) jTableVeiculo.getModel();
+//            
+//            model.setNumRows(0);
+//            for(int pos=0; pos<listaDeVeiculos.size();pos++){
+//                
+//                String[] saida = new String[4];
+//                Veiculo aux = listaDeVeiculos.get(pos);
+//                saida[0] = aux.getPlaca();
+//                saida[1] = aux.getModelo();
+//                saida[2] = aux.getMarca();
+//                saida[3] = aux.getCor();
+//                String disp = aux.getSituacao();
+//                if(disp.equals("DISPONIVEL")){
+//                    model.addRow(saida);
+//                }else{
+//                
+//                }
+//                
+//            }
             
             ArrayList<Cliente> listaDeClientes;
             ClasseDAO daoCliente = new ClasseDAO();
@@ -503,14 +503,15 @@ public class TelaLocar extends javax.swing.JInternalFrame {
                     .addComponent(jLabel32)
                     .addComponent(jLabelCor))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel36)
-                    .addComponent(jLabelPlaca)
-                    .addComponent(jLabel24)
-                    .addComponent(jLabelAno)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel34)
-                        .addComponent(jLabelCaucao)))
+                        .addComponent(jLabelCaucao))
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel36)
+                        .addComponent(jLabelPlaca)
+                        .addComponent(jLabel24)
+                        .addComponent(jLabelAno)))
                 .addGap(50, 50, 50)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
@@ -594,24 +595,24 @@ public class TelaLocar extends javax.swing.JInternalFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         String placaSelecionada = (String)jTableVeiculo.getValueAt(jTableVeiculo.getSelectedRow(), 0);
         try {
-            ArrayList<Veiculo> listaDeVeiculos;
-            ClasseDAO daoVeiculo = new ClasseDAO();
-            listaDeVeiculos = daoVeiculo.recuperarVeiculo();
-            
-            for(int pos=0; pos<listaDeVeiculos.size();pos++){
-                String saida;
-                Veiculo aux = listaDeVeiculos.get(pos);
-                saida = aux.getPlaca();
-                if(saida.equals(placaSelecionada)){
-                    jLabelAno.setText(String.valueOf(aux.getAno()));
-                    jLabelPlaca.setText(aux.getPlaca());
-                    jLabelModelo.setText(aux.getModelo());
-                    jLabelMarca.setText(aux.getMarca());
-                    jLabelCor.setText(aux.getCor());
-                    jLabelCaucao.setText(aux.getCaucao()+"%");
-                    JOptionPane.showMessageDialog(rootPane, aux.getMarcas());
-                }
-            }
+//            ArrayList<Veiculo> listaDeVeiculos;
+//            ClasseDAO daoVeiculo = new ClasseDAO();
+//            listaDeVeiculos = daoVeiculo.recuperarVeiculo();
+//            
+//            for(int pos=0; pos<listaDeVeiculos.size();pos++){
+//                String saida;
+//                Veiculo aux = listaDeVeiculos.get(pos);
+//                saida = aux.getPlaca();
+//                if(saida.equals(placaSelecionada)){
+//                    jLabelAno.setText(String.valueOf(aux.getAno()));
+//                    jLabelPlaca.setText(aux.getPlaca());
+//                    jLabelModelo.setText(aux.getModelo());
+//                    jLabelMarca.setText(aux.getMarca());
+//                    jLabelCor.setText(aux.getCor());
+//                    jLabelCaucao.setText(aux.getCaucao()+"%");
+//                    JOptionPane.showMessageDialog(rootPane, aux.getMarcas());
+//                }
+//            }
         } catch (Exception e) {
         }
     }//GEN-LAST:event_jButton4ActionPerformed

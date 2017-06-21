@@ -1,8 +1,8 @@
 package classededados;
 public class Veiculo {
     private String situacao = "";
-    private String marca = "";
-    private String modelo = "";
+    private int idMarca = 0;
+    private int idModelo = 0;
     private String placa = "";
     private String cor = "";
     private Marca marcas = null;
@@ -10,19 +10,6 @@ public class Veiculo {
     private int ano = 0;
     private double caucao = 0;
     private double valor = 0;
-    
-    public Marca getMarcas() {
-        return marcas;
-    }
-
-    public Modelo getModelos() {
-        return modelos;
-    }
-
-    public void setModelos(Modelo modelos) {
-        this.modelos = modelos;
-    }
-
     
     public enum UserStatus {
     VENDIDO,
@@ -38,22 +25,6 @@ public class Veiculo {
 
     public void setSituacao(String situacao) {
         this.situacao = situacao;
-    }
-
-    public String getMarca() {
-        return marca;
-    }
-
-    public String getModelo() {
-        return modelo;
-    }
-
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
-
-    public void setModelo(String modelo) {
-        this.modelo = modelo;
     }
     
     public String getMarca(String toString) {
@@ -103,6 +74,20 @@ public class Veiculo {
     public void setValor(double valor) {
         this.valor = valor;
     }
-    
+    public int getIdMarca() {
+        return idMarca;
+    }
+
+    public void setIdMarca(int idMarca) {
+        this.idMarca = idMarca;
+    }
+
+    public int getIdModelo() {
+        return idModelo;
+    }
+
+    public void setIdModelo(int idModelo) {
+        this.idModelo = idModelo;
+    }
     
 }

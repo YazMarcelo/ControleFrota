@@ -39,18 +39,29 @@ public class CadastroVeiculo extends javax.swing.JFrame {
         initComponents();
         try {
             ArrayList<Modelo> listaDeModelos;
+            ArrayList<Marca> listaDeMarcas;
             ClasseDAO dao = new ClasseDAO();
+            listaDeMarcas = dao.recuperarMarca();
             listaDeModelos = dao.recuperarModelo();
             model = (DefaultTableModel) jTable1.getModel();
             
             model.setNumRows(0);
             for(int pos=0; pos<listaDeModelos.size();pos++){
-                String[] saida = new String[4];
+                String[] saida = new String[3];
                 Modelo aux = listaDeModelos.get(pos);
-                saida[0] = aux.getMarca();
-                saida[1] = aux.getDescricao();
+                saida[0] = String.valueOf(aux.getId());
+                for(int pos2=0; pos2<listaDeMarcas.size();pos2++){
+                    Marca aux2 = listaDeMarcas.get(pos2);
+                    if((aux.getIdMarca())==(aux2.getId())){
+                        saida[1] = aux2.getDescricao();
+                    }
+                }
+                saida[2] = aux.getDescricao();
+                
                 model.addRow(saida);
-            }         
+            }
+              
+    
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(this, erro.getMessage());
         }
@@ -149,11 +160,11 @@ public class CadastroVeiculo extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Marca", "Modelo"
+                "Código", "Marca", "Modelo"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -161,6 +172,11 @@ public class CadastroVeiculo extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setResizable(false);
+            jTable1.getColumnModel().getColumn(1).setResizable(false);
+            jTable1.getColumnModel().getColumn(2).setResizable(false);
+        }
 
         jButton3.setText("Selecionar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -207,7 +223,7 @@ public class CadastroVeiculo extends javax.swing.JFrame {
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
-                                .addGap(0, 96, Short.MAX_VALUE))
+                                .addGap(0, 145, Short.MAX_VALUE))
                             .addComponent(jTextFieldPesquisar, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
         );
@@ -269,8 +285,8 @@ public class CadastroVeiculo extends javax.swing.JFrame {
                             .addComponent(jTextFieldPlaca3, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextFieldCor, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextFieldModelo, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addGap(72, 72, 72)))
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(23, 23, 23)))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanelCadastroLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel2)
@@ -372,8 +388,8 @@ public class CadastroVeiculo extends javax.swing.JFrame {
                 obj.setSituacao(jComboBoxStatus.getSelectedItem().toString());
                 obj.setCor(jTextFieldCor.getText());
                 obj.setAno(Integer.parseInt(jTextFieldPlaca3.getText()));
-                obj.setModelo(jTextFieldModelo.getText());
-                obj.setMarca((String)jTable1.getValueAt(jTable1.getSelectedRow(), 0));                
+                obj.setIdModelo((int)jTable1.getValueAt(jTable1.getSelectedRow(), 0));
+                obj.setIdMarca((int)jTable1.getValueAt(jTable1.getSelectedRow(), 0));                
                                 
             ClasseDAO dao = new ClasseDAO();
             dao.incluirVeiculo(obj);

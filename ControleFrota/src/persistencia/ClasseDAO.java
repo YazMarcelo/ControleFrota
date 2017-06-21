@@ -89,7 +89,7 @@ public class ClasseDAO implements CRUD{
             fileVeiculo = new FileWriter(arquivoVeiculo, true);
             bufferVeiculo = new BufferedWriter(fileVeiculo);
             
-            String aux = objVeiculo.getPlaca()+";"+objVeiculo.getMarca()+";"+objVeiculo.getModelo()+";"+objVeiculo.getAno()+";"+objVeiculo.getCor()+";"+objVeiculo.getSituacao()+"\n";
+            String aux = objVeiculo.getPlaca()+";"+objVeiculo.getIdMarca()+";"+objVeiculo.getIdModelo()+";"+objVeiculo.getAno()+";"+objVeiculo.getCor()+";"+objVeiculo.getSituacao()+"\n";
             bufferVeiculo.write(aux);
             
         } catch (Exception e) {
@@ -213,8 +213,8 @@ public class ClasseDAO implements CRUD{
         
         objVeiculo = new Veiculo();
         objVeiculo.setPlaca(vector[0]);
-        objVeiculo.setMarca(vector[1]);
-        objVeiculo.setModelo(vector[2]);
+        objVeiculo.setIdMarca(Integer.parseInt(vector[1]));
+        objVeiculo.setIdModelo(Integer.parseInt(vector[2]));
         objVeiculo.setAno(Integer.parseInt(vector[3]));
         objVeiculo.setCor(vector[4]);       
         objVeiculo.setSituacao(vector[5]);    
@@ -255,7 +255,7 @@ public class ClasseDAO implements CRUD{
            for(int pos=0; pos<listaDeVeiculos.size();pos++){
                Veiculo aux = listaDeVeiculos.get(pos);
                if(!(aux.getPlaca().equals(placa))){
-                   bw.write(aux.getPlaca()+";"+aux.getMarca()+";"+aux.getModelo()+";"+aux.getAno()+";"+aux.getCor()+";"+aux.getSituacao()+"\n");
+                   bw.write(aux.getPlaca()+";"+aux.getIdMarca()+";"+aux.getIdModelo()+";"+aux.getAno()+";"+aux.getCor()+";"+aux.getSituacao()+"\n");
                }
            }
            bw.close();
