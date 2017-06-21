@@ -5,6 +5,7 @@
  */
 package interfacesgraficas.Consulta;
 
+import classededados.Marca;
 import classededados.Modelo;
 import interfacesgraficas.Cadastro.CadastroModelo;
 import java.awt.event.KeyAdapter;
@@ -33,8 +34,10 @@ public class TelaConsultaModelo extends javax.swing.JInternalFrame {
         initComponents();
         
         try {
-            ArrayList<Modelo> listaDeModelos;
+             ArrayList<Modelo> listaDeModelos;
+            ArrayList<Marca> listaDeMarcas;
             ClasseDAO dao = new ClasseDAO();
+            listaDeMarcas = dao.recuperarMarca();
             listaDeModelos = dao.recuperarModelo();
             model = (DefaultTableModel) jTableModelo.getModel();
             
@@ -44,7 +47,12 @@ public class TelaConsultaModelo extends javax.swing.JInternalFrame {
                 Modelo aux = listaDeModelos.get(pos);
                 saida[0] = String.valueOf(aux.getId());
                 saida[1] = aux.getDescricao();
-                saida[2] = aux.getMarca();
+                for(int pos2=0; pos2<listaDeMarcas.size();pos2++){
+                    Marca aux2 = listaDeMarcas.get(pos2);
+                    if((aux.getIdMarca())==(aux2.getId())){
+                        saida[2] = aux2.getDescricao();
+                    }
+                }
                 saida[3] = aux.getTipo();
                 model.addRow(saida);
             }         
@@ -265,10 +273,12 @@ public class TelaConsultaModelo extends javax.swing.JInternalFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         try {
-            ArrayList<Modelo> listaDeModelos;
+             ArrayList<Modelo> listaDeModelos;
+            ArrayList<Marca> listaDeMarcas;
             ClasseDAO dao = new ClasseDAO();
+            listaDeMarcas = dao.recuperarMarca();
             listaDeModelos = dao.recuperarModelo();
-            DefaultTableModel model = (DefaultTableModel) jTableModelo.getModel();
+            model = (DefaultTableModel) jTableModelo.getModel();
             
             model.setNumRows(0);
             for(int pos=0; pos<listaDeModelos.size();pos++){
@@ -276,7 +286,12 @@ public class TelaConsultaModelo extends javax.swing.JInternalFrame {
                 Modelo aux = listaDeModelos.get(pos);
                 saida[0] = String.valueOf(aux.getId());
                 saida[1] = aux.getDescricao();
-                saida[2] = aux.getMarca();
+                for(int pos2=0; pos2<listaDeMarcas.size();pos2++){
+                    Marca aux2 = listaDeMarcas.get(pos2);
+                    if((aux.getIdMarca())==(aux2.getId())){
+                        saida[2] = aux2.getDescricao();
+                    }
+                }
                 saida[3] = aux.getTipo();
                 model.addRow(saida);
             }         

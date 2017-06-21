@@ -68,7 +68,7 @@ public class ClasseDAO implements CRUD{
            fileModelo = new FileWriter(arquivoModelo, true);
            bufferModelo = new BufferedWriter(fileModelo);
            
-           String aux = objModelo.getId()+";"+objModelo.getDescricao()+";"+objModelo.getMarca()+";"+objModelo.getTipo()+"\n";
+           String aux = objModelo.getId()+";"+objModelo.getDescricao()+";"+objModelo.getIdMarca()+";"+objModelo.getTipo()+"\n";
            bufferModelo.write(aux);
            
         } catch (Exception e) {
@@ -166,7 +166,7 @@ public class ClasseDAO implements CRUD{
         objModelo = new Modelo();
         objModelo.setId(Integer.parseInt(vector[0]));
         objModelo.setDescricao(vector[1]);    
-        objModelo.setMarca(vector[2]);    
+        objModelo.setIdMarca(Integer.parseInt(vector[2]));    
         objModelo.setTipo(vector[3]);    
         
        listaDeModelo.add(objModelo);

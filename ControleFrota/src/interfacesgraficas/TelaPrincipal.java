@@ -74,7 +74,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabelSair = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        jLabelBemVindo = new javax.swing.JLabel();
 
         jCheckBoxMenuItem1.setSelected(true);
         jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
@@ -244,9 +244,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 60)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel2.setText("Bem Vindo!");
+        jLabelBemVindo.setFont(new java.awt.Font("Tahoma", 1, 60)); // NOI18N
+        jLabelBemVindo.setForeground(new java.awt.Color(102, 102, 102));
+        jLabelBemVindo.setText("Bem Vindo!");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -262,7 +262,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(381, 381, 381)
-                        .addComponent(jLabel2)
+                        .addComponent(jLabelBemVindo)
                         .addContainerGap(394, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -270,7 +270,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(203, 203, 203)
-                .addComponent(jLabel2)
+                .addComponent(jLabelBemVindo)
                 .addGap(50, 50, 50)
                 .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(110, Short.MAX_VALUE))
@@ -301,6 +301,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         telaMarca.dispose();
         telaLocar.dispose();
         telaDevolucao.dispose();
+        jLabelBemVindo.setText("");
     }//GEN-LAST:event_jButtonModeloActionPerformed
 
     private void jButtonClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonClienteActionPerformed
@@ -312,6 +313,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         telaModelo.dispose();
         telaLocar.dispose();
         telaDevolucao.dispose();
+        jLabelBemVindo.setText("");
     }//GEN-LAST:event_jButtonClienteActionPerformed
 
     private void jButtonVeiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVeiculoActionPerformed
@@ -323,6 +325,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         telaModelo.dispose();
         telaLocar.dispose();
         telaDevolucao.dispose();
+        jLabelBemVindo.setText("");
     }//GEN-LAST:event_jButtonVeiculoActionPerformed
 
     private void jLabelSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelSairMouseClicked
@@ -338,6 +341,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         telaModelo.dispose();
         telaVeiculo.dispose();
         telaDevolucao.dispose();
+        jLabelBemVindo.setText("");
     }//GEN-LAST:event_jButtonLocarActionPerformed
 
     private void jButtonDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDevolverActionPerformed
@@ -349,6 +353,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         telaModelo.dispose();
         telaVeiculo.dispose();
         telaLocar.dispose();
+        jLabelBemVindo.setText("");
     }//GEN-LAST:event_jButtonDevolverActionPerformed
 
     /**
@@ -396,7 +401,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButtonVeiculo;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabelBemVindo;
     private javax.swing.JLabel jLabelSair;
     private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu11;

@@ -36,10 +36,11 @@ public class CadastroModelo extends javax.swing.JFrame {
             listaDeMarcas = agenda.recuperarMarca();
        
             for(int pos=0; pos<listaDeMarcas.size();pos++){
-                String saida;
+                String[] saida = new String[2];
                 Marca aux = listaDeMarcas.get(pos);
-                saida = aux.getDescricao();
-                marcas.add(String.valueOf(saida));
+                saida[0] = String.valueOf(aux.getId());
+                saida[1] = aux.getDescricao();
+                marcas.add(String.valueOf(saida[0]+"-"+saida[1]));
             }
              
             jComboBoxMarca.setModel(new DefaultComboBoxModel(new Vector(marcas)));
@@ -192,10 +193,12 @@ public class CadastroModelo extends javax.swing.JFrame {
 
                 GeradorDeId idModelo = new GeradorDeId();
                 Modelo obj = new Modelo();
+                String linha = jComboBoxMarca.getSelectedItem().toString();
+                String vetor[] = linha.split("-");
                 
                 obj.setId(idModelo.getIdModelo());
                 obj.setDescricao(jTextField1.getText());
-                obj.setMarca(jComboBoxMarca.getSelectedItem().toString());
+                obj.setIdMarca(Integer.parseInt(vetor[0]));
                 obj.setTipo(jComboBoxTipo.getSelectedItem().toString());
                 
                                 
