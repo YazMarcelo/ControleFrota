@@ -10,6 +10,8 @@ import classededados.Marca;
 import interfacesgraficas.Cadastro.CadastroCliente;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,31 +29,15 @@ public class TelaConsultaCliente extends javax.swing.JInternalFrame {
     DefaultTableModel model = null;
     TableRowSorter trs;
     int esc;
+    CadastroCliente tcc;
+    
     /**
      * Creates new form TelaConsultaVeículo
      */
     public TelaConsultaCliente() {
         initComponents();
-        try {
-            ArrayList<Cliente> listaDeClientes;
-            ClasseDAO dao = new ClasseDAO();
-            listaDeClientes = dao.recuperarCliente();
-            model = (DefaultTableModel) jTableCliente.getModel();
-            
-            model.setNumRows(0);
-            for(int pos=0; pos<listaDeClientes.size();pos++){
-                String[] saida = new String[4];
-                Cliente aux = listaDeClientes.get(pos);
-                saida[0] = aux.getNome();
-                saida[1] = aux.getCnh();
-                saida[2] = aux.getEmail();
-                saida[3] = aux.getTelefone();
-                model.addRow(saida);
-            }         
-        } catch (Exception erro) {
-            JOptionPane.showMessageDialog(this, erro.getMessage());
-        }
-        
+        atualizar();
+
     }
 
     /**
@@ -255,30 +241,13 @@ public class TelaConsultaCliente extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        CadastroCliente tela = new CadastroCliente();
-        tela.setVisible(true);
+        tcc = new CadastroCliente();
+        tcc.setVisible(true);
+        atualizaAposFechar();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        try {
-            ArrayList<Cliente> listaDeClientes;
-            ClasseDAO agenda = new ClasseDAO();
-            listaDeClientes = agenda.recuperarCliente();
-            model = (DefaultTableModel) jTableCliente.getModel();
-            
-            model.setNumRows(0);
-            for(int pos=0; pos<listaDeClientes.size();pos++){
-                String[] saida = new String[4];
-                Cliente aux = listaDeClientes.get(pos);
-                saida[0] = aux.getNome();
-                saida[1] = aux.getCnh();
-                saida[2] = aux.getEmail();
-                saida[3] = aux.getTelefone();
-                model.addRow(saida);
-            }         
-        } catch (Exception erro) {
-            JOptionPane.showMessageDialog(this, erro.getMessage());
-        }
+    atualizar();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -303,7 +272,14 @@ public class TelaConsultaCliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        try {
+        tcc= new CadastroCliente();
+            tcc.alteracao("Alterar Cliente",(String)jTableCliente.getValueAt(jTableCliente.getSelectedRow(), 1));
+            tcc.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(TelaConsultaMarca.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                    atualizaAposFechar();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextFieldPesquisar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldPesquisar1MouseClicked
@@ -349,4 +325,34 @@ public class TelaConsultaCliente extends javax.swing.JInternalFrame {
     private javax.swing.JTable jTableCliente;
     private javax.swing.JTextField jTextFieldPesquisar1;
     // End of variables declaration//GEN-END:variables
+
+    public void atualizar(){
+        try {
+            ArrayList<Cliente> listaDeClientes;
+            ClasseDAO agenda = new ClasseDAO();
+            listaDeClientes = agenda.recuperarCliente();
+            model = (DefaultTableModel) jTableCliente.getModel();
+            
+            model.setNumRows(0);
+            for(int pos=0; pos<listaDeClientes.size();pos++){
+                String[] saida = new String[4];
+                Cliente aux = listaDeClientes.get(pos);
+                saida[0] = aux.getNome();
+                saida[1] = aux.getCnh();
+                saida[2] = aux.getEmail();
+                saida[3] = (aux.getTipoTel1()+" - "+aux.getTelefone1());
+                model.addRow(saida);
+            }         
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(this, erro.getMessage());
+        }
+    }
+    public void atualizaAposFechar(){
+    tcc.addWindowListener(new WindowAdapter() {
+        public void windowClosing(WindowEvent evt) {
+            atualizar();
+        }
+    });  
+}
+
 }

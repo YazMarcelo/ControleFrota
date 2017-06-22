@@ -32,15 +32,18 @@ import persistencia.ClasseDAO;
 public class CadastroVeiculo extends javax.swing.JFrame {
     DefaultTableModel model = null;
     TableRowSorter trs;
+    ClasseDAO dao = new ClasseDAO(); 
+    String idPlaca;
+    int idModelo2;
+    
     /**
      * Creates new form CadastroMarca
      */
     public CadastroVeiculo() {
         initComponents();
         try {
-            ArrayList<Modelo> listaDeModelos;
-            ArrayList<Marca> listaDeMarcas;
-            ClasseDAO dao = new ClasseDAO();
+                ArrayList<Modelo> listaDeModelos;
+                ArrayList<Marca> listaDeMarcas;
             listaDeMarcas = dao.recuperarMarca();
             listaDeModelos = dao.recuperarModelo();
             model = (DefaultTableModel) jTable1.getModel();
@@ -80,9 +83,8 @@ public class CadastroVeiculo extends javax.swing.JFrame {
 
         jPanelCadastro = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabelAcao = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextFieldPlaca = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
@@ -99,10 +101,11 @@ public class CadastroVeiculo extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jTextFieldModelo = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        jTextFieldPlaca1 = new javax.swing.JTextField();
-        jTextFieldPlaca2 = new javax.swing.JTextField();
+        jTextFieldCaucao = new javax.swing.JTextField();
+        jTextFieldValor = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jTextFieldPlaca3 = new javax.swing.JTextField();
+        jTextFieldAno = new javax.swing.JTextField();
+        jTextFieldPlaca = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -110,8 +113,8 @@ public class CadastroVeiculo extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setText("Novo Veículo");
+        jLabelAcao.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabelAcao.setText("Novo Veículo");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -119,15 +122,15 @@ public class CadastroVeiculo extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addComponent(jLabel1)
+                .addComponent(jLabelAcao)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(jLabel1)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addComponent(jLabelAcao)
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -247,7 +250,25 @@ public class CadastroVeiculo extends javax.swing.JFrame {
 
         jLabel9.setText("Caução*");
 
+        jTextFieldCaucao.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldCaucaoKeyTyped(evt);
+            }
+        });
+
+        jTextFieldValor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldValorKeyTyped(evt);
+            }
+        });
+
         jLabel10.setText("Valor*    R$");
+
+        try {
+            jTextFieldPlaca.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("???-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         javax.swing.GroupLayout jPanelCadastroLayout = new javax.swing.GroupLayout(jPanelCadastro);
         jPanelCadastro.setLayout(jPanelCadastroLayout);
@@ -272,20 +293,21 @@ public class CadastroVeiculo extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelCadastroLayout.createSequentialGroup()
-                        .addComponent(jComboBoxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanelCadastroLayout.createSequentialGroup()
                         .addGroup(jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanelCadastroLayout.createSequentialGroup()
                                 .addGap(0, 36, Short.MAX_VALUE)
                                 .addComponent(jButton1))
-                            .addComponent(jTextFieldPlaca2, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldPlaca1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldPlaca, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldPlaca3, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldCaucao, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldAno, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextFieldCor, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldModelo, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addGap(23, 23, 23)))
+                            .addComponent(jTextFieldModelo, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldValor, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGap(23, 23, 23))
+                    .addGroup(jPanelCadastroLayout.createSequentialGroup()
+                        .addGroup(jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBoxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanelCadastroLayout.createSequentialGroup()
                 .addContainerGap()
@@ -306,19 +328,19 @@ public class CadastroVeiculo extends javax.swing.JFrame {
                             .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextFieldPlaca2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel10))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextFieldPlaca1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldCaucao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextFieldPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
+                            .addComponent(jLabel3)
+                            .addComponent(jTextFieldPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextFieldPlaca3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -330,8 +352,8 @@ public class CadastroVeiculo extends javax.swing.JFrame {
                             .addComponent(jLabel8))
                         .addGap(18, 18, 18)
                         .addComponent(jButton1)
-                        .addContainerGap(26, Short.MAX_VALUE))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)))
+                        .addContainerGap(32, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -374,35 +396,104 @@ public class CadastroVeiculo extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldPesquisarKeyTyped
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-       jTextFieldModelo.setText((String)jTable1.getValueAt(jTable1.getSelectedRow(), 1));
+       jTextFieldModelo.setText((String)jTable1.getValueAt(jTable1.getSelectedRow(), 2));
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if(!(jTextFieldPlaca.getText().equals(""))){
-           int resposta  = JOptionPane.showConfirmDialog(rootPane, "Confirmar Cadastro?");
-           if(resposta == JOptionPane.YES_OPTION){
-            try {
-                Veiculo obj = new Veiculo();
-          
-                obj.setPlaca(jTextFieldPlaca.getText());
-                obj.setSituacao(jComboBoxStatus.getSelectedItem().toString());
-                obj.setCor(jTextFieldCor.getText());
-                obj.setAno(Integer.parseInt(jTextFieldPlaca3.getText()));
-                obj.setIdModelo((int)jTable1.getValueAt(jTable1.getSelectedRow(), 0));
-                obj.setIdMarca((int)jTable1.getValueAt(jTable1.getSelectedRow(), 0));                
-                                
-            ClasseDAO dao = new ClasseDAO();
-            dao.incluirVeiculo(obj);
-            JOptionPane.showMessageDialog(rootPane, "Cadastro efetuado com sucesso!");  
-                                   
-        } catch (Exception e) {
+        
+        ClasseDAO daoVeiculo = new ClasseDAO();
+        Veiculo obj;
+        ArrayList<Modelo> listaDeModelos;
+
+        if ((jTextFieldPlaca.getText().equals("")) || (jTextFieldCor.getText().equals("")) || (jTextFieldAno.getText().equals(""))
+                || (jTextFieldValor.getText().equals("")) || (jTextFieldCaucao.getText().equals("")) || (jTextFieldModelo.getText().equals(""))) {
+            JOptionPane.showMessageDialog(rootPane, "Campo obrigatório não preenchido!");
+        } else if ((jLabelAcao.getText()).equals("Novo Veículo")) {
+            int resposta = JOptionPane.showConfirmDialog(rootPane, "Confirmar Cadastro?");
+
+            if (resposta == JOptionPane.YES_OPTION) {
+                try {
+                    int idModelo = Integer.parseInt((String) jTable1.getValueAt(jTable1.getSelectedRow(), 0));
+                    obj = new Veiculo();
+                    listaDeModelos = daoVeiculo.recuperarModelo();
+                    obj.setPlaca(jTextFieldPlaca.getText());
+                    obj.setSituacao(jComboBoxStatus.getSelectedItem().toString());
+                    obj.setCor(jTextFieldCor.getText());
+                    obj.setAno(Integer.parseInt(jTextFieldAno.getText()));
+                    for (int pos2 = 0; pos2 < listaDeModelos.size(); pos2++) {
+                        Modelo aux2 = listaDeModelos.get(pos2);
+                        if (idModelo == aux2.getId()) {
+                            obj.setIdModelo(aux2.getId());
+                            obj.setIdMarca(aux2.getIdMarca());
+                        }
+                    }
+                    obj.setValor(Double.parseDouble(jTextFieldValor.getText()));
+                    obj.setCaucao(Double.parseDouble(jTextFieldCaucao.getText()));
+
+                    daoVeiculo.incluirVeiculo(obj);
+                    JOptionPane.showMessageDialog(rootPane, "Cadastro efetuado com sucesso!");
+                    limpar();
+
+                } catch (Exception e) {
+                }
+            }
+        } else {
+            int resposta = JOptionPane.showConfirmDialog(rootPane, "Confirmar Alteração?");
+            if (resposta == JOptionPane.YES_OPTION) {
+                try {
+                    int modeloId;
+                    obj = new Veiculo();
+                    listaDeModelos = daoVeiculo.recuperarModelo();
+                    
+                    obj.setPlaca(jTextFieldPlaca.getText());
+                    obj.setAno(Integer.parseInt(jTextFieldAno.getText()));
+                    obj.setCaucao(Double.parseDouble(jTextFieldCaucao.getText()));
+                    obj.setValor(Double.parseDouble(jTextFieldValor.getText()));
+                    obj.setSituacao(jComboBoxStatus.getSelectedItem().toString());
+                    obj.setCor(jTextFieldCor.getText());
+                    if(jTable1.getSelectedRow()>0){
+                        modeloId = Integer.parseInt((String) jTable1.getValueAt(jTable1.getSelectedRow(), 0));
+                    }else{
+                        modeloId = idModelo2;
+                    }
+                    for (int pos2 = 0; pos2 < listaDeModelos.size(); pos2++) {
+                        Modelo aux2 = listaDeModelos.get(pos2);
+                        if (modeloId == aux2.getId()) {
+                            obj.setIdModelo(aux2.getId());
+                            obj.setIdMarca(aux2.getIdMarca());
+                        }
+                    }
+                    ClasseDAO daoAlterar = new ClasseDAO();
+
+                    daoAlterar.alterarVeiculo(obj, idPlaca);
+                    JOptionPane.showMessageDialog(rootPane, "Alteração efetuada com sucesso!");
+                } catch (Exception e) {
+                }
+            } else if (resposta == JOptionPane.NO_OPTION) {
+            } else {
+                this.dispose();
+            }
         }
-        } 
-        }else{
-        JOptionPane.showMessageDialog(rootPane, "Campos obrigatórios não preenchidos!");
-        }
-        jTextFieldPlaca.setText("");
+        
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextFieldValorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldValorKeyTyped
+               char vChar = evt.getKeyChar(); 
+        if (!(Character.isDigit(vChar) || 
+             (vChar == KeyEvent.VK_BACK_SPACE) || 
+             (vChar == KeyEvent.VK_DELETE))) { 
+            evt.consume(); 
+        }
+    }//GEN-LAST:event_jTextFieldValorKeyTyped
+
+    private void jTextFieldCaucaoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldCaucaoKeyTyped
+       char vChar = evt.getKeyChar(); 
+        if (!(Character.isDigit(vChar) || 
+             (vChar == KeyEvent.VK_BACK_SPACE) || 
+             (vChar == KeyEvent.VK_DELETE))) { 
+            evt.consume(); 
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldCaucaoKeyTyped
 
     /**
      * @param args the command line arguments
@@ -446,7 +537,6 @@ public class CadastroVeiculo extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBoxStatus;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -456,17 +546,57 @@ public class CadastroVeiculo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelAcao;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanelCadastro;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextFieldAno;
+    private javax.swing.JTextField jTextFieldCaucao;
     private javax.swing.JTextField jTextFieldCor;
     private javax.swing.JTextField jTextFieldModelo;
     private javax.swing.JTextField jTextFieldPesquisar;
-    private javax.swing.JTextField jTextFieldPlaca;
-    private javax.swing.JTextField jTextFieldPlaca1;
-    private javax.swing.JTextField jTextFieldPlaca2;
-    private javax.swing.JTextField jTextFieldPlaca3;
+    private javax.swing.JFormattedTextField jTextFieldPlaca;
+    private javax.swing.JTextField jTextFieldValor;
     // End of variables declaration//GEN-END:variables
+public void alteracao(String acao, String placa) throws Exception {
+        jLabelAcao.setText(acao);
+        ArrayList<Veiculo> listaDeVeiculos;
+        ArrayList<Modelo> listaDeModelos;
+        ClasseDAO agenda = new ClasseDAO();
+        listaDeModelos = agenda.recuperarModelo();
+        listaDeVeiculos = agenda.recuperarVeiculo();
+        for (int pos = 0; pos < listaDeVeiculos.size(); pos++) {
+            Veiculo aux = listaDeVeiculos.get(pos);
+            if (placa.equals(aux.getPlaca())) {
+                jTextFieldPlaca.setEnabled(false);
+                jTextFieldPlaca.setText(aux.getPlaca());
+                this.idPlaca = aux.getPlaca();
+                jComboBoxStatus.setSelectedItem(aux.getSituacao());
+                jTextFieldValor.setText(String.valueOf(aux.getValor()));
+                jTextFieldAno.setText(String.valueOf(aux.getAno()));
+                jTextFieldCaucao.setText(String.valueOf(aux.getCaucao()));
+                jTextFieldCor.setText(String.valueOf(aux.getCor()));
+                this.idModelo2 = aux.getIdModelo();
+                for (int pos2 = 0; pos2 < listaDeModelos.size(); pos2++) {
+                    Modelo aux2 = listaDeModelos.get(pos2);
+                    if (aux2.getId() == aux.getIdModelo()) {
+                        jTextFieldModelo.setText(aux2.getDescricao());
+                    }
+                }
+            }
+        }
+    }
+
+    public void limpar() {
+        jTextFieldPlaca.setText("");
+        jTextFieldCor.setText("");
+        jTextFieldAno.setText("");
+        jTextFieldValor.setText("");
+        jTextFieldCaucao.setText("");
+        jTextFieldModelo.setText("");
+        jComboBoxStatus.setSelectedItem("DISPONIVEL");
+    }
+
 }

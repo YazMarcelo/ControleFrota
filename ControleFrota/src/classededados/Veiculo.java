@@ -5,17 +5,16 @@ public class Veiculo {
     private int idModelo = 0;
     private String placa = "";
     private String cor = "";
-    private Marca marcas = null;
-    private Modelo modelos = null;
     private int ano = 0;
+    private String chassi = "";
     private double caucao = 0;
     private double valor = 0;
     
     public enum UserStatus {
-    VENDIDO,
-    SINISTRO,
     DISPONIVEL,
     DEVOLVIDO,
+    VENDIDO,
+    SINISTRO,
     LOCADO;
     }
 
@@ -25,14 +24,6 @@ public class Veiculo {
 
     public void setSituacao(String situacao) {
         this.situacao = situacao;
-    }
-    
-    public String getMarca(String toString) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public String getModelo(String toString) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public String getPlaca() {
@@ -63,7 +54,6 @@ public class Veiculo {
     }
 
     public void setCaucao(double caucao) {
-        caucao = (this.valor/100)*caucao;
         this.caucao = caucao;
     }
 

@@ -7,9 +7,13 @@ package interfacesgraficas.Cadastro;
 
 import classededados.Cliente;
 import classededados.Marca;
+import classededados.Modelo;
 import classededados.Veiculo;
 import java.awt.event.KeyEvent;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -29,29 +33,45 @@ public class TelaLocar extends javax.swing.JInternalFrame {
      */
     public TelaLocar() {
         initComponents();
+        jFormattedTextField2.setEditable(false);
+        
         try {
-//            ArrayList<Veiculo> listaDeVeiculos;
-//            ClasseDAO dao = new ClasseDAO();
-//            listaDeVeiculos = dao.recuperarVeiculo();
-//            model = (DefaultTableModel) jTableVeiculo.getModel();
-//            
-//            model.setNumRows(0);
-//            for(int pos=0; pos<listaDeVeiculos.size();pos++){
-//                
-//                String[] saida = new String[4];
-//                Veiculo aux = listaDeVeiculos.get(pos);
-//                saida[0] = aux.getPlaca();
-//                saida[1] = aux.getModelo();
-//                saida[2] = aux.getMarca();
-//                saida[3] = aux.getCor();
-//                String disp = aux.getSituacao();
-//                if(disp.equals("DISPONIVEL")){
-//                    model.addRow(saida);
-//                }else{
-//                
-//                }
-//                
-//            }
+            ArrayList<Veiculo> listaDeVeiculos;
+            ArrayList<Modelo> listaDeModelos;
+            ArrayList<Marca> listaDeMarcas;
+            
+            ClasseDAO dao = new ClasseDAO();
+        
+            listaDeMarcas = dao.recuperarMarca();
+            listaDeModelos = dao.recuperarModelo();
+            listaDeVeiculos = dao.recuperarVeiculo();
+            model = (DefaultTableModel) jTableVeiculo.getModel();
+            
+            model.setNumRows(0);
+            for(int posVeiculo=0; posVeiculo<listaDeVeiculos.size();posVeiculo++){
+                String[] saida = new String[8];
+                Veiculo aux = listaDeVeiculos.get(posVeiculo);
+                saida[0] = aux.getPlaca();
+                for(int pos=0; pos<listaDeModelos.size();pos++){
+                Modelo auxMod = listaDeModelos.get(pos);
+                if((aux.getIdModelo())==(auxMod.getId())){
+                    for(int pos2=0; pos2<listaDeMarcas.size();pos2++){
+                    Marca aux2 = listaDeMarcas.get(pos2);
+                    if((auxMod.getIdMarca())==(aux2.getId())){
+                        saida[2] = aux2.getDescricao();
+                    }
+                    saida[1] = auxMod.getDescricao();
+                }
+                }
+                }
+                saida[3] = aux.getCor();
+                String disp = aux.getSituacao();
+                if(disp.equals("DISPONIVEL")){
+                    model.addRow(saida);
+                }else{
+                
+                }
+            }
             
             ArrayList<Cliente> listaDeClientes;
             ClasseDAO daoCliente = new ClasseDAO();
@@ -132,6 +152,8 @@ public class TelaLocar extends javax.swing.JInternalFrame {
         jLabelCaucao = new javax.swing.JLabel();
         jLabel36 = new javax.swing.JLabel();
         jLabelPlaca = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabelDias = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -333,11 +355,29 @@ public class TelaLocar extends javax.swing.JInternalFrame {
 
         jLabel7.setText("Permanência");
 
-        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+        try {
+            jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jFormattedTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jFormattedTextField1KeyTyped(evt);
+            }
+        });
 
         jLabel8.setText("á");
 
-        jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+        try {
+            jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jFormattedTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jFormattedTextField2KeyTyped(evt);
+            }
+        });
 
         jLabel1.setText("Valor:");
 
@@ -372,6 +412,10 @@ public class TelaLocar extends javax.swing.JInternalFrame {
         jLabel34.setText("Caução:");
 
         jLabel36.setText("Placa:");
+
+        jLabel6.setText("Dias:");
+
+        jLabelDias.setText("jLabel10");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -461,14 +505,18 @@ public class TelaLocar extends javax.swing.JInternalFrame {
                                     .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 641, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(25, 25, 25))))
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(181, 181, 181)
+                .addGap(71, 71, 71)
                 .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(128, 128, 128)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabelDias)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
@@ -517,9 +565,11 @@ public class TelaLocar extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7)
                     .addComponent(jLabel8)
-                    .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabelDias)
+                    .addComponent(jLabel7))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
@@ -532,7 +582,12 @@ public class TelaLocar extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Locar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -559,7 +614,7 @@ public class TelaLocar extends javax.swing.JInternalFrame {
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton1)
-                        .addContainerGap())))
+                        .addContainerGap(22, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -595,6 +650,42 @@ public class TelaLocar extends javax.swing.JInternalFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         String placaSelecionada = (String)jTableVeiculo.getValueAt(jTableVeiculo.getSelectedRow(), 0);
         try {
+            ArrayList<Veiculo> listaDeVeiculos;
+            ArrayList<Modelo> listaDeModelos;
+            ArrayList<Marca> listaDeMarcas;
+            
+            ClasseDAO dao = new ClasseDAO();
+        
+            listaDeMarcas = dao.recuperarMarca();
+            listaDeModelos = dao.recuperarModelo();
+            listaDeVeiculos = dao.recuperarVeiculo();
+            for(int posVeiculo=0; posVeiculo<listaDeVeiculos.size();posVeiculo++){
+                String saida;
+                Veiculo aux = listaDeVeiculos.get(posVeiculo);
+                saida = aux.getPlaca();
+                if(saida.equals(placaSelecionada)){
+                    jLabelAno.setText(String.valueOf(aux.getAno()));
+                    jLabelPlaca.setText(aux.getPlaca());
+                    jLabelCor.setText(aux.getCor());
+                    jLabelCaucao.setText(String.valueOf(aux.getCaucao()));
+                for(int pos=0; pos<listaDeModelos.size();pos++){
+                Modelo auxMod = listaDeModelos.get(pos);
+                if((aux.getIdModelo())==(auxMod.getId())){
+                    jLabelModelo.setText(auxMod.getDescricao());
+                    jLabelTipo.setText(auxMod.getTipo());
+                    for(int pos2=0; pos2<listaDeMarcas.size();pos2++){
+                    Marca aux2 = listaDeMarcas.get(pos2);
+                    if((auxMod.getIdMarca())==(aux2.getId())){
+                        jLabelMarca.setText(aux2.getDescricao());
+                    }
+                }
+                }
+                }
+                }
+            }
+            
+            
+            
 //            ArrayList<Veiculo> listaDeVeiculos;
 //            ClasseDAO daoVeiculo = new ClasseDAO();
 //            listaDeVeiculos = daoVeiculo.recuperarVeiculo();
@@ -656,7 +747,7 @@ public class TelaLocar extends javax.swing.JInternalFrame {
                 if(saida.equals(cnhSelecionada)){
                     jLabelNome.setText(aux.getNome());
                     jLabelCnh.setText(aux.getCnh());
-                    jLabelTelefone.setText(aux.getTelefone());
+                    jLabelTelefone.setText(aux.getTipoTel1() + " - " + aux.getTelefone1());
                 }
             }
         } catch (Exception e) {
@@ -666,6 +757,27 @@ public class TelaLocar extends javax.swing.JInternalFrame {
 
     //jTextFieldModelo.setText((String)jTable1.getValueAt(jTable1.getSelectedRow(), 1));
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jFormattedTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jFormattedTextField1KeyTyped
+       if(!(jFormattedTextField1.getText()).equals("")){
+           jFormattedTextField2.setEditable(true);
+       }
+    }//GEN-LAST:event_jFormattedTextField1KeyTyped
+
+    private void jFormattedTextField2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jFormattedTextField2KeyTyped
+    try {
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        Date dataLow = formato.parse("10/06/2017");
+        Date dataHight = formato.parse("10/08/2017");
+        
+        jLabelDias.setText(String.valueOf(dataDiff(dataLow, dataHight)));
+        } catch (Exception e) {
+        } 
+    }//GEN-LAST:event_jFormattedTextField2KeyTyped
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -692,6 +804,7 @@ public class TelaLocar extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -699,6 +812,7 @@ public class TelaLocar extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabelCaucao;
     private javax.swing.JLabel jLabelCnh;
     private javax.swing.JLabel jLabelCor;
+    private javax.swing.JLabel jLabelDias;
     private javax.swing.JLabel jLabelMarca;
     private javax.swing.JLabel jLabelModelo;
     private javax.swing.JLabel jLabelNome;
@@ -723,4 +837,40 @@ public class TelaLocar extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextFieldPesquisar;
     private javax.swing.JTextField jTextFieldPesquisar1;
     // End of variables declaration//GEN-END:variables
+    public static int dataDiff(java.util.Date dataLow, java.util.Date dataHigh){
+        GregorianCalendar startTime = new GregorianCalendar();
+        GregorianCalendar endTime = new GregorianCalendar();
+        GregorianCalendar curTime = new GregorianCalendar();
+        GregorianCalendar baseTime = new GregorianCalendar();
+        startTime.setTime(dataLow);
+        endTime.setTime(dataHigh);
+        int dif_multiplier = 1;
+        // Verifica a ordem de inicio das datas
+        if( dataLow.compareTo( dataHigh ) < 0 ){
+            baseTime.setTime(dataHigh);
+            curTime.setTime(dataLow);
+            dif_multiplier = 1;
+        }else{
+            baseTime.setTime(dataLow);
+            curTime.setTime(dataHigh);
+            dif_multiplier = -1;
+        }
+        int result_years = 0;
+        int result_months = 0;
+        int result_days = 0;
+        // Para cada mes e ano, vai de mes em mes pegar o ultimo dia para import acumulando
+        // no total de dias. Ja leva em consideracao ano bissesto
+        while( curTime.get(GregorianCalendar.YEAR) < baseTime.get(GregorianCalendar.YEAR) ||
+               curTime.get(GregorianCalendar.MONTH) < baseTime.get(GregorianCalendar.MONTH)  )
+        {
+            int max_day = curTime.getActualMaximum( GregorianCalendar.DAY_OF_MONTH );
+            result_months += max_day;
+            curTime.add(GregorianCalendar.MONTH, 1);
+        }
+        // Marca que é um saldo negativo ou positivo
+        result_months = result_months*dif_multiplier;
+        // Retirna a diferenca de dias do total dos meses
+        result_days += (endTime.get(GregorianCalendar.DAY_OF_MONTH) - startTime.get(GregorianCalendar.DAY_OF_MONTH));
+        return result_years+result_months+result_days;
+    }
 }

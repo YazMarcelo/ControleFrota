@@ -12,6 +12,8 @@ import interfacesgraficas.Cadastro.CadastroMarca;
 import interfacesgraficas.Cadastro.CadastroVeiculo;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,49 +31,13 @@ public class TelaConsultaVeiculo extends javax.swing.JInternalFrame {
     DefaultTableModel model = null;
     TableRowSorter trs;
     int esc;
+    CadastroVeiculo tcv;
     /**
      * Creates new form TelaConsultaVeículo
      */
     public TelaConsultaVeiculo() {
         initComponents();
-        try {
-            ArrayList<Veiculo> listaDeVeiculos;
-            ArrayList<Modelo> listaDeModelos;
-            ArrayList<Marca> listaDeMarcas;
-            
-            ClasseDAO dao = new ClasseDAO();
-        
-            listaDeMarcas = dao.recuperarMarca();
-            listaDeModelos = dao.recuperarModelo();
-            listaDeVeiculos = dao.recuperarVeiculo();
-            model = (DefaultTableModel) jTableVeiculo.getModel();
-            
-            model.setNumRows(0);
-            for(int posVeiculo=0; posVeiculo<listaDeVeiculos.size();posVeiculo++){
-                String[] saida = new String[6];
-                Veiculo aux = listaDeVeiculos.get(posVeiculo);
-                saida[0] = aux.getPlaca();
-                for(int pos=0; pos<listaDeModelos.size();pos++){
-                Modelo auxMod = listaDeModelos.get(pos);
-                if((aux.getIdModelo())==(auxMod.getId())){
-                    for(int pos2=0; pos2<listaDeMarcas.size();pos2++){
-                    Marca aux2 = listaDeMarcas.get(pos2);
-                    if((auxMod.getIdMarca())==(aux2.getId())){
-                        saida[1] = aux2.getDescricao();
-                    }
-                    saida[2] = auxMod.getDescricao();
-                    saida[3] = auxMod.getTipo(); 
-                }
-                }
-                }
-                saida[4] = aux.getCor();
-                saida[5] = aux.getSituacao();
-                model.addRow(saida);
-            }         
-        } catch (Exception erro) {
-            JOptionPane.showMessageDialog(this, erro.getMessage());
-        }
-        
+        atualizar();
     }
 
     /**
@@ -143,11 +109,11 @@ public class TelaConsultaVeiculo extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Placa", "Marca", "Modelo", "Tipo", "Cor", "Situação"
+                "Placa", "Modelo", "Marca", "Cor", "Valor", "Caução", "Tipo", "Situação"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -162,12 +128,19 @@ public class TelaConsultaVeiculo extends javax.swing.JInternalFrame {
             jTableVeiculo.getColumnModel().getColumn(3).setResizable(false);
             jTableVeiculo.getColumnModel().getColumn(4).setResizable(false);
             jTableVeiculo.getColumnModel().getColumn(5).setResizable(false);
+            jTableVeiculo.getColumnModel().getColumn(6).setResizable(false);
+            jTableVeiculo.getColumnModel().getColumn(7).setResizable(false);
         }
 
         jButton2.setBackground(new java.awt.Color(0, 136, 204));
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Alterar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setBackground(new java.awt.Color(210, 50, 45));
         jButton3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -210,7 +183,7 @@ public class TelaConsultaVeiculo extends javax.swing.JInternalFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione...", "Placa", "Marca", "Modelo", "Cor", "Situação" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione...", "Placa", "Modelo", "Marca", "Cor", "Tipo", "Situação" }));
 
         jLabel2.setText("Filtro");
 
@@ -225,7 +198,7 @@ public class TelaConsultaVeiculo extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1070, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createSequentialGroup()
@@ -246,7 +219,7 @@ public class TelaConsultaVeiculo extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton3)
@@ -272,48 +245,13 @@ public class TelaConsultaVeiculo extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        CadastroVeiculo tela= new CadastroVeiculo();
-            tela.setVisible(true);
+            tcv = new CadastroVeiculo();
+            tcv.setVisible(true);
+            atualizaAposFechar();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-       try {
-            ArrayList<Veiculo> listaDeVeiculos;
-            ArrayList<Modelo> listaDeModelos;
-            ArrayList<Marca> listaDeMarcas;
-            
-            ClasseDAO dao = new ClasseDAO();
-        
-            listaDeMarcas = dao.recuperarMarca();
-            listaDeModelos = dao.recuperarModelo();
-            listaDeVeiculos = dao.recuperarVeiculo();
-            model = (DefaultTableModel) jTableVeiculo.getModel();
-            
-            model.setNumRows(0);
-            for(int posVeiculo=0; posVeiculo<listaDeVeiculos.size();posVeiculo++){
-                String[] saida = new String[6];
-                Veiculo aux = listaDeVeiculos.get(posVeiculo);
-                saida[0] = aux.getPlaca();
-                for(int pos=0; pos<listaDeModelos.size();pos++){
-                Modelo auxMod = listaDeModelos.get(pos);
-                if((aux.getIdModelo())==(auxMod.getId())){
-                    saida[2] = auxMod.getDescricao();
-                    saida[3] = auxMod.getTipo();
-                    for(int pos2=0; pos2<listaDeMarcas.size();pos2++){
-                    Marca aux2 = listaDeMarcas.get(pos2);
-                    if((auxMod.getIdMarca())==(aux2.getId())){
-                        saida[1] = aux2.getDescricao();
-                    }
-                }
-                }
-                }
-                saida[4] = aux.getCor();
-                saida[5] = aux.getSituacao();
-                model.addRow(saida);
-            }        
-        } catch (Exception erro) {
-            JOptionPane.showMessageDialog(this, erro.getMessage());
-        }
+       atualizar();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -353,10 +291,11 @@ public class TelaConsultaVeiculo extends javax.swing.JInternalFrame {
         jTextFieldPesquisar1.setForeground(new java.awt.Color(0, 0, 0));
         
         if(jComboBox1.getSelectedItem().equals("Placa")) esc = 0; 
-        if(jComboBox1.getSelectedItem().equals("Marca")) esc = 1; 
-        if(jComboBox1.getSelectedItem().equals("Modelo")||jComboBox1.getSelectedItem().equals("Selecione...")) esc = 2; 
+        if(jComboBox1.getSelectedItem().equals("Modelo")||jComboBox1.getSelectedItem().equals("Selecione...")) esc = 1; 
+        if(jComboBox1.getSelectedItem().equals("Marca")) esc = 2; 
         if(jComboBox1.getSelectedItem().equals("Cor")) esc = 3; 
-        if(jComboBox1.getSelectedItem().equals("Situação")) esc = 4; 
+        if(jComboBox1.getSelectedItem().equals("Tipo")) esc = 6; 
+        if(jComboBox1.getSelectedItem().equals("Situação")) esc = 7; 
         jTextFieldPesquisar1.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
@@ -367,6 +306,17 @@ public class TelaConsultaVeiculo extends javax.swing.JInternalFrame {
         trs = new TableRowSorter(model);
         jTableVeiculo.setRowSorter(trs);
     }//GEN-LAST:event_jTextFieldPesquisar1KeyTyped
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        try {
+        tcv = new CadastroVeiculo();
+            tcv.alteracao("Alterar Veículo",(String)jTableVeiculo.getValueAt(jTableVeiculo.getSelectedRow(), 0));
+            tcv.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(TelaConsultaMarca.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        atualizaAposFechar();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -383,4 +333,52 @@ public class TelaConsultaVeiculo extends javax.swing.JInternalFrame {
     private javax.swing.JTable jTableVeiculo;
     private javax.swing.JTextField jTextFieldPesquisar1;
     // End of variables declaration//GEN-END:variables
+public void atualizar(){
+    try {
+            ArrayList<Veiculo> listaDeVeiculos;
+            ArrayList<Modelo> listaDeModelos;
+            ArrayList<Marca> listaDeMarcas;
+            
+            ClasseDAO dao = new ClasseDAO();
+        
+            listaDeMarcas = dao.recuperarMarca();
+            listaDeModelos = dao.recuperarModelo();
+            listaDeVeiculos = dao.recuperarVeiculo();
+            model = (DefaultTableModel) jTableVeiculo.getModel();
+            
+            model.setNumRows(0);
+            for(int posVeiculo=0; posVeiculo<listaDeVeiculos.size();posVeiculo++){
+                String[] saida = new String[8];
+                Veiculo aux = listaDeVeiculos.get(posVeiculo);
+                saida[0] = aux.getPlaca();
+                for(int pos=0; pos<listaDeModelos.size();pos++){
+                Modelo auxMod = listaDeModelos.get(pos);
+                if((aux.getIdModelo())==(auxMod.getId())){
+                    for(int pos2=0; pos2<listaDeMarcas.size();pos2++){
+                    Marca aux2 = listaDeMarcas.get(pos2);
+                    if((auxMod.getIdMarca())==(aux2.getId())){
+                        saida[2] = aux2.getDescricao();
+                    }
+                    saida[1] = auxMod.getDescricao();
+                    saida[6] = auxMod.getTipo(); 
+                }
+                }
+                }
+                saida[3] = aux.getCor();
+                saida[4] = String.valueOf(aux.getValor());
+                saida[5] = String.valueOf(aux.getCaucao());
+                saida[7] = aux.getSituacao();
+                model.addRow(saida);
+            }         
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(this, erro.getMessage());
+        }
+}
+public void atualizaAposFechar(){
+    tcv.addWindowListener(new WindowAdapter() {
+        public void windowClosing(WindowEvent evt) {
+            atualizar();
+        }
+    });  
+}
 }

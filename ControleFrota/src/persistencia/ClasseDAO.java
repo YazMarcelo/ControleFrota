@@ -89,7 +89,10 @@ public class ClasseDAO implements CRUD{
             fileVeiculo = new FileWriter(arquivoVeiculo, true);
             bufferVeiculo = new BufferedWriter(fileVeiculo);
             
-            String aux = objVeiculo.getPlaca()+";"+objVeiculo.getIdMarca()+";"+objVeiculo.getIdModelo()+";"+objVeiculo.getAno()+";"+objVeiculo.getCor()+";"+objVeiculo.getSituacao()+"\n";
+            String aux = objVeiculo.getPlaca()+";"+objVeiculo.getIdMarca()+";"
+            +objVeiculo.getIdModelo()+";"+objVeiculo.getAno()+";"+objVeiculo.getCor()+";"
+            +objVeiculo.getValor()+";"+objVeiculo.getCaucao()+";"+objVeiculo.getSituacao()+"\n";
+            
             bufferVeiculo.write(aux);
             
         } catch (Exception e) {
@@ -110,7 +113,9 @@ public class ClasseDAO implements CRUD{
             fileCliente = new FileWriter(arquivoCliente, true);
             bufferCliente = new BufferedWriter(fileCliente);
             
-            String aux = objCliente.getNome()+";"+objCliente.getCnh()+";"+objCliente.getEmail()+";"+objCliente.getTelefone()+"\n";
+            String aux = objCliente.getNome()+";"+objCliente.getCnh()+";"
+            +objCliente.getEmail()+";"+objCliente.getTipoTel1()+";"
+            +objCliente.getTelefone1()+";"+objCliente.getTipoTel2()+";"+objCliente.getTelefone2()+"\n";
             bufferCliente.write(aux);
             
         } catch (Exception e) {
@@ -119,6 +124,7 @@ public class ClasseDAO implements CRUD{
                 if(bufferCliente != null) bufferCliente.close();
             }
     }
+    
     @Override
     public ArrayList<Marca> recuperarMarca() throws Exception {
         
@@ -191,7 +197,10 @@ public class ClasseDAO implements CRUD{
         objCliente.setNome(vector[0]);
         objCliente.setCnh(vector[1]);
         objCliente.setEmail(vector[2]);
-        objCliente.setTelefone(vector[3]);   
+        objCliente.setTipoTel1(vector[3]);   
+        objCliente.setTelefone1(vector[4]);   
+        objCliente.setTipoTel2(vector[5]);   
+        objCliente.setTelefone2(vector[6]);   
         
        listaDeCliente.add(objCliente);
     }
@@ -216,8 +225,10 @@ public class ClasseDAO implements CRUD{
         objVeiculo.setIdMarca(Integer.parseInt(vector[1]));
         objVeiculo.setIdModelo(Integer.parseInt(vector[2]));
         objVeiculo.setAno(Integer.parseInt(vector[3]));
-        objVeiculo.setCor(vector[4]);       
-        objVeiculo.setSituacao(vector[5]);    
+        objVeiculo.setCor(vector[4]);
+        objVeiculo.setValor(Double.parseDouble(vector[5]));
+        objVeiculo.setCaucao(Double.parseDouble(vector[6]));    
+        objVeiculo.setSituacao(vector[7]);    
         
        listaDeVeiculo.add(objVeiculo);
     }
@@ -273,7 +284,7 @@ public class ClasseDAO implements CRUD{
            for(int pos=0; pos<listaDeModelos.size();pos++){
                Modelo aux = listaDeModelos.get(pos);
                if((Integer.parseInt(id) != aux.getId())){
-                   bw.write(aux.getId()+";"+aux.getDescricao()+";"+aux.getMarca()+";"+aux.getTipo()+"\n");
+                   bw.write(aux.getId()+";"+aux.getDescricao()+";"+aux.getIdMarca()+";"+aux.getTipo()+"\n");
                }
            }
            bw.close();
@@ -291,7 +302,9 @@ public class ClasseDAO implements CRUD{
            for(int pos=0; pos<listaDeClientes.size();pos++){
                Cliente aux = listaDeClientes.get(pos);
                if(!(aux.getCnh().equals(cnh))){
-                   bw.write(aux.getNome()+";"+aux.getCnh()+";"+aux.getEmail()+";"+aux.getTelefone()+"\n");
+                   bw.write(aux.getNome()+";"+aux.getCnh()+";"
+            +aux.getEmail()+";"+aux.getTipoTel1()+";"
+            +aux.getTelefone1()+";"+aux.getTipoTel2()+";"+aux.getTelefone2()+"\n");
                }
            }
            bw.close();
@@ -304,6 +317,24 @@ public class ClasseDAO implements CRUD{
     public void alterarMarca(Object objeto, String id) throws Exception {
         excluirMarca(id);
         incluirMarca(objeto);
+    }
+
+    @Override
+    public void alterarModelo(Object objeto, String id) throws Exception {
+        excluirModelo(id);
+        incluirModelo(objeto);
+    }
+
+    @Override
+    public void alterarCliente(Object objeto, String cnh) throws Exception {
+        excluirCliente(cnh);
+        incluirCliente(objeto);
+    }
+
+    @Override
+    public void alterarVeiculo(Object objeto, String placa) throws Exception {
+        excluirVeiculo(placa);
+        incluirVeiculo(objeto);
     }
     
 }

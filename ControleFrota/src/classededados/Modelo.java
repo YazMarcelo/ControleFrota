@@ -13,7 +13,6 @@ import classededados.Marca;
 public class Modelo {
     private int id = 0;
     private String descricao = "";
-    private Marca marca = null;
     private int idMarca = 0;
     private String tipo = "";
     //private String tipo = "";
@@ -28,10 +27,10 @@ public class Modelo {
     ECONÔMICO;
     }
     
-    public Modelo(int id, String descricao, Marca marca){
+    public Modelo(int id, String descricao, int idMarca){
         this.id = id;
         this.descricao = descricao;
-        this.marca = marca;
+        this.idMarca = idMarca;
     }
 
     public int getId() {
@@ -48,14 +47,6 @@ public class Modelo {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
-    }
-
-    public Marca getMarca() {
-        return marca;
-    }
-
-    public void setMarca(Marca marca) {
-        this.marca = marca;
     }
 
     public String getTipo() {

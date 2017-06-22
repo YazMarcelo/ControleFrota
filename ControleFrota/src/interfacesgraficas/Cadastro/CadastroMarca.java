@@ -177,8 +177,7 @@ public class CadastroMarca extends javax.swing.JFrame {
                         ClasseDAO dao = new ClasseDAO();
                         dao.alterarMarca(obj, idAlteracao);
                         JOptionPane.showMessageDialog(rootPane, "Alteração efetuada com sucesso!");
-                        atualizarJTable();
-                        ClasseDAO daoMarca = new ClasseDAO();                      
+                                             
                         terminado = true;
                         jTextFieldDescricao.setEnabled(false);
                     } catch (Exception e) {
@@ -262,24 +261,24 @@ public class CadastroMarca extends javax.swing.JFrame {
         return terminado;
     }
 
-    public void atualizarJTable() {
-        try {
-            ArrayList<Marca> listaDeMarcas;
-            ClasseDAO agenda = new ClasseDAO();
-            listaDeMarcas = agenda.recuperarMarca();
-            new TelaConsultaMarca().model = (DefaultTableModel) new TelaConsultaMarca().jTableMarca.getModel();
-
-            new TelaConsultaMarca().model.setNumRows(0);
-            for (int pos = 0; pos < listaDeMarcas.size(); pos++) {
-                String[] saida = new String[2];
-                Marca aux = listaDeMarcas.get(pos);
-                saida[0] = String.valueOf(aux.getId());
-                saida[1] = aux.getDescricao();
-                new TelaConsultaMarca().model.addRow(saida);
-            }
-        } catch (Exception erro) {
-            JOptionPane.showMessageDialog(this, erro.getMessage());
-        }
-    }
+//    public void atualizarJTable() {
+//        try {
+//            ArrayList<Marca> listaDeMarcas;
+//            ClasseDAO agenda = new ClasseDAO();
+//            listaDeMarcas = agenda.recuperarMarca();
+//            new TelaConsultaMarca().model = (DefaultTableModel) new TelaConsultaMarca().jTableMarca.getModel();
+//
+//            new TelaConsultaMarca().model.setNumRows(0);
+//            for (int pos = 0; pos < listaDeMarcas.size(); pos++) {
+//                String[] saida = new String[2];
+//                Marca aux = listaDeMarcas.get(pos);
+//                saida[0] = String.valueOf(aux.getId());
+//                saida[1] = aux.getDescricao();
+//                new TelaConsultaMarca().model.addRow(saida);
+//            }
+//        } catch (Exception erro) {
+//            JOptionPane.showMessageDialog(this, erro.getMessage());
+//        }
+//    }
 
 }

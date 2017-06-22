@@ -31,7 +31,7 @@ import javax.swing.table.TableRowSorter;
 import persistencia.ClasseDAO;
 
 public class TelaConsultaMarca extends javax.swing.JInternalFrame {
-    public DefaultTableModel model = null;
+    DefaultTableModel model = null;
     TableRowSorter trs;
     TelaPrincipal desk = null;
     CadastroMarca telaCadastroMarca= null;
@@ -355,15 +355,5 @@ public void atualizaAposFechar(){
         }
     });  
 }
-//public void atualizarDeOutraTela(ArrayList<Marca> alm){
-//    model = (DefaultTableModel) jTableMarca.getModel();
-//            model.setNumRows(0);
-//            for(int pos=0; pos<alm.size();pos++){
-//                String[] saida = new String[2];
-//                Marca aux = alm.get(pos);
-//                saida[0] = String.valueOf(aux.getId());
-//                saida[1] = aux.getDescricao();
-//                model.addRow(saida);
-//            }
-//}
+
 }
