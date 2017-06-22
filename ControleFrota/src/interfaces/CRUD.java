@@ -1,6 +1,8 @@
 package interfaces;
 
 import classededados.Cliente;
+import classededados.Devolucao;
+import classededados.Locacao;
 import classededados.Marca;
 import classededados.Modelo;
 import classededados.Veiculo;
@@ -19,9 +21,15 @@ public interface CRUD {
     void incluirModelo(Object objeto)throws Exception;
     void incluirVeiculo(Object objeto)throws Exception;
     void incluirCliente(Object objeto)throws Exception;
+    void incluirLocacao(Object objeto)throws Exception;
     public ArrayList<Marca> recuperarMarca()throws Exception;
     public ArrayList<Modelo> recuperarModelo()throws Exception;
     public ArrayList<Cliente> recuperarCliente()throws Exception;
     public ArrayList<Veiculo> recuperarVeiculo()throws Exception;
+    public ArrayList<Locacao> recuperarLocacao()throws Exception;
+    void excluirLocacao(String placa)throws Exception;
+    public ArrayList<Devolucao> recuperarDevolucao()throws Exception;
+    void incluirDevolucao(Object objeto)throws Exception;
+
 
 }

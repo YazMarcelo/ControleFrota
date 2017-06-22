@@ -5,6 +5,21 @@
  */
 package interfacesgraficas.Cadastro;
 
+import classededados.Marca;
+import classededados.Modelo;
+import classededados.Veiculo;
+import classededados.Cliente;
+import classededados.GeradorDeId;
+import classededados.Locacao;
+import static interfacesgraficas.Cadastro.TelaLocar.dataDiff;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
+import persistencia.ClasseDAO;
+
 /**
  *
  * @author Pedro
@@ -27,21 +42,363 @@ public class TelaConclusaoLocacao extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jLabel24 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jLabelCliente = new javax.swing.JLabel();
+        jLabelPlaca = new javax.swing.JLabel();
+        jLabelAno = new javax.swing.JLabel();
+        jLabelPerm = new javax.swing.JLabel();
+        jLabelLoc = new javax.swing.JLabel();
+        jLabelVeiculo = new javax.swing.JLabel();
+        jLabelCNH = new javax.swing.JLabel();
+        jLabelTef1 = new javax.swing.JLabel();
+        jLabelTef2 = new javax.swing.JLabel();
+        jLabelCaucao = new javax.swing.JLabel();
+        jLabelCor = new javax.swing.JLabel();
+        jLabelMarca = new javax.swing.JLabel();
+        jLabelTipo = new javax.swing.JLabel();
+        jLabelTotal = new javax.swing.JLabel();
+        jLabelDataLoc = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabelDataDev = new javax.swing.JLabel();
+        jLabelTotal1 = new javax.swing.JLabel();
+
+        jLabel24.setText("texto");
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel2.setText("Dados da Locação");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(127, 127, 127)
+                .addComponent(jLabel2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel2)
+                .addContainerGap(22, Short.MAX_VALUE))
+        );
+
+        jLabel1.setText("Cliente:");
+
+        jLabel3.setText("1° Telefone:");
+
+        jLabel4.setText("Veículo:");
+
+        jLabel5.setText("Placa:");
+
+        jLabel6.setText("Ano:");
+
+        jLabel7.setText("CNH:");
+
+        jLabel8.setText("2° Telefone:");
+
+        jLabel9.setText("Tipo:");
+
+        jLabel10.setText("Marca:");
+
+        jLabel11.setText("Cor:");
+
+        jLabel12.setText("Permanência:");
+
+        jLabel13.setText("Locação:");
+
+        jLabel14.setText("Caução:");
+
+        jLabel15.setText("Valor Total:");
+
+        jButton1.setText("Cancelar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Confirmar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jLabelCliente.setText("texto");
+
+        jLabelPlaca.setText("texto");
+
+        jLabelAno.setText("texto");
+
+        jLabelPerm.setText("texto");
+
+        jLabelLoc.setText("texto");
+
+        jLabelVeiculo.setText("texto");
+
+        jLabelCNH.setText("texto");
+
+        jLabelTef1.setText("texto");
+
+        jLabelTef2.setText("texto");
+
+        jLabelCaucao.setText("texto");
+
+        jLabelCor.setText("texto");
+
+        jLabelMarca.setText("texto");
+
+        jLabelTipo.setText("texto");
+
+        jLabelTotal.setText("texto");
+
+        jLabelDataLoc.setForeground(new java.awt.Color(153, 153, 153));
+        jLabelDataLoc.setText("texto");
+
+        jLabel17.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel17.setText("á");
+
+        jLabelDataDev.setForeground(new java.awt.Color(153, 153, 153));
+        jLabelDataDev.setText("texto");
+
+        jLabelTotal1.setText("R$");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(222, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel15)
+                        .addGap(5, 5, 5)
+                        .addComponent(jLabelTotal1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelTotal)
+                        .addGap(37, 37, 37)))
+                .addGap(47, 47, 47))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(47, 47, 47)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabelTef1))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabelVeiculo))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabelTef2))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabelCliente))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabelCNH))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabelPlaca))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabelAno))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel13)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabelLoc)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabelTipo))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabelMarca))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabelCor))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel14)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabelCaucao)))
+                        .addGap(111, 111, 111))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabelPerm)
+                        .addGap(22, 22, 22)
+                        .addComponent(jLabelDataLoc)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel17)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelDataDev)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabelCliente))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabelCNH))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabelTef1))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabelTef2))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabelVeiculo)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabelTipo))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabelPlaca)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabelMarca))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabelAno)
+                    .addComponent(jLabel11)
+                    .addComponent(jLabelCor))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabelPerm)
+                    .addComponent(jLabelDataLoc)
+                    .addComponent(jLabelDataDev)
+                    .addComponent(jLabel17))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(jLabelLoc)
+                    .addComponent(jLabel14)
+                    .addComponent(jLabelCaucao))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel15)
+                    .addComponent(jLabelTotal)
+                    .addComponent(jLabelTotal1))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addGap(22, 22, 22))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        ClasseDAO dao = new ClasseDAO();            
+        try {
+                        GeradorDeId idLocacao = new GeradorDeId();
+                        Locacao obj = new Locacao();
+                        
+                        ArrayList<Veiculo> listaVeiculos;
+                        listaVeiculos = dao.recuperarVeiculo();
+                        Veiculo aux = new Veiculo();
+                        
+                        obj.setId(idLocacao.getIdLocacao());
+                        obj.setCnhCliente(jLabelCNH.getText());
+                        obj.setPlacaVeiculo(jLabelPlaca.getText());
+                   
+                        for(int pos=0; pos<listaVeiculos.size(); pos++){
+                             aux = listaVeiculos.get(pos);
+                            if((aux.getPlaca()).equals(jLabelPlaca.getText())){
+                                aux.setPlaca(jLabelPlaca.getText());
+                                aux.setSituacao("LOCADO");
+                                aux.setCor(aux.getCor());
+                                aux.setAno(aux.getAno());
+                                aux.setIdMarca(aux.getIdMarca());
+                                aux.setIdModelo(aux.getIdModelo());
+                                aux.setDiaria(aux.getDiaria());
+                                aux.setCaucao(aux.getCaucao());
+                                aux.setValor(aux.getValor());
+                            }
+                        }
+                        obj.setValor(Double.parseDouble(jLabelTotal.getText()));
+                        obj.setDataLoc(jLabelDataLoc.getText());
+                        obj.setDataDev(jLabelDataDev.getText()); 
+                        
+                        dao.alterarVeiculo(aux, jLabelPlaca.getText());
+                        
+                        dao.incluirLocacao(obj);
+                        JOptionPane.showMessageDialog(rootPane, "Locação efetuada com sucesso!");
+                        idLocacao.finalize();
+                    } catch (Exception e) {
+                    }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -79,5 +436,148 @@ public class TelaConclusaoLocacao extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelAno;
+    private javax.swing.JLabel jLabelCNH;
+    private javax.swing.JLabel jLabelCaucao;
+    private javax.swing.JLabel jLabelCliente;
+    private javax.swing.JLabel jLabelCor;
+    private javax.swing.JLabel jLabelDataDev;
+    private javax.swing.JLabel jLabelDataLoc;
+    private javax.swing.JLabel jLabelLoc;
+    private javax.swing.JLabel jLabelMarca;
+    private javax.swing.JLabel jLabelPerm;
+    private javax.swing.JLabel jLabelPlaca;
+    private javax.swing.JLabel jLabelTef1;
+    private javax.swing.JLabel jLabelTef2;
+    private javax.swing.JLabel jLabelTipo;
+    private javax.swing.JLabel jLabelTotal;
+    private javax.swing.JLabel jLabelTotal1;
+    private javax.swing.JLabel jLabelVeiculo;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
+
+    public void finalizarLocacao(String cnh, String placa, String dataLow, String dataHigh) {
+        ClasseDAO dao = new ClasseDAO();
+        ArrayList<Veiculo> listaDeVeiculos;
+        ArrayList<Modelo> listaDeModelos;
+        ArrayList<Marca> listaDeMarcas;
+        ArrayList<Cliente> listaDeClientes;
+        double caucao = 0;
+        double  locacao = 0;
+        try {
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        Date dateInicio = formato.parse(dataLow);
+        Date dateFim = formato.parse(dataHigh);
+        jLabelPerm.setText(String.valueOf(dataDiff(dateInicio, dateFim)));
+        jLabelDataLoc.setText(dataLow);
+        jLabelDataDev.setText(dataHigh);
+        int dias = Integer.parseInt(jLabelPerm.getText());
+                
+            listaDeMarcas = dao.recuperarMarca();
+            listaDeModelos = dao.recuperarModelo();
+            listaDeVeiculos = dao.recuperarVeiculo();
+            listaDeClientes = dao.recuperarCliente();
+            
+            
+
+            for (int posCliente = 0; posCliente < listaDeVeiculos.size(); posCliente++) {
+                Cliente auxC = listaDeClientes.get(posCliente);
+                if (cnh.equals(auxC.getCnh())) {
+                    jLabelCNH.setText(cnh);
+                    jLabelTef1.setText(auxC.getTelefone1());
+                    jLabelTef2.setText(auxC.getTelefone2());
+                    jLabelCliente.setText(auxC.getNome());
+                }
+            }
+            for (int posVeiculo = 0; posVeiculo < listaDeVeiculos.size(); posVeiculo++) {
+                Veiculo aux = listaDeVeiculos.get(posVeiculo);
+                if (placa.equals(aux.getPlaca())) {
+                    jLabelPlaca.setText(aux.getPlaca());
+                    jLabelAno.setText(String.valueOf(aux.getAno()));
+                    jLabelCor.setText(aux.getCor());
+                    caucao = aux.getCaucao();
+                    jLabelCaucao.setText("R$ "+String.valueOf(caucao));
+                    locacao = aux.getDiaria()*dias;
+                    jLabelLoc.setText("R$ "+(String.valueOf(locacao)));
+                    for (int pos = 0; pos < listaDeModelos.size(); pos++) {
+                        Modelo auxMod = listaDeModelos.get(pos);
+                        if ((aux.getIdModelo()) == (auxMod.getId())) {
+                            jLabelVeiculo.setText(auxMod.getDescricao());
+                            jLabelTipo.setText(auxMod.getTipo());
+                            for (int pos2 = 0; pos2 < listaDeMarcas.size(); pos2++) {
+                                Marca aux2 = listaDeMarcas.get(pos2);
+                                if ((auxMod.getIdMarca()) == (aux2.getId())) {
+                                    jLabelMarca.setText(aux2.getDescricao());
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+            jLabelTotal.setText(String.valueOf(caucao+locacao));
+        } catch (Exception e) {
+        }
+
+    }
+    public static int dataDiff(java.util.Date dataLow, java.util.Date dataHigh){
+        GregorianCalendar startTime = new GregorianCalendar();
+        GregorianCalendar endTime = new GregorianCalendar();
+        GregorianCalendar curTime = new GregorianCalendar();
+        GregorianCalendar baseTime = new GregorianCalendar();
+        startTime.setTime(dataLow);
+        endTime.setTime(dataHigh);
+        int dif_multiplier = 1;
+        // Verifica a ordem de inicio das datas
+        if( dataLow.compareTo( dataHigh ) < 0 ){
+            baseTime.setTime(dataHigh);
+            curTime.setTime(dataLow);
+            dif_multiplier = 1;
+        }else{
+            baseTime.setTime(dataLow);
+            curTime.setTime(dataHigh);
+            dif_multiplier = -1;
+        }
+        int result_years = 0;
+        int result_months = 0;
+        int result_days = 0;
+        // Para cada mes e ano, vai de mes em mes pegar o ultimo dia para import acumulando
+        // no total de dias. Ja leva em consideracao ano bissesto
+        while( curTime.get(GregorianCalendar.YEAR) < baseTime.get(GregorianCalendar.YEAR) ||
+               curTime.get(GregorianCalendar.MONTH) < baseTime.get(GregorianCalendar.MONTH)  )
+        {
+            int max_day = curTime.getActualMaximum( GregorianCalendar.DAY_OF_MONTH );
+            result_months += max_day;
+            curTime.add(GregorianCalendar.MONTH, 1);
+        }
+        // Marca que é um saldo negativo ou positivo
+        result_months = result_months*dif_multiplier;
+        // Retirna a diferenca de dias do total dos meses
+        result_days += (endTime.get(GregorianCalendar.DAY_OF_MONTH) - startTime.get(GregorianCalendar.DAY_OF_MONTH));
+        return result_years+result_months+result_days;
+    }
+    public void fechar(JInternalFrame frame){
+        frame.dispose();
+    }
+
 }

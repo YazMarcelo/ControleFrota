@@ -9,7 +9,11 @@ import classededados.Cliente;
 import classededados.Marca;
 import classededados.Modelo;
 import classededados.Veiculo;
+import interfacesgraficas.Consulta.TelaConsultaCliente;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,70 +29,24 @@ import persistencia.ClasseDAO;
  * @author aluno
  */
 public class TelaLocar extends javax.swing.JInternalFrame {
+
     DefaultTableModel model = null;
     DefaultTableModel modelCliente = null;
     TableRowSorter trs;
+    CadastroCliente tcc;
+    TelaConclusaoLocacao tcl;
+    int esc;
+    int esc2;
+        
+
     /**
      * Creates new form TelaLocar
      */
     public TelaLocar() {
         initComponents();
         jFormattedTextField2.setEditable(false);
-        
-        try {
-            ArrayList<Veiculo> listaDeVeiculos;
-            ArrayList<Modelo> listaDeModelos;
-            ArrayList<Marca> listaDeMarcas;
-            
-            ClasseDAO dao = new ClasseDAO();
-        
-            listaDeMarcas = dao.recuperarMarca();
-            listaDeModelos = dao.recuperarModelo();
-            listaDeVeiculos = dao.recuperarVeiculo();
-            model = (DefaultTableModel) jTableVeiculo.getModel();
-            
-            model.setNumRows(0);
-            for(int posVeiculo=0; posVeiculo<listaDeVeiculos.size();posVeiculo++){
-                String[] saida = new String[8];
-                Veiculo aux = listaDeVeiculos.get(posVeiculo);
-                saida[0] = aux.getPlaca();
-                for(int pos=0; pos<listaDeModelos.size();pos++){
-                Modelo auxMod = listaDeModelos.get(pos);
-                if((aux.getIdModelo())==(auxMod.getId())){
-                    for(int pos2=0; pos2<listaDeMarcas.size();pos2++){
-                    Marca aux2 = listaDeMarcas.get(pos2);
-                    if((auxMod.getIdMarca())==(aux2.getId())){
-                        saida[2] = aux2.getDescricao();
-                    }
-                    saida[1] = auxMod.getDescricao();
-                }
-                }
-                }
-                saida[3] = aux.getCor();
-                String disp = aux.getSituacao();
-                if(disp.equals("DISPONIVEL")){
-                    model.addRow(saida);
-                }else{
-                
-                }
-            }
-            
-            ArrayList<Cliente> listaDeClientes;
-            ClasseDAO daoCliente = new ClasseDAO();
-            listaDeClientes = daoCliente.recuperarCliente();
-            modelCliente = (DefaultTableModel) jTableCliente.getModel();
-            
-            modelCliente.setNumRows(0);
-            for(int pos=0; pos<listaDeClientes.size();pos++){
-                String[] saida = new String[2];
-                Cliente aux = listaDeClientes.get(pos);
-                saida[0] = aux.getNome();
-                saida[1] = aux.getCnh();
-                modelCliente.addRow(saida);
-            }
-        } catch (Exception erro) {
-            JOptionPane.showMessageDialog(this, erro.getMessage());
-        }
+        atualizarTableVeiculo();
+        atualizarTableCliente();
     }
 
     /**
@@ -116,18 +74,17 @@ public class TelaLocar extends javax.swing.JInternalFrame {
         jTableVeiculo = new javax.swing.JTable();
         jTextFieldPesquisar1 = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jComboBoxCli = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        jComboBoxVei = new javax.swing.JComboBox<>();
         jPanel5 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jFormattedTextField1 = new javax.swing.JFormattedTextField();
         jLabel8 = new javax.swing.JLabel();
         jFormattedTextField2 = new javax.swing.JFormattedTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
@@ -152,8 +109,6 @@ public class TelaLocar extends javax.swing.JInternalFrame {
         jLabelCaucao = new javax.swing.JLabel();
         jLabel36 = new javax.swing.JLabel();
         jLabelPlaca = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabelDias = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -188,9 +143,9 @@ public class TelaLocar extends javax.swing.JInternalFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addContainerGap()
                 .addComponent(jLabel4)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         jTableCliente.setModel(new javax.swing.table.DefaultTableModel(
@@ -215,6 +170,8 @@ public class TelaLocar extends javax.swing.JInternalFrame {
             jTableCliente.getColumnModel().getColumn(1).setResizable(false);
         }
 
+        jButton3.setBackground(new java.awt.Color(0, 136, 204));
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Selecionar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -245,6 +202,8 @@ public class TelaLocar extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Buscar Clientes");
 
+        jButton4.setBackground(new java.awt.Color(0, 136, 204));
+        jButton4.setForeground(new java.awt.Color(255, 255, 255));
         jButton4.setText("Selecionar");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -299,54 +258,99 @@ public class TelaLocar extends javax.swing.JInternalFrame {
 
         jLabel9.setText("Veículos Disponíveis");
 
+        jButton2.setBackground(new java.awt.Color(4, 165, 30));
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("Atualizar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton5.setBackground(new java.awt.Color(0, 136, 204));
+        jButton5.setForeground(new java.awt.Color(255, 255, 255));
+        jButton5.setText("+ Novo");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Filtro:");
+
+        jComboBoxCli.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione...", "Nome", "CNH" }));
+
+        jLabel2.setText("Filtro:");
+
+        jComboBoxVei.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione...", "Placa", "Modelo", "Marca", "Cor" }));
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton3))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jTextFieldPesquisar)
+                    .addComponent(jSeparator1)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jTextFieldPesquisar1)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jTextFieldPesquisar)
-                            .addComponent(jSeparator1)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jTextFieldPesquisar1)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
-                                    .addGroup(jPanel4Layout.createSequentialGroup()
-                                        .addGap(270, 270, 270)
-                                        .addComponent(jButton4))
-                                    .addComponent(jLabel9))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                        .addComponent(jButton2)
+                        .addGap(197, 197, 197)
+                        .addComponent(jButton4)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jComboBoxVei, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jComboBoxCli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel5)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel1)
+                    .addComponent(jComboBoxCli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTextFieldPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton3)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton3)
+                    .addComponent(jButton5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel9)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(jComboBoxVei, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTextFieldPesquisar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton4)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton4)
+                    .addComponent(jButton2))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -379,14 +383,6 @@ public class TelaLocar extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel1.setText("Valor:");
-
-        jLabel2.setText("+");
-
-        jLabel3.setText("Caução:");
-
-        jLabel11.setText("Total:");
-
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel14.setText("Informações do Cliente");
 
@@ -412,10 +408,6 @@ public class TelaLocar extends javax.swing.JInternalFrame {
         jLabel34.setText("Caução:");
 
         jLabel36.setText("Placa:");
-
-        jLabel6.setText("Dias:");
-
-        jLabelDias.setText("jLabel10");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -446,64 +438,47 @@ public class TelaLocar extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(43, 43, 43)
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(120, 120, 120))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel19)
+                    .addComponent(jLabel19)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel5Layout.createSequentialGroup()
-                                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                                .addComponent(jLabel22)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jLabelMarca))
-                                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                                .addComponent(jLabel36)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jLabelPlaca)))
-                                        .addGap(102, 102, 102)
-                                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                                .addComponent(jLabel28)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jLabelModelo))
-                                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                                .addComponent(jLabel24)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jLabelAno)))
-                                        .addGap(156, 156, 156)
-                                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                                .addComponent(jLabel34)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jLabelCaucao))
-                                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                                .addComponent(jLabel30)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jLabelTipo)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jLabel32)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jLabelCor)
-                                                .addGap(56, 56, 56))))
-                                    .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 641, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(25, 25, 25))))
+                                        .addComponent(jLabel22)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabelMarca))
+                                    .addGroup(jPanel5Layout.createSequentialGroup()
+                                        .addComponent(jLabel36)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabelPlaca)))
+                                .addGap(102, 102, 102)
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel5Layout.createSequentialGroup()
+                                        .addComponent(jLabel28)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabelModelo))
+                                    .addGroup(jPanel5Layout.createSequentialGroup()
+                                        .addComponent(jLabel24)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabelAno)))
+                                .addGap(156, 156, 156)
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel5Layout.createSequentialGroup()
+                                        .addComponent(jLabel34)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabelCaucao))
+                                    .addGroup(jPanel5Layout.createSequentialGroup()
+                                        .addComponent(jLabel30)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabelTipo)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel32)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabelCor)
+                                        .addGap(56, 56, 56))))
+                            .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 641, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(25, 25, 25))
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(71, 71, 71)
                 .addComponent(jLabel7)
@@ -513,10 +488,6 @@ public class TelaLocar extends javax.swing.JInternalFrame {
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(128, 128, 128)
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabelDias)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
@@ -562,26 +533,17 @@ public class TelaLocar extends javax.swing.JInternalFrame {
                         .addComponent(jLabelAno)))
                 .addGap(50, 50, 50)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
                     .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabelDias)
                     .addComponent(jLabel7))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addContainerGap())
+                .addGap(49, 49, 49))
         );
 
+        jButton1.setBackground(new java.awt.Color(0, 136, 204));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Locar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -612,9 +574,9 @@ public class TelaLocar extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(28, 28, 28)
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(jButton1)
-                        .addContainerGap(22, Short.MAX_VALUE))))
+                        .addContainerGap(38, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -632,7 +594,20 @@ public class TelaLocar extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextFieldPesquisar1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldPesquisar1KeyTyped
-        // TODO add your handling code here:
+
+        if(jComboBoxVei.getSelectedItem().equals("Placa")) esc = 0; 
+        if(jComboBoxVei.getSelectedItem().equals("Modelo")||jComboBoxVei.getSelectedItem().equals("Selecione...")) esc = 1; 
+        if(jComboBoxVei.getSelectedItem().equals("Marca")) esc = 2; 
+        if(jComboBoxVei.getSelectedItem().equals("Cor")) esc = 3; 
+        jTextFieldPesquisar1.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+                trs.setRowFilter(RowFilter.regexFilter("(?)"+jTextFieldPesquisar1.getText(), esc));
+            }
+        });
+        trs = new TableRowSorter(model);
+        jTableVeiculo.setRowSorter(trs);
     }//GEN-LAST:event_jTextFieldPesquisar1KeyTyped
 
     private void jTextFieldPesquisar1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldPesquisar1KeyReleased
@@ -644,81 +619,64 @@ public class TelaLocar extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextFieldPesquisar1ActionPerformed
 
     private void jTextFieldPesquisar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldPesquisar1MouseClicked
-        // TODO add your handling code here:
+        jTextFieldPesquisar1.setForeground(new java.awt.Color(0, 0, 0));
+        jTextFieldPesquisar1.setText("");
     }//GEN-LAST:event_jTextFieldPesquisar1MouseClicked
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        String placaSelecionada = (String)jTableVeiculo.getValueAt(jTableVeiculo.getSelectedRow(), 0);
+        String placaSelecionada = (String) jTableVeiculo.getValueAt(jTableVeiculo.getSelectedRow(), 0);
         try {
             ArrayList<Veiculo> listaDeVeiculos;
             ArrayList<Modelo> listaDeModelos;
             ArrayList<Marca> listaDeMarcas;
-            
+
             ClasseDAO dao = new ClasseDAO();
-        
+
             listaDeMarcas = dao.recuperarMarca();
             listaDeModelos = dao.recuperarModelo();
             listaDeVeiculos = dao.recuperarVeiculo();
-            for(int posVeiculo=0; posVeiculo<listaDeVeiculos.size();posVeiculo++){
+            for (int posVeiculo = 0; posVeiculo < listaDeVeiculos.size(); posVeiculo++) {
                 String saida;
                 Veiculo aux = listaDeVeiculos.get(posVeiculo);
                 saida = aux.getPlaca();
-                if(saida.equals(placaSelecionada)){
+                if (saida.equals(placaSelecionada)) {
                     jLabelAno.setText(String.valueOf(aux.getAno()));
                     jLabelPlaca.setText(aux.getPlaca());
                     jLabelCor.setText(aux.getCor());
                     jLabelCaucao.setText(String.valueOf(aux.getCaucao()));
-                for(int pos=0; pos<listaDeModelos.size();pos++){
-                Modelo auxMod = listaDeModelos.get(pos);
-                if((aux.getIdModelo())==(auxMod.getId())){
-                    jLabelModelo.setText(auxMod.getDescricao());
-                    jLabelTipo.setText(auxMod.getTipo());
-                    for(int pos2=0; pos2<listaDeMarcas.size();pos2++){
-                    Marca aux2 = listaDeMarcas.get(pos2);
-                    if((auxMod.getIdMarca())==(aux2.getId())){
-                        jLabelMarca.setText(aux2.getDescricao());
+                    for (int pos = 0; pos < listaDeModelos.size(); pos++) {
+                        Modelo auxMod = listaDeModelos.get(pos);
+                        if ((aux.getIdModelo()) == (auxMod.getId())) {
+                            jLabelModelo.setText(auxMod.getDescricao());
+                            jLabelTipo.setText(auxMod.getTipo());
+                            for (int pos2 = 0; pos2 < listaDeMarcas.size(); pos2++) {
+                                Marca aux2 = listaDeMarcas.get(pos2);
+                                if ((auxMod.getIdMarca()) == (aux2.getId())) {
+                                    jLabelMarca.setText(aux2.getDescricao());
+                                }
+                            }
+                        }
                     }
                 }
-                }
-                }
-                }
             }
-            
-            
-            
-//            ArrayList<Veiculo> listaDeVeiculos;
-//            ClasseDAO daoVeiculo = new ClasseDAO();
-//            listaDeVeiculos = daoVeiculo.recuperarVeiculo();
-//            
-//            for(int pos=0; pos<listaDeVeiculos.size();pos++){
-//                String saida;
-//                Veiculo aux = listaDeVeiculos.get(pos);
-//                saida = aux.getPlaca();
-//                if(saida.equals(placaSelecionada)){
-//                    jLabelAno.setText(String.valueOf(aux.getAno()));
-//                    jLabelPlaca.setText(aux.getPlaca());
-//                    jLabelModelo.setText(aux.getModelo());
-//                    jLabelMarca.setText(aux.getMarca());
-//                    jLabelCor.setText(aux.getCor());
-//                    jLabelCaucao.setText(aux.getCaucao()+"%");
-//                    JOptionPane.showMessageDialog(rootPane, aux.getMarcas());
-//                }
-//            }
         } catch (Exception e) {
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jTextFieldPesquisarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldPesquisarKeyTyped
-        //        jTextFieldPesquisar.setForeground(new java.awt.Color(0, 0, 0));
-        //        jTextFieldPesquisar.addKeyListener(new java.awt.event.KeyAdapter() {
-            //            @Override
-            //            public void keyReleased(KeyEvent e) {
-                //
-                //                trs.setRowFilter(RowFilter.regexFilter("(?)"+jTextFieldPesquisar.getText(),1));
-                //            }
-            //        });
-    //        trs = new TableRowSorter(model);
-    //        jTable1.setRowSorter(trs);
+                jTextFieldPesquisar.setForeground(new java.awt.Color(0, 0, 0));
+                model = (DefaultTableModel) jTableCliente.getModel();
+        if(jComboBoxVei.getSelectedItem().equals("Nome")) esc2 = 0; 
+        if(jComboBoxVei.getSelectedItem().equals("CNH")||jComboBoxVei.getSelectedItem().equals("Selecione...")) esc2 = 1; 
+                jTextFieldPesquisar.addKeyListener(new java.awt.event.KeyAdapter() {
+                    @Override
+                    public void keyReleased(KeyEvent e) {
+        
+                        trs.setRowFilter(RowFilter.regexFilter("(?)"+jTextFieldPesquisar.getText(),esc2));
+                    }
+                });
+                trs = new TableRowSorter(model);
+                jTableCliente.setRowSorter(trs);
     }//GEN-LAST:event_jTextFieldPesquisarKeyTyped
 
     private void jTextFieldPesquisarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldPesquisarKeyReleased
@@ -730,21 +688,22 @@ public class TelaLocar extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextFieldPesquisarActionPerformed
 
     private void jTextFieldPesquisarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldPesquisarMouseClicked
+        jTextFieldPesquisar.setForeground(new java.awt.Color(0, 0, 0));
         jTextFieldPesquisar.setText("");
     }//GEN-LAST:event_jTextFieldPesquisarMouseClicked
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        String cnhSelecionada = (String)jTableCliente.getValueAt(jTableCliente.getSelectedRow(), 1);
+        String cnhSelecionada = (String) jTableCliente.getValueAt(jTableCliente.getSelectedRow(), 1);
         try {
             ArrayList<Cliente> listaDeClientes;
             ClasseDAO daoCliente = new ClasseDAO();
             listaDeClientes = daoCliente.recuperarCliente();
-            
-            for(int pos=0; pos<listaDeClientes.size();pos++){
+
+            for (int pos = 0; pos < listaDeClientes.size(); pos++) {
                 String saida;
                 Cliente aux = listaDeClientes.get(pos);
                 saida = aux.getCnh();
-                if(saida.equals(cnhSelecionada)){
+                if (saida.equals(cnhSelecionada)) {
                     jLabelNome.setText(aux.getNome());
                     jLabelCnh.setText(aux.getCnh());
                     jLabelTelefone.setText(aux.getTipoTel1() + " - " + aux.getTelefone1());
@@ -752,42 +711,59 @@ public class TelaLocar extends javax.swing.JInternalFrame {
             }
         } catch (Exception e) {
         }
-            
 
-
-    //jTextFieldModelo.setText((String)jTable1.getValueAt(jTable1.getSelectedRow(), 1));
+        //jTextFieldModelo.setText((String)jTable1.getValueAt(jTable1.getSelectedRow(), 1));
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jFormattedTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jFormattedTextField1KeyTyped
-       if(!(jFormattedTextField1.getText()).equals("")){
-           jFormattedTextField2.setEditable(true);
-       }
+        if (!(jFormattedTextField1.getText()).equals("")) {
+            jFormattedTextField2.setEditable(true);
+        }
     }//GEN-LAST:event_jFormattedTextField1KeyTyped
 
     private void jFormattedTextField2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jFormattedTextField2KeyTyped
-    try {
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-        Date dataLow = formato.parse("10/06/2017");
-        Date dataHight = formato.parse("10/08/2017");
-        
-        jLabelDias.setText(String.valueOf(dataDiff(dataLow, dataHight)));
-        } catch (Exception e) {
-        } 
+
     }//GEN-LAST:event_jFormattedTextField2KeyTyped
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+        if (jLabelNome.getText().equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "Selecione um Cliente!");
+        } else if (jLabelPlaca.getText().equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "Selecione um Veículo!");
+        } else if ((jFormattedTextField1.getText().equals("  /  /    "))) {
+            JOptionPane.showMessageDialog(rootPane, "Verifique os campos de permanência!");
+        } else if (jFormattedTextField1.getText().equals("  /  /    ")) {
+            JOptionPane.showMessageDialog(rootPane, "Verifique os campos de permanência!");
+        } else {
+            tcl = new TelaConclusaoLocacao();
+            tcl.finalizarLocacao(jLabelCnh.getText(), jLabelPlaca.getText(), jFormattedTextField1.getText(), jFormattedTextField2.getText());
+            tcl.setVisible(true);
+        }
+        atualizaAposFecharTableVeiculo();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        tcc = new CadastroCliente();
+        tcc.setVisible(true);
+        atualizaAposFecharTableCliente();
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        atualizarTableVeiculo();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JComboBox<String> jComboBoxCli;
+    private javax.swing.JComboBox<String> jComboBoxVei;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel19;
@@ -797,14 +773,12 @@ public class TelaLocar extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -812,7 +786,6 @@ public class TelaLocar extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabelCaucao;
     private javax.swing.JLabel jLabelCnh;
     private javax.swing.JLabel jLabelCor;
-    private javax.swing.JLabel jLabelDias;
     private javax.swing.JLabel jLabelMarca;
     private javax.swing.JLabel jLabelModelo;
     private javax.swing.JLabel jLabelNome;
@@ -831,13 +804,10 @@ public class TelaLocar extends javax.swing.JInternalFrame {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JTable jTableCliente;
     private javax.swing.JTable jTableVeiculo;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextFieldPesquisar;
     private javax.swing.JTextField jTextFieldPesquisar1;
     // End of variables declaration//GEN-END:variables
-    public static int dataDiff(java.util.Date dataLow, java.util.Date dataHigh){
+    public static int dataDiff(java.util.Date dataLow, java.util.Date dataHigh) {
         GregorianCalendar startTime = new GregorianCalendar();
         GregorianCalendar endTime = new GregorianCalendar();
         GregorianCalendar curTime = new GregorianCalendar();
@@ -846,11 +816,11 @@ public class TelaLocar extends javax.swing.JInternalFrame {
         endTime.setTime(dataHigh);
         int dif_multiplier = 1;
         // Verifica a ordem de inicio das datas
-        if( dataLow.compareTo( dataHigh ) < 0 ){
+        if (dataLow.compareTo(dataHigh) < 0) {
             baseTime.setTime(dataHigh);
             curTime.setTime(dataLow);
             dif_multiplier = 1;
-        }else{
+        } else {
             baseTime.setTime(dataLow);
             curTime.setTime(dataHigh);
             dif_multiplier = -1;
@@ -860,17 +830,90 @@ public class TelaLocar extends javax.swing.JInternalFrame {
         int result_days = 0;
         // Para cada mes e ano, vai de mes em mes pegar o ultimo dia para import acumulando
         // no total de dias. Ja leva em consideracao ano bissesto
-        while( curTime.get(GregorianCalendar.YEAR) < baseTime.get(GregorianCalendar.YEAR) ||
-               curTime.get(GregorianCalendar.MONTH) < baseTime.get(GregorianCalendar.MONTH)  )
-        {
-            int max_day = curTime.getActualMaximum( GregorianCalendar.DAY_OF_MONTH );
+        while (curTime.get(GregorianCalendar.YEAR) < baseTime.get(GregorianCalendar.YEAR)
+                || curTime.get(GregorianCalendar.MONTH) < baseTime.get(GregorianCalendar.MONTH)) {
+            int max_day = curTime.getActualMaximum(GregorianCalendar.DAY_OF_MONTH);
             result_months += max_day;
             curTime.add(GregorianCalendar.MONTH, 1);
         }
         // Marca que é um saldo negativo ou positivo
-        result_months = result_months*dif_multiplier;
+        result_months = result_months * dif_multiplier;
         // Retirna a diferenca de dias do total dos meses
         result_days += (endTime.get(GregorianCalendar.DAY_OF_MONTH) - startTime.get(GregorianCalendar.DAY_OF_MONTH));
-        return result_years+result_months+result_days;
+        return result_years + result_months + result_days;
+    }
+    public void atualizarTableCliente(){
+        try {
+            ArrayList<Cliente> listaDeClientes;
+            ClasseDAO daoCliente = new ClasseDAO();
+            listaDeClientes = daoCliente.recuperarCliente();
+            modelCliente = (DefaultTableModel) jTableCliente.getModel();
+
+            modelCliente.setNumRows(0);
+            for (int pos = 0; pos < listaDeClientes.size(); pos++) {
+                String[] saida = new String[2];
+                Cliente aux = listaDeClientes.get(pos);
+                saida[0] = aux.getNome();
+                saida[1] = aux.getCnh();
+                modelCliente.addRow(saida);
+            }
+        } catch (Exception e) {
+        }
+    }
+    public void atualizarTableVeiculo(){
+        try {
+            ArrayList<Veiculo> listaDeVeiculos;
+            ArrayList<Modelo> listaDeModelos;
+            ArrayList<Marca> listaDeMarcas;
+
+            ClasseDAO dao = new ClasseDAO();
+
+            listaDeMarcas = dao.recuperarMarca();
+            listaDeModelos = dao.recuperarModelo();
+            listaDeVeiculos = dao.recuperarVeiculo();
+            model = (DefaultTableModel) jTableVeiculo.getModel();
+
+            model.setNumRows(0);
+            for (int posVeiculo = 0; posVeiculo < listaDeVeiculos.size(); posVeiculo++) {
+                String[] saida = new String[8];
+                Veiculo aux = listaDeVeiculos.get(posVeiculo);
+                saida[0] = aux.getPlaca();
+                for (int pos = 0; pos < listaDeModelos.size(); pos++) {
+                    Modelo auxMod = listaDeModelos.get(pos);
+                    if ((aux.getIdModelo()) == (auxMod.getId())) {
+                        for (int pos2 = 0; pos2 < listaDeMarcas.size(); pos2++) {
+                            Marca aux2 = listaDeMarcas.get(pos2);
+                            if ((auxMod.getIdMarca()) == (aux2.getId())) {
+                                saida[2] = aux2.getDescricao();
+                            }
+                            saida[1] = auxMod.getDescricao();
+                        }
+                    }
+                }
+                saida[3] = aux.getCor();
+                String disp = aux.getSituacao();
+                if (disp.equals("DISPONIVEL")) {
+                    model.addRow(saida);
+                } else {
+
+                }
+            }
+        } catch (Exception e) {
+        }
+    }
+    
+    public void atualizaAposFecharTableCliente(){
+    tcc.addWindowListener(new WindowAdapter() {
+        public void windowClosing(WindowEvent evt) {
+            atualizarTableCliente();
+        }
+    });  
+    }
+    public void atualizaAposFecharTableVeiculo(){
+    tcl.addWindowListener(new WindowAdapter() {
+        public void windowClosing(WindowEvent evt) {
+            atualizarTableVeiculo();
+        }
+    });  
     }
 }

@@ -9,6 +9,8 @@ import classededados.Marca;
 import classededados.Modelo;
 import classededados.Veiculo;
 import classededados.Cliente;
+import classededados.Devolucao;
+import classededados.Locacao;
 import interfaces.CRUD;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -35,6 +37,8 @@ public class ClasseDAO implements CRUD{
     private String arquivoModelo = mc+"\\Modelo.csv";
     private String arquivoVeiculo = mc+"\\Veiculos.csv";
     private String arquivoCliente = mc+"\\Cliente.csv";
+    private String arquivoLocacao = mc+"\\Locacao.csv";
+    private String arquivoDevolucao = mc+"\\Devolucao.csv";
     
     @Override
     public void incluirMarca(Object objeto) throws Exception {
@@ -91,7 +95,7 @@ public class ClasseDAO implements CRUD{
             
             String aux = objVeiculo.getPlaca()+";"+objVeiculo.getIdMarca()+";"
             +objVeiculo.getIdModelo()+";"+objVeiculo.getAno()+";"+objVeiculo.getCor()+";"
-            +objVeiculo.getValor()+";"+objVeiculo.getCaucao()+";"+objVeiculo.getSituacao()+"\n";
+            +objVeiculo.getValor()+";"+objVeiculo.getCaucao()+";"+objVeiculo.getSituacao()+";"+objVeiculo.getDiaria()+"\n";
             
             bufferVeiculo.write(aux);
             
@@ -229,6 +233,7 @@ public class ClasseDAO implements CRUD{
         objVeiculo.setValor(Double.parseDouble(vector[5]));
         objVeiculo.setCaucao(Double.parseDouble(vector[6]));    
         objVeiculo.setSituacao(vector[7]);    
+        objVeiculo.setDiaria(Double.parseDouble(vector[8]));   
         
        listaDeVeiculo.add(objVeiculo);
     }
@@ -266,7 +271,9 @@ public class ClasseDAO implements CRUD{
            for(int pos=0; pos<listaDeVeiculos.size();pos++){
                Veiculo aux = listaDeVeiculos.get(pos);
                if(!(aux.getPlaca().equals(placa))){
-                   bw.write(aux.getPlaca()+";"+aux.getIdMarca()+";"+aux.getIdModelo()+";"+aux.getAno()+";"+aux.getCor()+";"+aux.getSituacao()+"\n");
+                   bw.write(aux.getPlaca()+";"+aux.getIdMarca()+";"
+            +aux.getIdModelo()+";"+aux.getAno()+";"+aux.getCor()+";"
+            +aux.getValor()+";"+aux.getCaucao()+";"+aux.getSituacao()+";"+aux.getDiaria()+"\n");
                }
            }
            bw.close();
@@ -335,6 +342,119 @@ public class ClasseDAO implements CRUD{
     public void alterarVeiculo(Object objeto, String placa) throws Exception {
         excluirVeiculo(placa);
         incluirVeiculo(objeto);
+    }
+
+    @Override
+    public void incluirLocacao(Object objeto) throws Exception {
+         Locacao objLocacao = (Locacao)(objeto);
+        
+        FileWriter fileLocacao = null;
+        BufferedWriter bufferLocacao = null;
+        
+        try {
+           fileLocacao = new FileWriter(arquivoLocacao, true);
+           bufferLocacao = new BufferedWriter(fileLocacao);
+           
+           String aux = objLocacao.getId()+";"+objLocacao.getCnhCliente()+";"+objLocacao.getPlacaVeiculo()+
+                   ";"+objLocacao.getValor()+";"+objLocacao.getDataLoc()+";"+objLocacao.getDataDev()+"\n";
+           bufferLocacao.write(aux);
+           
+        } catch (Exception e) {
+            throw e;
+        }finally{
+            if (bufferLocacao != null) bufferLocacao.close();
+        }
+    }
+
+    @Override
+    public ArrayList<Locacao> recuperarLocacao() throws Exception {
+        ArrayList<Locacao> listaDeLocacao = new ArrayList<>();
+        Locacao objLocacao = null;            
+            
+    FileReader frLocacao = new FileReader(arquivoLocacao);
+    BufferedReader br = new BufferedReader(frLocacao);
+    String linha = "";
+    
+    while((linha=br.readLine())!= null){
+        String vector[] = linha.split(";");
+        
+        objLocacao = new Locacao();
+        objLocacao.setId(Integer.parseInt(vector[0]));
+        objLocacao.setCnhCliente(vector[1]);
+        objLocacao.setPlacaVeiculo(vector[2]);
+        objLocacao.setValor(Double.parseDouble(vector[3]));
+        objLocacao.setDataLoc(vector[4]);
+        objLocacao.setDataDev(vector[5]);   
+        
+       listaDeLocacao.add(objLocacao);
+    }
+    br.close();
+    return listaDeLocacao;
+    }
+
+    @Override
+    public ArrayList<Devolucao> recuperarDevolucao() throws Exception {
+        
+        ArrayList<Devolucao> listaDev = new ArrayList<>();
+        Devolucao objDev = null;            
+            
+    FileReader frDev = new FileReader(arquivoDevolucao);
+    BufferedReader br = new BufferedReader(frDev);
+    String linha = "";
+    
+    while((linha=br.readLine())!= null){
+        String vector[] = linha.split(";");
+        
+        objDev = new Devolucao();
+        objDev.setPlaca(vector[0]);
+        objDev.setSituação(vector[1]);
+        objDev.setObservacao(vector[2]);   
+        objDev.setDataDev(vector[3]);   
+        
+       listaDev.add(objDev);
+    }
+    return listaDev;
+    }
+
+    @Override
+    public void incluirDevolucao(Object objeto) throws Exception {
+        Devolucao objDevolucao = (Devolucao)(objeto);
+        
+        FileWriter fileDev = null;
+        BufferedWriter bufferDev = null;
+        
+        try {
+           fileDev = new FileWriter(arquivoDevolucao, true);
+           bufferDev = new BufferedWriter(fileDev);
+           
+           String aux = objDevolucao.getPlaca()+";"+objDevolucao.getSituação()+";"+objDevolucao.getObservacao()+";"+objDevolucao.getDataDev()+"\n";
+           bufferDev.write(aux);
+           
+        } catch (Exception e) {
+            throw e;
+        }finally{
+            if (bufferDev != null) bufferDev.close();
+        }
+    }
+
+    @Override
+    public void excluirLocacao(String placa) throws Exception {
+        Locacao objMarca;
+        try {
+           ArrayList<Locacao> listaLoc = this.recuperarLocacao();
+           FileWriter fw = new FileWriter(arquivoLocacao);
+           BufferedWriter bw = new BufferedWriter(fw);
+           for(int pos=0; pos<listaLoc.size();pos++){
+               Locacao aux = listaLoc.get(pos);
+               if(!(placa).equals(aux.getPlacaVeiculo())){
+                   bw.write(aux.getId()+";"+aux.getCnhCliente()+";"+aux.getPlacaVeiculo()+
+                   ";"+aux.getValor()+";"+aux.getDataLoc()+";"+aux.getDataDev()+"\n");
+               }
+           }
+           bw.close();
+        } catch (Exception erro) {
+            throw erro;
+        }
     }
     
 }

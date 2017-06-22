@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class GeradorDeId {
     private int idCliente = 0;
-    private int idVeiculo = 0;
+    private int idLocacao = 0;
     private int idMarca = 0;
     private int idModelo = 0;
     
@@ -32,7 +32,7 @@ public class GeradorDeId {
         String linha = brIds.readLine();
         String vetorIds[] = linha.split(";");
         idCliente = Integer.parseInt(vetorIds[0]);
-        idVeiculo = Integer.parseInt(vetorIds[1]);
+        idLocacao = Integer.parseInt(vetorIds[1]);
         idMarca = Integer.parseInt(vetorIds[2]);
         idModelo = Integer.parseInt(vetorIds[3]);
         brIds.close();
@@ -45,8 +45,8 @@ public class GeradorDeId {
         return ++idCliente;
     }
 
-    public int getIdVeiculo() {
-        return ++idVeiculo;
+    public int getIdLocacao() {
+        return ++idLocacao;
     }
 
     public int getIdMarca() {
@@ -60,7 +60,7 @@ public class GeradorDeId {
     public void finalize() throws IOException{
         FileWriter fwIds = new FileWriter(arquivoIds,false);
         BufferedWriter bwIds = new BufferedWriter(fwIds);
-        String saida = idVeiculo+";"+idCliente+";"+idMarca+";"+idModelo;
+        String saida = idLocacao+";"+idCliente+";"+idMarca+";"+idModelo;
         bwIds.write(saida);
         bwIds.close();
     }

@@ -9,7 +9,9 @@ public class Veiculo {
     private String chassi = "";
     private double caucao = 0;
     private double valor = 0;
-    
+    private double diaria = 0;
+
+
     public enum UserStatus {
     DISPONIVEL,
     DEVOLVIDO,
@@ -79,5 +81,14 @@ public class Veiculo {
     public void setIdModelo(int idModelo) {
         this.idModelo = idModelo;
     }
+    
+    public double getDiaria() {
+        return diaria;
+    }
+
+    public void setDiaria(double diaria) {
+        this.diaria = diaria;
+    }
+    
     
 }

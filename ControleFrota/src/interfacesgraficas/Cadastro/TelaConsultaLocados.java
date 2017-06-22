@@ -3,20 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package interfacesgraficas.Consulta;
+package interfacesgraficas.Cadastro;
 
+import classededados.Cliente;
+import classededados.Locacao;
 import classededados.Marca;
 import classededados.Modelo;
 import classededados.Veiculo;
-import interfacesgraficas.Cadastro.CadastroMarca;
-import interfacesgraficas.Cadastro.CadastroVeiculo;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -27,15 +23,14 @@ import persistencia.ClasseDAO;
  *
  * @author aluno
  */
-public class TelaConsultaVeiculo extends javax.swing.JInternalFrame {
+public class TelaConsultaLocados extends javax.swing.JInternalFrame {
+    int esc;
     DefaultTableModel model = null;
     TableRowSorter trs;
-    int esc;
-    CadastroVeiculo tcv;
     /**
-     * Creates new form TelaConsultaVeículo
+     * Creates new form TelaDevolução
      */
-    public TelaConsultaVeiculo() {
+    public TelaConsultaLocados() {
         initComponents();
         atualizar();
     }
@@ -52,56 +47,38 @@ public class TelaConsultaVeiculo extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableVeiculo = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
         jTextFieldPesquisar1 = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setClosable(true);
-        setAlignmentX(100.0F);
-        setAlignmentY(100.0F);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setText("Consulta de Veículos");
-
-        jButton1.setBackground(new java.awt.Color(0, 136, 204));
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("+ Novo Veículo");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        jLabel1.setText("Consulta de Veículos Locados");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(929, Short.MAX_VALUE))
+                .addGap(25, 25, 25)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addGap(41, 41, 41)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         jTableVeiculo.setModel(new javax.swing.table.DefaultTableModel(
@@ -109,11 +86,11 @@ public class TelaConsultaVeiculo extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Placa", "Modelo", "Marca", "Cor", "Valor", "Caução", "Tipo", "Situação"
+                "Cliente", "Placa do Veículo", "Modelo", "Marca", "Data de Locação", "Data de Devolução", "Situação"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -129,36 +106,15 @@ public class TelaConsultaVeiculo extends javax.swing.JInternalFrame {
             jTableVeiculo.getColumnModel().getColumn(4).setResizable(false);
             jTableVeiculo.getColumnModel().getColumn(5).setResizable(false);
             jTableVeiculo.getColumnModel().getColumn(6).setResizable(false);
-            jTableVeiculo.getColumnModel().getColumn(7).setResizable(false);
         }
 
         jButton2.setBackground(new java.awt.Color(0, 136, 204));
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Alterar");
+        jButton2.setText("Devolver");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
-            }
-        });
-
-        jButton3.setBackground(new java.awt.Color(210, 50, 45));
-        jButton3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Excluir");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
-        jButton4.setBackground(new java.awt.Color(4, 165, 30));
-        jButton4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("Atualizar");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
             }
         });
 
@@ -183,9 +139,19 @@ public class TelaConsultaVeiculo extends javax.swing.JInternalFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione...", "Placa", "Modelo", "Marca", "Cor", "Tipo", "Situação" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione...", "Placa", "Cliente", "Modelo", "Marca", " " }));
 
         jLabel2.setText("Filtro");
+
+        jButton1.setBackground(new java.awt.Color(4, 165, 30));
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Atualizar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -204,9 +170,7 @@ public class TelaConsultaVeiculo extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(jButton2)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jButton3)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jButton4)
+                            .addComponent(jButton1)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jTextFieldPesquisar1, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(56, Short.MAX_VALUE))
@@ -219,12 +183,11 @@ public class TelaConsultaVeiculo extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4)
-                    .addComponent(jTextFieldPesquisar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldPesquisar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41))
@@ -244,36 +207,11 @@ public class TelaConsultaVeiculo extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-            tcv = new CadastroVeiculo();
-            tcv.setVisible(true);
-            atualizaAposFechar();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-       atualizar();
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        if (jTableVeiculo.getSelectedRow() >= 0){
-            int resposta  = JOptionPane.showConfirmDialog(rootPane, "Excluir Veiculo?");
-            if(resposta == JOptionPane.YES_OPTION){
-        try {
-            
-            String placa = (String)jTableVeiculo.getValueAt(jTableVeiculo.getSelectedRow(), 0);
-            ClasseDAO dao = new ClasseDAO();
-            dao.excluirVeiculo(placa);
-            model.removeRow(jTableVeiculo.getSelectedRow());
-            jTableVeiculo.setModel(model);
-        
-        } catch (Exception ex) {
-            Logger.getLogger(TelaConsultaMarca.class.getName()).log(Level.SEVERE, null, ex);
-        }
-            }
-        }else{
-            JOptionPane.showMessageDialog(null, "Selecione uma linha!");
-        } 
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        TelaDevolucao td = new TelaDevolucao();
+        td.devolucao((String)jTableVeiculo.getValueAt(jTableVeiculo.getSelectedRow(), 1));
+        td.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextFieldPesquisar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldPesquisar1MouseClicked
         jTextFieldPesquisar1.setText("");
@@ -289,13 +227,11 @@ public class TelaConsultaVeiculo extends javax.swing.JInternalFrame {
 
     private void jTextFieldPesquisar1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldPesquisar1KeyTyped
         jTextFieldPesquisar1.setForeground(new java.awt.Color(0, 0, 0));
-        
-        if(jComboBox1.getSelectedItem().equals("Placa")) esc = 0; 
-        if(jComboBox1.getSelectedItem().equals("Modelo")||jComboBox1.getSelectedItem().equals("Selecione...")) esc = 1; 
-        if(jComboBox1.getSelectedItem().equals("Marca")) esc = 2; 
-        if(jComboBox1.getSelectedItem().equals("Cor")) esc = 3; 
-        if(jComboBox1.getSelectedItem().equals("Tipo")) esc = 6; 
-        if(jComboBox1.getSelectedItem().equals("Situação")) esc = 7; 
+
+        if(jComboBox1.getSelectedItem().equals("Cliente")) esc = 0;
+        if(jComboBox1.getSelectedItem().equals("Placa")) esc = 1;
+        if(jComboBox1.getSelectedItem().equals("Modelo")||jComboBox1.getSelectedItem().equals("Selecione...")) esc = 2;
+        if(jComboBox1.getSelectedItem().equals("Marca")) esc = 3;
         jTextFieldPesquisar1.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
@@ -307,23 +243,14 @@ public class TelaConsultaVeiculo extends javax.swing.JInternalFrame {
         jTableVeiculo.setRowSorter(trs);
     }//GEN-LAST:event_jTextFieldPesquisar1KeyTyped
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        try {
-        tcv = new CadastroVeiculo();
-            tcv.alteracao("Alterar Veículo",(String)jTableVeiculo.getValueAt(jTableVeiculo.getSelectedRow(), 0));
-            tcv.setVisible(true);
-        } catch (Exception ex) {
-            Logger.getLogger(TelaConsultaMarca.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        atualizaAposFechar();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       atualizar();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -335,50 +262,61 @@ public class TelaConsultaVeiculo extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 public void atualizar(){
     try {
+            ArrayList<Cliente> listaDeClientes;
             ArrayList<Veiculo> listaDeVeiculos;
             ArrayList<Modelo> listaDeModelos;
             ArrayList<Marca> listaDeMarcas;
+            ArrayList<Locacao> listaDeLocacao;
             
             ClasseDAO dao = new ClasseDAO();
         
             listaDeMarcas = dao.recuperarMarca();
             listaDeModelos = dao.recuperarModelo();
             listaDeVeiculos = dao.recuperarVeiculo();
+            listaDeClientes = dao.recuperarCliente();
+            listaDeLocacao = dao.recuperarLocacao();
+
             model = (DefaultTableModel) jTableVeiculo.getModel();
             
             model.setNumRows(0);
-            for(int posVeiculo=0; posVeiculo<listaDeVeiculos.size();posVeiculo++){
-                String[] saida = new String[8];
+            
+            for(int posLoc=0; posLoc<listaDeLocacao.size();posLoc++){
+                String[] saida = new String[7];
+                Locacao auxLoc = listaDeLocacao.get(posLoc);
+                for(int pos2=0; pos2<listaDeClientes.size();pos2++){
+                    Cliente aux2 = listaDeClientes.get(pos2);
+                    if((auxLoc.getCnhCliente()).equals(aux2.getCnh())){
+                        saida[0] = aux2.getNome();
+                    }
+                }
+                
+                for(int posVeiculo=0; posVeiculo<listaDeVeiculos.size();posVeiculo++){
                 Veiculo aux = listaDeVeiculos.get(posVeiculo);
-                saida[0] = aux.getPlaca();
+                if(auxLoc.getPlacaVeiculo().equals(aux.getPlaca())){
+                    saida[1] = aux.getPlaca();
                 for(int pos=0; pos<listaDeModelos.size();pos++){
                 Modelo auxMod = listaDeModelos.get(pos);
                 if((aux.getIdModelo())==(auxMod.getId())){
+                    saida[2] = auxMod.getDescricao();
                     for(int pos2=0; pos2<listaDeMarcas.size();pos2++){
                     Marca aux2 = listaDeMarcas.get(pos2);
                     if((auxMod.getIdMarca())==(aux2.getId())){
-                        saida[2] = aux2.getDescricao();
+                        saida[3] = aux2.getDescricao();
                     }
-                    saida[1] = auxMod.getDescricao();
-                    saida[6] = auxMod.getTipo(); 
                 }
                 }
                 }
-                saida[3] = aux.getCor();
-                saida[4] = String.valueOf(aux.getValor());
-                saida[5] = String.valueOf(aux.getCaucao());
-                saida[7] = aux.getSituacao();
+                saida[6] = aux.getSituacao();
+                }
+                saida[4] = auxLoc.getDataLoc();
+                saida[5] = auxLoc.getDataDev(); 
+            } 
+                
                 model.addRow(saida);
-            }         
+                }           
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(this, erro.getMessage());
         }
 }
-public void atualizaAposFechar(){
-    tcv.addWindowListener(new WindowAdapter() {
-        public void windowClosing(WindowEvent evt) {
-            atualizar();
-        }
-    });  
-}
+
 }

@@ -106,6 +106,8 @@ public class CadastroVeiculo extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jTextFieldAno = new javax.swing.JTextField();
         jTextFieldPlaca = new javax.swing.JFormattedTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jTextFieldDiaria = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -248,7 +250,7 @@ public class CadastroVeiculo extends javax.swing.JFrame {
 
         jTextFieldModelo.setEditable(false);
 
-        jLabel9.setText("Caução*");
+        jLabel9.setText("Caução*  R$");
 
         jTextFieldCaucao.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -270,6 +272,14 @@ public class CadastroVeiculo extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
+        jLabel11.setText("Diária*    R$");
+
+        jTextFieldDiaria.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldDiariaKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelCadastroLayout = new javax.swing.GroupLayout(jPanelCadastro);
         jPanelCadastro.setLayout(jPanelCadastroLayout);
         jPanelCadastroLayout.setHorizontalGroup(
@@ -278,36 +288,43 @@ public class CadastroVeiculo extends javax.swing.JFrame {
             .addGroup(jPanelCadastroLayout.createSequentialGroup()
                 .addGroup(jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelCadastroLayout.createSequentialGroup()
-                        .addGap(58, 58, 58)
-                        .addComponent(jLabel5))
-                    .addGroup(jPanelCadastroLayout.createSequentialGroup()
-                        .addGap(50, 50, 50)
                         .addGroup(jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel10)
-                                .addComponent(jLabel9)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelCadastroLayout.createSequentialGroup()
-                        .addGroup(jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanelCadastroLayout.createSequentialGroup()
-                                .addGap(0, 36, Short.MAX_VALUE)
-                                .addComponent(jButton1))
-                            .addComponent(jTextFieldCaucao, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldAno, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldCor, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldModelo, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldValor, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addGap(23, 23, 23))
-                    .addGroup(jPanelCadastroLayout.createSequentialGroup()
+                                .addGap(58, 58, 58)
+                                .addComponent(jLabel5))
+                            .addGroup(jPanelCadastroLayout.createSequentialGroup()
+                                .addGap(50, 50, 50)
+                                .addGroup(jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel10)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCadastroLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBoxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(jPanelCadastroLayout.createSequentialGroup()
+                                .addGroup(jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jTextFieldCaucao, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextFieldAno, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextFieldCor, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextFieldModelo, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextFieldValor, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextFieldDiaria))
+                                .addGap(23, 23, 23))
+                            .addGroup(jPanelCadastroLayout.createSequentialGroup()
+                                .addGroup(jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jComboBoxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextFieldPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCadastroLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addGap(18, 18, 18)))
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanelCadastroLayout.createSequentialGroup()
                 .addContainerGap()
@@ -319,6 +336,7 @@ public class CadastroVeiculo extends javax.swing.JFrame {
             .addGroup(jPanelCadastroLayout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
                     .addGroup(jPanelCadastroLayout.createSequentialGroup()
                         .addGap(12, 12, 12)
                         .addComponent(jLabel2)
@@ -350,10 +368,13 @@ public class CadastroVeiculo extends javax.swing.JFrame {
                         .addGroup(jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextFieldModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextFieldDiaria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                         .addComponent(jButton1)
-                        .addContainerGap(32, Short.MAX_VALUE))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)))
+                        .addGap(25, 25, 25))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -364,7 +385,7 @@ public class CadastroVeiculo extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanelCadastro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -429,6 +450,7 @@ public class CadastroVeiculo extends javax.swing.JFrame {
                     }
                     obj.setValor(Double.parseDouble(jTextFieldValor.getText()));
                     obj.setCaucao(Double.parseDouble(jTextFieldCaucao.getText()));
+                    obj.setDiaria(Double.parseDouble(jTextFieldDiaria.getText()));
 
                     daoVeiculo.incluirVeiculo(obj);
                     JOptionPane.showMessageDialog(rootPane, "Cadastro efetuado com sucesso!");
@@ -451,6 +473,7 @@ public class CadastroVeiculo extends javax.swing.JFrame {
                     obj.setValor(Double.parseDouble(jTextFieldValor.getText()));
                     obj.setSituacao(jComboBoxStatus.getSelectedItem().toString());
                     obj.setCor(jTextFieldCor.getText());
+                    obj.setDiaria(Double.parseDouble(jTextFieldDiaria.getText()));
                     if(jTable1.getSelectedRow()>0){
                         modeloId = Integer.parseInt((String) jTable1.getValueAt(jTable1.getSelectedRow(), 0));
                     }else{
@@ -495,6 +518,10 @@ public class CadastroVeiculo extends javax.swing.JFrame {
         }        // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldCaucaoKeyTyped
 
+    private void jTextFieldDiariaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldDiariaKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldDiariaKeyTyped
+
     /**
      * @param args the command line arguments
      */
@@ -538,6 +565,7 @@ public class CadastroVeiculo extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBoxStatus;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -555,6 +583,7 @@ public class CadastroVeiculo extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldAno;
     private javax.swing.JTextField jTextFieldCaucao;
     private javax.swing.JTextField jTextFieldCor;
+    private javax.swing.JTextField jTextFieldDiaria;
     private javax.swing.JTextField jTextFieldModelo;
     private javax.swing.JTextField jTextFieldPesquisar;
     private javax.swing.JFormattedTextField jTextFieldPlaca;
@@ -578,6 +607,7 @@ public void alteracao(String acao, String placa) throws Exception {
                 jTextFieldAno.setText(String.valueOf(aux.getAno()));
                 jTextFieldCaucao.setText(String.valueOf(aux.getCaucao()));
                 jTextFieldCor.setText(String.valueOf(aux.getCor()));
+                jTextFieldDiaria.setText(String.valueOf(aux.getDiaria()));
                 this.idModelo2 = aux.getIdModelo();
                 for (int pos2 = 0; pos2 < listaDeModelos.size(); pos2++) {
                     Modelo aux2 = listaDeModelos.get(pos2);

@@ -5,7 +5,8 @@
  */
 package interfacesgraficas;
 
-import interfacesgraficas.Cadastro.TelaDevolucao;
+import interfacesgraficas.Cadastro.TelaConsultaDevolvidos;
+import interfacesgraficas.Cadastro.TelaConsultaLocados;
 import interfacesgraficas.Cadastro.TelaLocar;
 import interfacesgraficas.Consulta.TelaConsultaCliente;
 import interfacesgraficas.Consulta.TelaConsultaMarca;
@@ -26,7 +27,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     TelaConsultaModelo telaModelo = new TelaConsultaModelo();
     TelaConsultaCliente telaCliente = new TelaConsultaCliente();
     TelaLocar telaLocar = new TelaLocar();
-    TelaDevolucao telaDevolucao = new TelaDevolucao();
+    TelaConsultaLocados telaDevolucao = new TelaConsultaLocados();
+    TelaConsultaDevolvidos tcd = new TelaConsultaDevolvidos();
     boolean aberta;
     
     /**
@@ -72,6 +74,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jButtonLocar = new javax.swing.JButton();
         jButtonDevolver = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jButtonDevolver1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabelSair = new javax.swing.JLabel();
         jLabelBemVindo = new javax.swing.JLabel();
@@ -163,7 +166,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jButtonDevolver.setBackground(new java.awt.Color(51, 51, 51));
         jButtonDevolver.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButtonDevolver.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonDevolver.setText("Devolver");
+        jButtonDevolver.setText("Locados");
         jButtonDevolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonDevolverActionPerformed(evt);
@@ -174,11 +177,25 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("MENU");
 
+        jButtonDevolver1.setBackground(new java.awt.Color(51, 51, 51));
+        jButtonDevolver1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButtonDevolver1.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonDevolver1.setText("Devolvidos");
+        jButtonDevolver1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDevolver1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator1)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButtonCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -186,12 +203,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     .addComponent(jButtonMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonLocar, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonDevolver, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonDevolver, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonDevolver1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -204,6 +218,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addComponent(jButtonLocar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jButtonDevolver, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jButtonDevolver1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jButtonCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
@@ -289,6 +305,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         telaModelo.dispose();
         telaLocar.dispose();
         telaDevolucao.dispose();
+        tcd.dispose();
         aberta = true;
     }//GEN-LAST:event_jButtonMarcaActionPerformed
 
@@ -301,6 +318,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         telaMarca.dispose();
         telaLocar.dispose();
         telaDevolucao.dispose();
+        tcd.dispose();
         jLabelBemVindo.setText("");
     }//GEN-LAST:event_jButtonModeloActionPerformed
 
@@ -313,6 +331,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         telaModelo.dispose();
         telaLocar.dispose();
         telaDevolucao.dispose();
+        tcd.dispose();
         jLabelBemVindo.setText("");
     }//GEN-LAST:event_jButtonClienteActionPerformed
 
@@ -325,6 +344,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         telaModelo.dispose();
         telaLocar.dispose();
         telaDevolucao.dispose();
+        tcd.dispose();
         jLabelBemVindo.setText("");
     }//GEN-LAST:event_jButtonVeiculoActionPerformed
 
@@ -341,6 +361,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         telaModelo.dispose();
         telaVeiculo.dispose();
         telaDevolucao.dispose();
+        tcd.dispose();
         jLabelBemVindo.setText("");
     }//GEN-LAST:event_jButtonLocarActionPerformed
 
@@ -353,8 +374,22 @@ public class TelaPrincipal extends javax.swing.JFrame {
         telaModelo.dispose();
         telaVeiculo.dispose();
         telaLocar.dispose();
+        tcd.dispose();
         jLabelBemVindo.setText("");
     }//GEN-LAST:event_jButtonDevolverActionPerformed
+
+    private void jButtonDevolver1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDevolver1ActionPerformed
+        tcd.setLocation(182, 36);
+       /*this.*/ this.add(tcd);
+        tcd.show();
+        telaVeiculo.dispose();
+        telaMarca.dispose();
+        telaModelo.dispose();
+        telaLocar.dispose();
+        telaDevolucao.dispose();
+        telaCliente.dispose();
+        jLabelBemVindo.setText("");
+    }//GEN-LAST:event_jButtonDevolver1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -395,6 +430,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.Box.Filler filler1;
     private javax.swing.JButton jButtonCliente;
     private javax.swing.JButton jButtonDevolver;
+    private javax.swing.JButton jButtonDevolver1;
     private javax.swing.JButton jButtonLocar;
     private javax.swing.JButton jButtonMarca;
     private javax.swing.JButton jButtonModelo;
